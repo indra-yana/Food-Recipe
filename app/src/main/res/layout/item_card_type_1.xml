@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/item_card_view_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:foreground="?selectableItemBackground"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="3dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_item_banner_1"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_launcher_background"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tv_item_title_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_item_banner_1"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="5dp"
+                android:layout_toStartOf="@+id/overflow_menu"
+                android:ellipsize="end"
+                android:text="@string/text_lorem_ipsum_title"
+                android:textColor="@color/color_text_black_80"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_item_description_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_item_title_1"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="15dp"
+                android:layout_toStartOf="@+id/overflow_menu"
+                android:drawablePadding="10dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="@string/text_lorem_ipsum_description"
+                android:textColor="@color/color_text_black_80" />
+
+            <ImageView
+                android:id="@+id/overflow_menu"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:layout_below="@id/iv_item_banner_1"
+                android:layout_alignTop="@+id/tv_item_title_1"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="15dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_more_vert_black_24dp"
+                app:tint="@color/color_text_black_80" />
+
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

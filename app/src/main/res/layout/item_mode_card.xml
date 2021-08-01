@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/_4sdp"
+    android:layout_marginTop="@dimen/_4sdp"
+    android:layout_marginEnd="@dimen/_4sdp"
+    android:layout_marginBottom="@dimen/_4sdp"
+    android:foreground="?selectableItemBackground"
+    app:cardCornerRadius="@dimen/_3sdp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_item_thumb"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_140sdp"
+            android:layout_marginBottom="@dimen/_4sdp"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerCrop"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars" />
+
+        <View
+            android:id="@+id/viewFadingEdgeTop"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp"
+            android:background="@drawable/bg_fading_edge_top"
+            android:visibility="visible"
+            app:layout_constraintTop_toTopOf="@+id/iv_item_thumb" />
+
+        <View
+            android:id="@+id/viewFadingEdgeBottom"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp"
+            android:background="@drawable/bg_fading_edge_bottom"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_item_thumb" />
+
+        <TextView
+            android:id="@+id/tv_item_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_6sdp"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:maxLines="2"
+            android:textAllCaps="false"
+            android:textColor="@color/color_text_white"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintBottom_toBottomOf="@+id/viewFadingEdgeTop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/viewFadingEdgeTop"
+            tools:text="@string/text_lorem_ipsum_title" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/viewFadingEdgeBottom"
+            app:layout_constraintTop_toTopOf="@+id/viewFadingEdgeBottom">
+
+            <ImageButton
+                android:id="@+id/btn_set_favourite"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:layout_marginEnd="@dimen/_6sdp"
+                android:contentDescription="@string/app_name"
+                android:foreground="?selectableItemBackground"
+                android:includeFontPadding="false"
+                android:src="@drawable/ic_favorite_border"
+                android:textAllCaps="false"
+                android:textColor="@color/color_text_white"
+                android:tint="@color/color_text_white" />
+
+            <ImageButton
+                android:id="@+id/btn_set_share"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:layout_marginEnd="@dimen/_6sdp"
+                android:contentDescription="@string/app_name"
+                android:foreground="?selectableItemBackground"
+                android:includeFontPadding="false"
+                android:src="@drawable/ic_share"
+                android:textAllCaps="false"
+                android:textColor="@color/color_text_white"
+                android:tint="@color/color_text_white" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
