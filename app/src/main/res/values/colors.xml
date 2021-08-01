@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#2464AC</color>
     <color name="colorAccent">#2e87eb</color>
 
-    // Custom Color
+    <!-- Custom Color -->
     <color name="colorPrimaryDarkTransparent">#CC2464AC</color>
     <color name="colorPrimaryDarkTransparent2">#992464AC</color>
     <color name="color_text_white">#FFFFFF</color>
