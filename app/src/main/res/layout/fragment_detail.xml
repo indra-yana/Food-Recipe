@@ -41,35 +41,34 @@
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_item_thumb" />
 
-            <Button
+<!--            <Button-->
+<!--                android:id="@+id/btn_back"-->
+<!--                style="@style/Widget.App.Button.IconOnly"-->
+<!--                android:layout_width="@dimen/_30sdp"-->
+<!--                android:layout_height="@dimen/_30sdp"-->
+<!--                android:layout_marginStart="@dimen/_10sdp"-->
+<!--                android:layout_marginTop="@dimen/_10sdp"-->
+<!--                android:foreground="?selectableItemBackground"-->
+<!--                app:backgroundTint="@color/colorPrimaryDarkTransparent"-->
+<!--                app:icon="@drawable/ic_back"-->
+<!--                app:iconSize="@dimen/_18sdp"-->
+<!--                app:iconTint="@color/color_text_white"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+            <ImageButton
                 android:id="@+id/btn_back"
-                style="@style/Widget.App.Button.IconOnly"
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:foreground="?selectableItemBackground"
-                app:backgroundTint="@color/colorPrimaryDarkTransparent"
-                app:icon="@drawable/ic_back"
-                app:iconSize="@dimen/_18sdp"
-                app:iconTint="@color/color_text_white"
+                android:background="@drawable/bg_rounded_button_dark"
+                android:contentDescription="@string/app_name"
+                android:foreground="?selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_back"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!--            <ImageButton-->
-            <!--                android:id="@+id/btn_back"-->
-            <!--                android:layout_width="@dimen/_25sdp"-->
-            <!--                android:layout_height="@dimen/_25sdp"-->
-            <!--                android:layout_marginStart="@dimen/_10sdp"-->
-            <!--                android:layout_marginTop="@dimen/_10sdp"-->
-            <!--                android:background="@drawable/bg_back_button"-->
-            <!--                android:contentDescription="@string/app_name"-->
-            <!--                android:foreground="?selectableItemBackground"-->
-            <!--                android:padding="@dimen/_3sdp"-->
-            <!--                android:src="@drawable/ic_act_back"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toTopOf="parent"-->
-            <!--                app:tint="@color/colorTextIcons" />-->
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/color_text_white" />
 
             <LinearLayout
                 android:layout_width="match_parent"

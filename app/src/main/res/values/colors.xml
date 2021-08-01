@@ -7,6 +7,7 @@
     <!-- Custom Color -->
     <color name="colorPrimaryDarkTransparent">#CC2464AC</color>
     <color name="colorPrimaryDarkTransparent2">#992464AC</color>
+    <color name="colorPrimaryDarkTransparent3">#73081029</color>
     <color name="color_text_white">#FFFFFF</color>
     <color name="color_text_black_100">#000000</color>
     <color name="color_text_black_80">#2B2B2B</color>

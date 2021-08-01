@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_40sdp"
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="invisible"
@@ -48,7 +48,6 @@
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="invisible"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 

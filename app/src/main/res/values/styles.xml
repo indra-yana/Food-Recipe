@@ -51,4 +51,11 @@
         <item name="cornerRadius">@dimen/_20sdp</item>
     </style>
 
+    <style name="RippleWhite">
+        <item name="background">@drawable/bg_rounded_button_dark</item>
+        <item name="android:foreground">?android:attr/selectableItemBackgroundBorderless</item>
+        <item name="android:colorControlHighlight">@color/colorPrimaryDarkTransparent3</item>
+        <item name="android:radius">@dimen/_100sdp</item>
+        <item name="cornerRadius">@dimen/_20sdp</item>
+    </style>
 </resources>
