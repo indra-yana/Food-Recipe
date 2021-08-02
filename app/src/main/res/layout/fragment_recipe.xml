@@ -10,9 +10,9 @@
         android:id="@+id/layoutSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_12sdp"
         android:layout_marginTop="@dimen/_45sdp"
-        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
         android:background="@drawable/background_search"
         android:elevation="@dimen/_6sdp"
         android:gravity="center_vertical"
@@ -32,7 +32,7 @@
         <EditText
             android:id="@+id/etInputSearch"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_height="@dimen/_30sdp"
             android:layout_marginStart="@dimen/_12sdp"
             android:layout_weight="1"
             android:background="@null"
@@ -61,52 +61,65 @@
         android:id="@+id/layoutHeader"
         layout="@layout/layout_header" />
 
+    <ProgressBar
+        android:id="@+id/pbRecipeList"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:elevation="@dimen/_5sdp"
+        android:indeterminateTint="@color/color_text_white"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/vp2_slider"
+        android:id="@+id/vp2Banner"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_120sdp"
-        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_8sdp"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:elevation="@dimen/_6sdp"
-        android:paddingTop="@dimen/_5sdp"
-        android:paddingBottom="@dimen/_5sdp"
+        android:elevation="@dimen/_5sdp"
+        android:paddingTop="@dimen/_3sdp"
+        android:paddingBottom="@dimen/_3sdp"
         app:layout_constraintTop_toBottomOf="@id/layoutSearch" />
 
-    <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
-        android:id="@+id/dots_indicator"
+    <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+        android:id="@+id/sliderIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        app:dotsColor="@color/colorPrimaryDark"
-        app:dotsCornerRadius="@dimen/_8sdp"
-        app:dotsSize="@dimen/_10sdp"
+        app:dampingRatio="0.5"
+        app:dotsColor="@color/colorPrimary"
+        app:dotsCornerRadius="@dimen/_100sdp"
+        app:dotsSize="@dimen/_8sdp"
         app:dotsSpacing="@dimen/_2sdp"
-        app:dotsWidthFactor="2.5"
+        app:dotsStrokeColor="@color/color_text_black_60"
+        app:dotsStrokeWidth="@dimen/_1sdp"
+        app:layout_constraintBottom_toTopOf="@+id/rvRecipe"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vp2_slider"
-        app:progressMode="true"
-        app:selectedDotColor="@color/colorPrimaryDark" />
+        app:layout_constraintTop_toBottomOf="@+id/vp2Banner"
+        app:stiffness="300" />
 
-    <TextView
-        android:id="@+id/btn_view_all"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:text="@string/text_see_more"
-        android:textSize="@dimen/_14ssp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/dots_indicator"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/dots_indicator" />
+    <!--    <TextView-->
+    <!--        android:id="@+id/btn_view_all"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginEnd="@dimen/_10sdp"-->
+    <!--        android:text="@string/text_see_more"-->
+    <!--        android:textSize="@dimen/_14ssp"-->
+    <!--        android:textStyle="bold"-->
+    <!--        app:layout_constraintBottom_toBottomOf="@+id/sliderIndicator"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="@+id/sliderIndicator" />-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvRecipe"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_8sdp"
         android:clipToPadding="false"
+        android:elevation="@dimen/_5sdp"
         android:orientation="vertical"
         android:paddingStart="@dimen/_4sdp"
         android:paddingTop="@dimen/_4sdp"
@@ -115,18 +128,8 @@
         android:visibility="visible"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dots_indicator"
+        app:layout_constraintTop_toBottomOf="@+id/sliderIndicator"
         tools:listitem="@layout/item_mode_list" />
-
-    <ProgressBar
-        android:id="@+id/pbRecipeList"
-        android:layout_width="@dimen/_25sdp"
-        android:layout_height="@dimen/_25sdp"
-        android:layout_marginTop="@dimen/_35sdp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/vp2_slider" />
 
     <!--    <ProgressBar-->
     <!--        android:id="@+id/pbRecipeList"-->
@@ -171,6 +174,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_38sdp"
         android:background="@color/colorPrimaryDarkTransparent"
+        android:elevation="@dimen/_5sdp"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="@dimen/_2sdp"

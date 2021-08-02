@@ -1,6 +1,7 @@
 package com.training.foodrecipe
 
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -9,16 +10,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.view.children
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
+import com.training.foodrecipe.adapter.BannerAdapter
 import com.training.foodrecipe.adapter.IOnItemClickListener
 import com.training.foodrecipe.adapter.RecipeAdapter
 import com.training.foodrecipe.adapter.ViewHolderType
 import com.training.foodrecipe.databinding.FragmentRecipeBinding
 import com.training.foodrecipe.datasource.remote.IRecipeApi
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
+import com.training.foodrecipe.helper.OverlapSliderTransformation
 import com.training.foodrecipe.model.Recipe
 import com.training.foodrecipe.repository.RecipeRepository
 import com.training.foodrecipe.viewmodel.RecipeViewModel
@@ -28,14 +33,14 @@ import com.training.foodrecipe.viewmodel.RecipeViewModel
  * On Friday, 02/04/2021 22.02
  * https://gitlab.com/indra-yana
  ****************************************************/
-
 class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, RecipeRepository>() {
 
     companion object {
         private val TAG = RecipeFragment::class.java.simpleName
     }
 
-    private lateinit var adapter: RecipeAdapter
+    private lateinit var recipeAdapter: RecipeAdapter
+    private lateinit var bannerAdapter: BannerAdapter
 
     // Indicator state
     private var isLoading = false
@@ -47,11 +52,18 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
 
     private var visibleItemAnchorPoint: Int = RecyclerView.NO_POSITION
 
+    // Slider
+    private val sliderInterval: Long = 5000
+    private val sliderHandler = Handler()
+    private lateinit var sliderRunnable: Runnable
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         buildAdapter()
         buildRecyclerView()
+        buildBanner()
+        getLatestRecipe()
         getRecipeByPage()
         toggleRetry()
 
@@ -78,6 +90,16 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        sliderHandler.postDelayed(sliderRunnable, sliderInterval)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        sliderHandler.removeCallbacks(sliderRunnable)
+    }
+
     override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRecipeBinding {
         return FragmentRecipeBinding.inflate(inflater, container, false)
     }
@@ -91,7 +113,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
     }
 
     private fun buildAdapter() {
-        adapter = RecipeAdapter().apply {
+        recipeAdapter = RecipeAdapter().apply {
             iOnItemClickListener = object : IOnItemClickListener {
                 override fun onItemClicked(data: Recipe) {
                     Toast.makeText(requireContext(), "${data.title} Item clicked!", Toast.LENGTH_SHORT).show()
@@ -157,19 +179,50 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
 
             when (it) {
                 is ResponseStatus.Loading -> {
-                    Log.d(TAG, "State is loading!")
+                    Log.d(TAG, "getRecipeByPage: State is loading!")
                 }
                 is ResponseStatus.Success -> {
-                    adapter.bindData(it.value.recipes)
+                    recipeAdapter.bindData(it.value.recipes)
 
                     nextPage++
-                    Log.d(TAG, "State is success! ${it.value.recipes}")
+                    Log.d(TAG, "getRecipeByPage: State is success! ${it.value.recipes}")
                 }
                 is ResponseStatus.Failure -> {
-                    Log.d(TAG, "State is failure! ${it.exception}")
+                    Log.d(TAG, "getRecipeByPage:State is failure! ${it.exception}")
                 }
                 else -> {
-                    Log.d(TAG, "State is unknown!")
+                    Log.d(TAG, "getRecipeByPage: State is unknown!")
+                }
+            }
+        })
+    }
+
+    private fun getLatestRecipe() {
+        viewModel.getLatestRecipe()
+        viewModel.latestRecipe.observe(viewLifecycleOwner, Observer {
+            isLoading = it is ResponseStatus.Loading
+            isNetworkError = it is ResponseStatus.Failure
+
+            toggleLoading(isLoading)
+            toggleNetworkError(isNetworkError)
+
+            when (it) {
+                is ResponseStatus.Loading -> {
+                    Log.d(TAG, "getLatestRecipe: State is loading!")
+                }
+                is ResponseStatus.Success -> {
+                    if (bannerAdapter.itemCount <= 0) {
+                        bannerAdapter.bindData(it.value.recipes)
+                        viewBinding.sliderIndicator.refreshDots()
+                    }
+
+                    Log.d(TAG, "getLatestRecipe: State is success! ${it.value.recipes}")
+                }
+                is ResponseStatus.Failure -> {
+                    Log.d(TAG, "getLatestRecipe: State is failure! ${it.exception}")
+                }
+                else -> {
+                    Log.d(TAG, "getLatestRecipe: State is unknown!")
                 }
             }
         })
@@ -184,12 +237,15 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
     }
 
     private fun toggleRetry() {
-        viewBinding.btnRetryNetwork.setOnClickListener { v -> viewModel.getRecipeByPage(nextPage) }
+        viewBinding.btnRetryNetwork.setOnClickListener { v ->
+            viewModel.getRecipeByPage(nextPage)
+            viewModel.getLatestRecipe()
+        }
     }
 
     private fun setMode(viewHolderType: ViewHolderType) {
-        adapter.holderType = viewHolderType
-        viewBinding.rvRecipe.adapter = adapter
+        recipeAdapter.holderType = viewHolderType
+        viewBinding.rvRecipe.adapter = recipeAdapter
         viewBinding.rvRecipe.layoutManager = when (viewHolderType) {
             ViewHolderType.CARD -> LinearLayoutManager(requireContext())
             ViewHolderType.LIST -> LinearLayoutManager(requireContext())
@@ -228,6 +284,50 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
             })
             show()
         }
+    }
+
+    private fun buildBanner() {
+        bannerAdapter = BannerAdapter().apply {
+            iOnItemClickListener = object : IOnItemClickListener {
+                override fun onItemClicked(data: Recipe) {
+                    Toast.makeText(requireContext(), "${data.title} Item clicked!", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        viewBinding.vp2Banner.apply {
+            adapter = bannerAdapter
+            offscreenPageLimit = 3
+            layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+
+            val recyclerViewChild = children.firstOrNull() as RecyclerView
+            recyclerViewChild.clipChildren = false
+            recyclerViewChild.clipToPadding = false
+            recyclerViewChild.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+            recyclerViewChild.setPadding(50, 0, 50, 0)
+
+            setPageTransformer(OverlapSliderTransformation(ViewPager2.ORIENTATION_HORIZONTAL))
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    sliderHandler.removeCallbacks(sliderRunnable)
+                    sliderHandler.postDelayed(sliderRunnable, sliderInterval)
+                }
+            })
+
+            sliderRunnable = Runnable {
+                if (bannerAdapter.itemCount > 0) {
+                    if (currentItem + 1 == bannerAdapter.itemCount) {
+                        currentItem = 0
+                    } else {
+                        currentItem += 1
+                    }
+                }
+            }
+
+            viewBinding.sliderIndicator.setViewPager2(this)
+        }
+
     }
 
 }
