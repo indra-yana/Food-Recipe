@@ -39,8 +39,10 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
         private val TAG = RecipeFragment::class.java.simpleName
     }
 
+    // Adapter
     private lateinit var recipeAdapter: RecipeAdapter
     private lateinit var bannerAdapter: BannerAdapter
+    private var viewHolderType: ViewHolderType = ViewHolderType.LIST
 
     // Indicator state
     private var isLoading = false
@@ -50,21 +52,38 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
     private val initialPage = 1
     private var nextPage = initialPage
 
-    private var visibleItemAnchorPoint: Int = RecyclerView.NO_POSITION
+    private var lastVisibleItem: Int = RecyclerView.NO_POSITION
 
-    // Slider
-    private val sliderInterval: Long = 5000
-    private val sliderHandler = Handler()
-    private lateinit var sliderRunnable: Runnable
+    // Slider banner
+    private val bannerInterval: Long = 5000
+    private val bannerHandler = Handler()
+    private lateinit var bannerRunnable: Runnable
 
+    /**
+     * Init all variable here that need once time initialization
+     */
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        buildRecipeAdapter()
+        buildBannerAdapter()
+
+        viewModel.getLatestRecipe()
+        viewModel.getRecipeByPage(initialPage)
+    }
+
+    /**
+     * Init all variable here that consume view
+     */
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        buildAdapter()
         buildRecyclerView()
         buildBanner()
+
         getLatestRecipe()
         getRecipeByPage()
+
         toggleRetry()
 
         with(viewBinding) {
@@ -92,12 +111,12 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
 
     override fun onResume() {
         super.onResume()
-        sliderHandler.postDelayed(sliderRunnable, sliderInterval)
+        bannerHandler.postDelayed(bannerRunnable, bannerInterval)
     }
 
     override fun onPause() {
         super.onPause()
-        sliderHandler.removeCallbacks(sliderRunnable)
+        bannerHandler.removeCallbacks(bannerRunnable)
     }
 
     override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRecipeBinding {
@@ -112,7 +131,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
         return RecipeRepository(apiClient.crete(IRecipeApi::class.java))
     }
 
-    private fun buildAdapter() {
+    private fun buildRecipeAdapter() {
         recipeAdapter = RecipeAdapter().apply {
             iOnItemClickListener = object : IOnItemClickListener {
                 override fun onItemClicked(data: Recipe) {
@@ -135,7 +154,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
     private fun buildRecyclerView() {
         with(viewBinding) {
 
-            setMode(ViewHolderType.LIST)
+            setListMode()
 
             rvRecipe.setHasFixedSize(true)
             rvRecipe.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -145,8 +164,8 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
                     val visibleItem = layoutManager.findFirstCompletelyVisibleItemPosition()
 
                     if (visibleItem > -1) {
-                        visibleItemAnchorPoint = visibleItem
-                        // Log.d(TAG, "onScrolled: $visibleItemAnchorPoint")
+                        lastVisibleItem = visibleItem
+//                        Log.d(TAG, "onScrolled: visibleItemAnchorPoint: $visibleItemAnchorPoint")
                     }
 
                     // Scroll bottom
@@ -154,7 +173,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
                         if (!isLoading && !isNetworkError) {
                             viewModel.getRecipeByPage(nextPage)
 
-                            Log.d(TAG, "onScrolled: $nextPage")
+//                            Log.d(TAG, "onScrolled: nextPage: $nextPage")
                         }
                     }
 
@@ -169,7 +188,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
     }
 
     private fun getRecipeByPage() {
-        viewModel.getRecipeByPage(initialPage)
+//        viewModel.getRecipeByPage(initialPage)
         viewModel.recipe.observe(viewLifecycleOwner, Observer {
             isLoading = it is ResponseStatus.Loading
             isNetworkError = it is ResponseStatus.Failure
@@ -198,7 +217,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
     }
 
     private fun getLatestRecipe() {
-        viewModel.getLatestRecipe()
+//        viewModel.getLatestRecipe()
         viewModel.latestRecipe.observe(viewLifecycleOwner, Observer {
             isLoading = it is ResponseStatus.Loading
             isNetworkError = it is ResponseStatus.Failure
@@ -211,10 +230,8 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
                     Log.d(TAG, "getLatestRecipe: State is loading!")
                 }
                 is ResponseStatus.Success -> {
-                    if (bannerAdapter.itemCount <= 0) {
-                        bannerAdapter.bindData(it.value.recipes)
-                        viewBinding.sliderIndicator.refreshDots()
-                    }
+                    bannerAdapter.bindData(it.value.recipes)
+                    viewBinding.sliderIndicator.refreshDots()
 
                     Log.d(TAG, "getLatestRecipe: State is success! ${it.value.recipes}")
                 }
@@ -243,7 +260,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
         }
     }
 
-    private fun setMode(viewHolderType: ViewHolderType) {
+    private fun setListMode() {
         recipeAdapter.holderType = viewHolderType
         viewBinding.rvRecipe.adapter = recipeAdapter
         viewBinding.rvRecipe.layoutManager = when (viewHolderType) {
@@ -252,7 +269,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
             ViewHolderType.GRID -> GridLayoutManager(requireContext(), 2)
         }
 
-        viewBinding.rvRecipe.scrollToPosition(visibleItemAnchorPoint)
+        viewBinding.rvRecipe.scrollToPosition(lastVisibleItem)
     }
 
     /**
@@ -265,17 +282,23 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
             setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.menu_act_cardview -> {
-                        setMode(ViewHolderType.CARD)
+                        viewHolderType = ViewHolderType.CARD
+                        setListMode()
+
                         Toast.makeText(view.context, "Changed to card", Toast.LENGTH_SHORT).show()
                         return@OnMenuItemClickListener true
                     }
                     R.id.menu_act_list -> {
-                        setMode(ViewHolderType.LIST)
+                        viewHolderType = ViewHolderType.LIST
+                        setListMode()
+
                         Toast.makeText(view.context, "Changed to list", Toast.LENGTH_SHORT).show()
                         return@OnMenuItemClickListener true
                     }
                     R.id.menu_act_grid -> {
-                        setMode(ViewHolderType.GRID)
+                        viewHolderType = ViewHolderType.GRID
+                        setListMode()
+
                         Toast.makeText(view.context, "Changed to grid", Toast.LENGTH_SHORT).show()
                         return@OnMenuItemClickListener true
                     }
@@ -286,7 +309,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
         }
     }
 
-    private fun buildBanner() {
+    private fun buildBannerAdapter() {
         bannerAdapter = BannerAdapter().apply {
             iOnItemClickListener = object : IOnItemClickListener {
                 override fun onItemClicked(data: Recipe) {
@@ -294,7 +317,9 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
                 }
             }
         }
+    }
 
+    private fun buildBanner() {
         viewBinding.vp2Banner.apply {
             adapter = bannerAdapter
             offscreenPageLimit = 3
@@ -310,12 +335,14 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
             registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
-                    sliderHandler.removeCallbacks(sliderRunnable)
-                    sliderHandler.postDelayed(sliderRunnable, sliderInterval)
+                    bannerHandler.removeCallbacks(bannerRunnable)
+                    bannerHandler.postDelayed(bannerRunnable, bannerInterval)
+
+                    viewBinding.sliderIndicator.refreshDots()
                 }
             })
 
-            sliderRunnable = Runnable {
+            bannerRunnable = Runnable {
                 if (bannerAdapter.itemCount > 0) {
                     if (currentItem + 1 == bannerAdapter.itemCount) {
                         currentItem = 0

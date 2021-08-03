@@ -32,6 +32,7 @@ class BannerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     fun bindData(listRecipe: List<Recipe>) {
         val oldCount: Int = itemCount
 
+        this.listRecipe.clear()
         this.listRecipe.addAll(listRecipe)
         notifyItemRangeInserted(oldCount, itemCount)
     }

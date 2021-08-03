@@ -23,10 +23,15 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel, BR : BaseRepos
     protected lateinit var viewModel: VM
     protected val apiClient = RecipeApiClient
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this, ViewModelFactory(getRepository())).get(getViewModel())
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         viewBinding = getViewBinding(inflater, container)
-        viewModel = ViewModelProvider(this, ViewModelFactory(getRepository())).get(getViewModel())
+//        viewModel = ViewModelProvider(this, ViewModelFactory(getRepository())).get(getViewModel())
 
         return viewBinding.root
     }

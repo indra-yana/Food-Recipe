@@ -6,16 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-<!--    <fragment-->
-<!--        android:id="@+id/navHostContainer"-->
-<!--        android:name="androidx.navigation.fragment.NavHostFragment"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_marginBottom="@dimen/_12sdp"-->
-<!--        app:defaultNavHost="true"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:navGraph="@navigation/recipe_nav"-->
-<!--        tools:ignore="FragmentTagUsage" />-->
+    <!--    <fragment-->
+    <!--        android:id="@+id/navHostContainer"-->
+    <!--        android:name="androidx.navigation.fragment.NavHostFragment"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:layout_marginBottom="@dimen/_12sdp"-->
+    <!--        app:defaultNavHost="true"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:navGraph="@navigation/recipe_nav"-->
+    <!--        tools:ignore="FragmentTagUsage" />-->
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/navHostContainer"
@@ -69,11 +69,13 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_40sdp"
         android:layout_marginStart="@dimen/_8sdp"
         android:layout_marginEnd="@dimen/_8sdp"
         android:layout_marginBottom="@dimen/_5sdp"
         android:background="@drawable/background_rounded"
+        android:clipToPadding="false"
+        app:itemIconSize="@dimen/_20sdp"
         app:itemIconTint="@drawable/selector_bottom_nav_color"
         app:itemTextColor="@drawable/selector_bottom_nav_color"
         app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
