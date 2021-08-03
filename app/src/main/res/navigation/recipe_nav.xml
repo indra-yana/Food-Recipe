@@ -9,5 +9,18 @@
         android:id="@+id/recipeFragment"
         android:name="com.training.foodrecipe.RecipeFragment"
         android:label="fragment_recipe"
-        tools:layout="@layout/fragment_recipe" />
+        tools:layout="@layout/fragment_recipe">
+        <action
+            android:id="@+id/action_recipeFragment_to_articleFragment"
+            app:destination="@id/articleFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/articleFragment2"
+        android:name="com.training.foodrecipe.ArticleFragment"
+        android:label="fragment_article"
+        tools:layout="@layout/fragment_article" >
+        <action
+            android:id="@+id/action_articleFragment_to_recipeFragment"
+            app:destination="@id/recipeFragment" />
+    </fragment>
 </navigation>
