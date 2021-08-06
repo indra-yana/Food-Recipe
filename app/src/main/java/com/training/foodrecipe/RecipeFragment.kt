@@ -78,6 +78,8 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        (activity as MainActivity).showFabAction()
+
         buildRecyclerView()
         buildBanner()
 

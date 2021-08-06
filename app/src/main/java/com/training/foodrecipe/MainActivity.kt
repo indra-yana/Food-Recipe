@@ -4,9 +4,11 @@ import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.os.postDelayed
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -15,6 +17,11 @@ import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.gauravk.bubblenavigation.BubbleNavigationLinearView
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationBarView
+import com.google.android.material.snackbar.Snackbar
+import com.training.foodrecipe.databinding.FragmentRecipeBinding
 import com.training.foodrecipe.helper.ConnectivityHelper
 import com.training.foodrecipe.helper.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
@@ -28,6 +35,8 @@ class MainActivity : AppCompatActivity() {
 
     private var currentNavController: LiveData<NavController>? = null
     private var backPressedOnce = false
+
+    private lateinit var fabAction: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +53,11 @@ class MainActivity : AppCompatActivity() {
                 layoutDisconnected.visibility = View.VISIBLE
             }
         })
+
+        fabAction = findViewById(R.id.fabCreate)
+        fabAction.setOnClickListener {
+            Toast.makeText(this, "Fab Clicked!", Toast.LENGTH_SHORT).show()
+        }
 
         if (savedInstanceState == null) {
             setupBottomNavigationBar()
@@ -75,6 +89,24 @@ class MainActivity : AppCompatActivity() {
             containerId = R.id.navHostContainer,
             intent = intent
         )
+
+        /*
+        bottomNavBar.setOnItemSelectedListener {
+            when(it.itemId) {
+                R.id.nav_home -> {
+                    Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show()
+                }
+                R.id.nav_article -> {
+                    Toast.makeText(this, "Article", Toast.LENGTH_SHORT).show()
+                }
+                R.id.nav_favourite -> {
+                    Toast.makeText(this, "Favourite", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            return@setOnItemSelectedListener false
+        }
+        */
 
         // Whenever the selected controller changes, setup the action bar.
         controller.observe(this, Observer {
@@ -108,6 +140,14 @@ class MainActivity : AppCompatActivity() {
         } else {
             super.onBackPressed()
         }
+    }
+
+    fun hideFabAction() {
+        fabAction.visibility = View.GONE
+    }
+
+    fun showFabAction() {
+        fabAction.visibility = View.VISIBLE
     }
 
     fun showBottomNavigation() {

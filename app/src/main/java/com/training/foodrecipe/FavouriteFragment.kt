@@ -32,6 +32,8 @@ class FavouriteFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         Log.d(TAG, "onActivityCreated: ")
+
+        (activity as MainActivity).hideFabAction()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
