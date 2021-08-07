@@ -1,27 +1,17 @@
 package com.training.foodrecipe
 
-import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.os.postDelayed
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
-import androidx.navigation.ui.setupActionBarWithNavController
-import com.gauravk.bubblenavigation.BubbleNavigationLinearView
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.navigation.NavigationBarView
-import com.google.android.material.snackbar.Snackbar
-import com.training.foodrecipe.databinding.FragmentRecipeBinding
 import com.training.foodrecipe.helper.ConnectivityHelper
 import com.training.foodrecipe.helper.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
@@ -45,12 +35,14 @@ class MainActivity : AppCompatActivity() {
         ConnectivityHelper(applicationContext).observe(this, Observer { isConnected ->
             if (isConnected) {
 //                networkStatusContainer.visibility = View.GONE
-                layoutConnected.visibility = View.VISIBLE
-                layoutDisconnected.visibility = View.GONE
+//                layoutConnected.visibility = View.VISIBLE
+//                layoutDisconnected.visibility = View.GONE
+                Log.d(TAG, "You're connected")
             } else {
 //                networkStatusContainer.visibility = View.VISIBLE
-                layoutConnected.visibility = View.GONE
-                layoutDisconnected.visibility = View.VISIBLE
+//                layoutConnected.visibility = View.GONE
+//                layoutDisconnected.visibility = View.VISIBLE
+                Log.d(TAG, "You're not connected")
             }
         })
 
@@ -157,17 +149,6 @@ class MainActivity : AppCompatActivity() {
     fun hideBottomNavigation() {
         bottomNavBar.visibility = View.GONE
     }
-
-    // TODO: Add this on detail fragment to show or hide bottom navigation
-//    override fun onAttach(context: Context) {
-//        super.onAttach(context)
-//        (activity as MainActivity).hideBottomNavigation()
-//    }
-//
-//    override fun onDetach() {
-//        super.onDetach()
-//        (activity as MainActivity).showBottomNavigation()
-//    }
 
 
 //    fun setupNavigationBar() {

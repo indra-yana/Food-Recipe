@@ -2,10 +2,10 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parentHome"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/parentHome"
     tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -82,10 +82,11 @@
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/ic_create"
-        android:tint="@color/color_text_white"
+        app:backgroundTint="@color/colorPrimary"
         app:fabSize="normal"
         app:layout_anchor="@id/bottomNavBar"
         app:layout_anchorGravity="top|end"
+        app:tint="@color/color_text_white"
         app:useCompatPadding="true" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

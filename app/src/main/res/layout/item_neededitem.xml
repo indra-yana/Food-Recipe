@@ -2,14 +2,14 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/item_card_view_2"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:id="@+id/cardNeededItem"
+    android:layout_width="@dimen/_130sdp"
+    android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?selectableItemBackground"
-    app:cardCornerRadius="5dp"
+    app:cardCornerRadius="8dp"
     app:cardElevation="3dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,11 +17,10 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/iv_item_banner_2"
+            android:id="@+id/ivNeededItem"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_120sdp"
+            android:layout_height="@dimen/_90sdp"
             android:scaleType="centerCrop"
-            tools:src="@tools:sample/avatars"
             android:src="@drawable/ic_launcher_background"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ContentDescription" />
@@ -32,21 +31,22 @@
             android:layout_height="@dimen/_40sdp"
             android:background="@drawable/bg_fading_edge_bottom"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_item_banner_2" />
+            app:layout_constraintBottom_toBottomOf="@+id/ivNeededItem" />
 
         <TextView
             android:id="@+id/tv_item_title_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_12sdp"
+            android:layout_margin="@dimen/_6sdp"
             android:ellipsize="end"
             android:includeFontPadding="false"
-            android:maxLines="1"
+            android:maxLines="2"
             android:text="@string/text_lorem_ipsum_title"
             android:textColor="@color/color_text_white"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="@dimen/_12ssp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_item_banner_2" />
+            app:layout_constraintStart_toStartOf="@+id/viewFadingEdgeBottom"
+            app:layout_constraintTop_toTopOf="@+id/viewFadingEdgeBottom"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,19 +1,17 @@
 package com.training.foodrecipe.helper
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
-import android.text.method.HideReturnsTransformationMethod
-import android.text.method.PasswordTransformationMethod
+import android.text.Layout
+import android.util.Log
 import android.view.View
-import android.widget.EditText
-import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
-import com.training.foodrecipe.BaseFragment
-import com.training.foodrecipe.R
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
+import retrofit2.HttpException
+import java.net.UnknownHostException
 
 
 /****************************************************
@@ -21,6 +19,8 @@ import com.training.foodrecipe.datasource.remote.response.ResponseStatus
  * On Saturday, 16/01/2021 13.08
  * https://gitlab.com/indra-yana
  ****************************************************/
+
+const val TAG = "Utils"
 
 fun <A : Activity> Activity.startNewActivity(activity: Class<A>) {
     Intent(this, activity).apply {
@@ -54,30 +54,45 @@ fun View.snackBar(message: String, action: (() -> Unit)? = null) {
     snackBar.show()
 }
 
-fun Fragment.handleApiError(failure: ResponseStatus.Error, retry: (() -> Unit)? = null) {
-    when {
-        failure.isNetworkError -> {
-            requireView().snackBar("Please check your internet connection!", retry)
+fun Fragment.handleRequestError(failure: ResponseStatus.Failure, action: (() -> Unit)? = null) {
+    when (val exception = failure.exception) {
+        is HttpException -> {
+            when (val errorCode =  exception.code()) {
+                401 -> requireView().snackBar("$errorCode: Bad request!")
+                403 -> requireView().snackBar("$errorCode: Not authorize!")
+                404 -> requireView().snackBar("$errorCode: Resource not found!")
+                500 -> requireView().snackBar("$errorCode: Internal server error!")
+                else -> requireView().snackBar("$errorCode: ${exception.response()?.errorBody()?.string().toString()}")
+            }
+
+            Log.e(TAG, "handleRequestError: ${exception.message}")
         }
-        failure.errorCode == 401 -> {
-//            if (this is LoginFragment) {
-                requireView().snackBar("You've entered incorrect email or password!")
-//            } else {
-//                (this as BaseFragment<*, *, *>).logout()
-//            }
-        }
-        failure.errorCode == 404 -> {
-            requireView().snackBar("The page you're looking couldn't be find!")
-        }
-        failure.errorCode == 500 -> {
-            requireView().snackBar("Internal server error!")
+        is UnknownHostException -> {
+            requireView().snackBar("Unknown host!", action)
+
+            Log.e(TAG, "handleRequestError: ${exception.message}")
         }
         else -> {
-            requireView().snackBar(failure.errorBody?.string().toString())
+            requireView().snackBar("Something when wrong please try again later!", action)
+
+            Log.e(TAG, "handleRequestError: ${exception.message}")
         }
     }
 }
 
+fun TextView.hasEllipsis(): Boolean {
+    var hasLongContent = false
+    val descriptionLayout: Layout? = this.layout
+
+    if (descriptionLayout != null) {
+        val lines: Int = descriptionLayout.lineCount
+        if (lines > 0) {
+            hasLongContent = descriptionLayout.getEllipsisCount(lines - 1) > 0
+        }
+    }
+
+    return hasLongContent
+}
 
 //fun ImageView.showOrHidePassword(passwordField: EditText, passwordField2: EditText? = null) {
 //    setOnClickListener {

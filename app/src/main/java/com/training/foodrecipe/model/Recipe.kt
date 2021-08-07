@@ -1,17 +1,19 @@
 package com.training.foodrecipe.model
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 /****************************************************
  * Created by Indra Muliana (indra.ndra26@gmail.com)
  * On Friday, 02/04/2021 14.59
  * https://gitlab.com/indra-yana
  ****************************************************/
-
+@Parcelize
 @Entity(tableName = "recipes", indices = [Index(value = ["id", "key"], unique = true)])
 data class Recipe(
     @PrimaryKey(autoGenerate = true)
@@ -49,4 +51,4 @@ data class Recipe(
     @ColumnInfo(name = "thumb")
     @SerializedName("thumb")
     val thumb: String
-)
+) : Parcelable

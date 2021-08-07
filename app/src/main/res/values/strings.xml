@@ -27,9 +27,9 @@
     <string name="text_about_repo">https://github.com/indra-yana</string>
     <string name="text_about_phone">+6289 969 57xxx</string>
     <string name="text_about_address">Male | Bandung, West Java</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="text_menu_home_title">Home</string>
     <string name="text_menu_article_title">Article</string>
     <string name="text_menu_favourite_title">Favourite</string>
+    <string name="text_needed_items">Needed Items</string>
 </resources>

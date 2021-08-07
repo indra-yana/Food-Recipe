@@ -1,7 +1,5 @@
 package com.training.foodrecipe.adapter
 
-import com.training.foodrecipe.model.Recipe
-
 
 /****************************************************
  * Created by Indra Muliana (indra.ndra26@gmail.com)
@@ -10,7 +8,7 @@ import com.training.foodrecipe.model.Recipe
  ****************************************************/
 
 interface IOnItemClickListener {
-    fun onItemClicked(data: Recipe)
-    fun onButtonFavouriteClicked(data: Recipe) { }
-    fun onButtonShareClicked(data: Recipe) { }
+    fun onItemClicked(data: Any)
+    fun onButtonFavouriteClicked(data: Any) { }
+    fun onButtonShareClicked(data: Any) { }
 }

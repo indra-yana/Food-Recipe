@@ -11,5 +11,14 @@
         android:id="@+id/homeFragment"
         android:name="com.training.foodrecipe.RecipeFragment"
         android:label="fragment_recipe"
-        tools:layout="@layout/fragment_recipe" />
+        tools:layout="@layout/fragment_recipe" >
+        <action
+            android:id="@+id/action_homeFragment_to_recipeDetailFragment"
+            app:destination="@id/recipeDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeDetailFragment"
+        android:name="com.training.foodrecipe.RecipeDetailFragment"
+        android:label="fragment_detail"
+        tools:layout="@layout/fragment_recipe_detail" />
 </navigation>

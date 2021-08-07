@@ -9,35 +9,37 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.training.foodrecipe.R
 import com.training.foodrecipe.adapter.IOnItemClickListener
-import com.training.foodrecipe.model.Recipe
+import com.training.foodrecipe.model.NeedItem
 
 /****************************************************
  * Created by Indra Muliana (indra.ndra26@gmail.com)
- * On 08/04/2020 10.49
+ * On Friday, 14/05/2021 22.31
+ * https://gitlab.com/indra-yana
  ****************************************************/
-class BannerViewHolder(itemView: View) : BaseViewHolder(itemView) {
+
+class NeededItemViewHolder(itemView: View) : BaseViewHolder(itemView) {
     private var tvTitle: TextView = itemView.findViewById(R.id.tv_item_title_2)
-    private var imgPhoto: ImageView = itemView.findViewById(R.id.iv_item_banner_2)
+    private var imgPhoto: ImageView = itemView.findViewById(R.id.ivNeededItem)
 
     constructor(parent: ViewGroup) : this(
-        LayoutInflater.from(parent.context).inflate(R.layout.item_card_type_2, parent, false)
+        LayoutInflater.from(parent.context).inflate(R.layout.item_neededitem, parent, false)
     )
 
     override fun bindView(viewGroup: ViewGroup): View {
-        return LayoutInflater.from(viewGroup.context).inflate(R.layout.item_card_type_2, viewGroup, false)
+        return LayoutInflater.from(viewGroup.context).inflate(R.layout.item_neededitem, viewGroup, false)
     }
 
     override fun bind(data: Any, listener: IOnItemClickListener?) {
-        val recipe = data as Recipe
+        val needItem = data as NeedItem
 
-        tvTitle.text = recipe.title
+        tvTitle.text = needItem.itemName
         Glide.with(itemView.context)
-            .load(recipe.thumb)
-            .apply(RequestOptions().override(350, 350))
+            .load(needItem.thumbItem)
+            .apply(RequestOptions().override(450, 250))
             .into(imgPhoto)
 
         itemView.setOnClickListener {
-            listener?.onItemClicked(recipe)
+            listener?.onItemClicked(needItem)
         }
     }
 

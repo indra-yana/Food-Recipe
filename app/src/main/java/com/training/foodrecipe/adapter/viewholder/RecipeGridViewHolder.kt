@@ -17,7 +17,7 @@ import com.training.foodrecipe.model.Recipe
  ****************************************************/
 
 class RecipeGridViewHolder(itemView: View) : BaseViewHolder(itemView) {
-    private var imgPhoto: ImageView = itemView.findViewById(R.id.iv_item_thumb)
+    private var imgPhoto: ImageView = itemView.findViewById(R.id.ivDetailThumb)
 
     constructor(parent: ViewGroup) : this(
         LayoutInflater.from(parent.context).inflate(R.layout.item_mode_grid, parent, false)
@@ -27,7 +27,9 @@ class RecipeGridViewHolder(itemView: View) : BaseViewHolder(itemView) {
         return LayoutInflater.from(viewGroup.context).inflate(R.layout.item_mode_grid, viewGroup, false)
     }
 
-    override fun bind(recipe: Recipe, listener: IOnItemClickListener?) {
+    override fun bind(data: Any, listener: IOnItemClickListener?) {
+        val recipe = data as Recipe
+
         Glide.with(itemView.context)
             .load(recipe.thumb)
             .apply(RequestOptions().override(350, 350))

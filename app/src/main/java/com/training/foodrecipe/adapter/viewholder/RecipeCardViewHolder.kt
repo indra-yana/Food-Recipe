@@ -3,7 +3,6 @@ package com.training.foodrecipe.adapter.viewholder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -21,7 +20,7 @@ import com.training.foodrecipe.model.Recipe
 
 class RecipeCardViewHolder(itemView: View) : BaseViewHolder(itemView) {
     private var tvName: TextView = itemView.findViewById(R.id.tv_item_title)
-    private var imgPhoto: ImageView = itemView.findViewById(R.id.iv_item_thumb)
+    private var imgPhoto: ImageView = itemView.findViewById(R.id.ivDetailThumb)
     private var btnFavourite: ImageButton = itemView.findViewById(R.id.btn_set_favourite)
     private var btnShare: ImageButton = itemView.findViewById(R.id.btn_set_share)
 
@@ -33,7 +32,9 @@ class RecipeCardViewHolder(itemView: View) : BaseViewHolder(itemView) {
         return LayoutInflater.from(viewGroup.context).inflate(R.layout.item_mode_card, viewGroup, false)
     }
 
-    override fun bind(recipe: Recipe, listener: IOnItemClickListener?) {
+    override fun bind(data: Any, listener: IOnItemClickListener?) {
+        val recipe = data as Recipe
+
         tvName.text = recipe.title
         Glide.with(itemView.context)
             .load(recipe.thumb)

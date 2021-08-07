@@ -34,7 +34,9 @@ class RecipeListViewHolder(itemView: View) : BaseViewHolder(itemView) {
         return LayoutInflater.from(viewGroup.context).inflate(R.layout.item_mode_list, viewGroup, false)
     }
 
-    override fun bind(recipe: Recipe, listener: IOnItemClickListener?) {
+    override fun bind(data: Any, listener: IOnItemClickListener?) {
+        val recipe = data as Recipe
+
         tvTitle.text = recipe.title
         tvMisc.text = ("${recipe.dificulty ?: "-"} | ${recipe.portion} | ${recipe.times}")
         tvServing.text = recipe.serving

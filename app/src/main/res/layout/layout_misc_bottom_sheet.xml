@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_layout_about"
+    android:orientation="vertical"
+    app:behavior_hideable="false"
+    android:id="@+id/layoutBottomSheetContainer"
+    app:layout_behavior="@string/bottom_sheet_behavior">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@drawable/bg_layout_about_header"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/_8sdp">
+
+        <TextView
+            android:id="@+id/tvBottomSheetTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:fontFamily="@font/poppins_light"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="@color/color_text_white"
+            android:textSize="@dimen/_14ssp"
+            tools:text="@string/text_lorem_ipsum_title" />
+
+        <ImageButton
+            android:id="@+id/btnBottomSheetClose"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_6sdp"
+            android:background="@drawable/bg_rounded_button_dark"
+            android:contentDescription="@string/app_name"
+            android:foreground="?selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_clear"
+            android:tint="@color/color_text_white" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvRecipeDetailMisc"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:padding="@dimen/_4sdp"
+        android:scrollbars="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_mode_text" />
+
+</LinearLayout>

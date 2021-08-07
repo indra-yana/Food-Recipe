@@ -1,16 +1,12 @@
 package com.training.foodrecipe.adapter
 
-import android.util.Log
 import android.view.ViewGroup
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.training.foodrecipe.adapter.viewholder.BaseViewHolder
 import com.training.foodrecipe.adapter.viewholder.RecipeCardViewHolder
 import com.training.foodrecipe.adapter.viewholder.RecipeGridViewHolder
 import com.training.foodrecipe.adapter.viewholder.RecipeListViewHolder
 import com.training.foodrecipe.model.Recipe
-import kotlin.math.log
 
 
 /****************************************************

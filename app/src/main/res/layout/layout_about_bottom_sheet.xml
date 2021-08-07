@@ -35,7 +35,7 @@
             android:textSize="@dimen/_14ssp" />
 
         <ImageButton
-            android:id="@+id/btn_close"
+            android:id="@+id/btnBottomSheetClose"
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
             android:layout_marginStart="@dimen/_6sdp"

@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.children
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -78,7 +79,10 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        (activity as MainActivity).showFabAction()
+        (activity as MainActivity).apply {
+            showFabAction()
+            showBottomNavigation()
+        }
 
         buildRecyclerView()
         buildBanner()
@@ -136,18 +140,29 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
     private fun buildRecipeAdapter() {
         recipeAdapter = RecipeAdapter().apply {
             iOnItemClickListener = object : IOnItemClickListener {
-                override fun onItemClicked(data: Recipe) {
-                    Toast.makeText(requireContext(), "${data.title} Item clicked!", Toast.LENGTH_SHORT).show()
+                override fun onItemClicked(data: Any) {
+                    val recipe = data as Recipe
+                    val bundle = Bundle().apply {
+                        putString("args", "This is my args!")
+                        putParcelable("recipe", recipe)
+                    }
+
+                    findNavController().navigate(R.id.action_homeFragment_to_recipeDetailFragment, bundle)
+
                 }
 
-                override fun onButtonFavouriteClicked(data: Recipe) {
+                override fun onButtonFavouriteClicked(data: Any) {
                     super.onButtonFavouriteClicked(data)
-                    Toast.makeText(requireContext(), "${data.title} Added to favourite!", Toast.LENGTH_SHORT).show()
+
+                    val recipe = data as Recipe
+                    Toast.makeText(requireContext(), "${recipe.title} Added to favourite!", Toast.LENGTH_SHORT).show()
                 }
 
-                override fun onButtonShareClicked(data: Recipe) {
+                override fun onButtonShareClicked(data: Any) {
                     super.onButtonShareClicked(data)
-                    Toast.makeText(requireContext(), "${data.title} Shared to social media!", Toast.LENGTH_SHORT).show()
+
+                    val recipe = data as Recipe
+                    Toast.makeText(requireContext(), "${recipe.title} Shared to social media!", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -314,8 +329,10 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
     private fun buildBannerAdapter() {
         bannerAdapter = BannerAdapter().apply {
             iOnItemClickListener = object : IOnItemClickListener {
-                override fun onItemClicked(data: Recipe) {
-                    Toast.makeText(requireContext(), "${data.title} Item clicked!", Toast.LENGTH_SHORT).show()
+                override fun onItemClicked(data: Any) {
+                    val recipe = data as Recipe
+
+                    Toast.makeText(requireContext(), "${recipe.title} Item clicked!", Toast.LENGTH_SHORT).show()
                 }
             }
         }

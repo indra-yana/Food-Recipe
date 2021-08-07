@@ -17,7 +17,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/iv_item_thumb"
+            android:id="@+id/ivDetailThumb"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_140sdp"
             android:layout_marginBottom="@dimen/_4sdp"
@@ -32,7 +32,7 @@
             android:layout_height="@dimen/_30sdp"
             android:background="@drawable/bg_fading_edge_top"
             android:visibility="visible"
-            app:layout_constraintTop_toTopOf="@+id/iv_item_thumb" />
+            app:layout_constraintTop_toTopOf="@+id/ivDetailThumb" />
 
         <View
             android:id="@+id/viewFadingEdgeBottom"
@@ -40,7 +40,7 @@
             android:layout_height="@dimen/_30sdp"
             android:background="@drawable/bg_fading_edge_bottom"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_item_thumb" />
+            app:layout_constraintBottom_toBottomOf="@+id/ivDetailThumb" />
 
         <TextView
             android:id="@+id/tv_item_title"
