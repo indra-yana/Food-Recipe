@@ -37,7 +37,7 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
 
     // Adapter
     private lateinit var neededItemAdapter: NeededItemAdapter
-    private lateinit var detailMiscAdapter: SimpleTextAdapter
+    private lateinit var detailTodoAdapter: SimpleTextAdapter
 
     // Data
     private lateinit var recipe: Recipe
@@ -77,7 +77,7 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
 
         buildNeededItemAdapter()
         buildNeededItemRecyclerView()
-        buildMiscAdapter()
+        buildTodoAdapter()
         updateUI()
     }
 
@@ -156,11 +156,11 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
                 }
 
                 btnIngredients.setOnClickListener {
-                    openBottomSheetMisc("Ingredients", this)
+                    openTodoBottomSheet("Ingredients", this)
                 }
 
                 btnSteps.setOnClickListener {
-                    openBottomSheetMisc("Steps", this)
+                    openTodoBottomSheet("Steps", this)
                 }
             }
         }
@@ -187,23 +187,23 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    private fun openBottomSheetMisc(title: String, data: Any) {
+    private fun openTodoBottomSheet(title: String, data: Any) {
         val recipeDetail = data as RecipeDetail
         val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
-        val view = LayoutInflater.from(requireContext()).inflate(R.layout.layout_misc_bottom_sheet, requireView().findViewById<LinearLayout>(R.id.layoutBottomSheetContainer), false)
+        val view = LayoutInflater.from(requireContext()).inflate(R.layout.layout_todo_detail_recipe, requireView().findViewById<LinearLayout>(R.id.layoutBottomSheetContainer), false)
 
-        view?.apply{
+        view?.apply {
             minimumHeight = Resources.getSystem().displayMetrics.heightPixels
 
             (findViewById<ImageButton>(R.id.btnBottomSheetClose)).setOnClickListener { bottomSheetDialog.dismiss() }
             (findViewById<TextView>(R.id.tvBottomSheetTitle)).text = title
 
-            buildMiscRecyclerView(findViewById(R.id.rvRecipeDetailMisc))
+            buildTodoRecyclerView(findViewById(R.id.rvRecipeDetailTodo))
 
             if (title == "Ingredients") {
-                detailMiscAdapter.bindData(recipeDetail.ingredient)
+                detailTodoAdapter.bindData(recipeDetail.ingredient)
             } else if (title == "Steps") {
-                detailMiscAdapter.bindData(recipeDetail.step)
+                detailTodoAdapter.bindData(recipeDetail.step)
             }
         }
 
@@ -218,9 +218,9 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
         bottomSheetDialog.show()
     }
 
-    private fun buildMiscAdapter() {
-        detailMiscAdapter = SimpleTextAdapter().apply {
-            iOnItemClickListener = object : IOnItemClickListener{
+    private fun buildTodoAdapter() {
+        detailTodoAdapter = SimpleTextAdapter().apply {
+            iOnItemClickListener = object : IOnItemClickListener {
                 override fun onItemClicked(data: Any) {
                     // TODO: Not yet implemented
                 }
@@ -228,9 +228,9 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
         }
     }
 
-    private fun buildMiscRecyclerView(recyclerView: RecyclerView) {
+    private fun buildTodoRecyclerView(recyclerView: RecyclerView) {
         recyclerView.setHasFixedSize(true)
-        recyclerView.adapter = detailMiscAdapter
+        recyclerView.adapter = detailTodoAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
 }

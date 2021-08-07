@@ -25,6 +25,7 @@ import com.training.foodrecipe.databinding.FragmentRecipeBinding
 import com.training.foodrecipe.datasource.remote.IRecipeApi
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.helper.OverlapSliderTransformation
+import com.training.foodrecipe.helper.handleRequestError
 import com.training.foodrecipe.model.Recipe
 import com.training.foodrecipe.repository.RecipeRepository
 import com.training.foodrecipe.viewmodel.RecipeViewModel
@@ -148,7 +149,6 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
                     }
 
                     findNavController().navigate(R.id.action_homeFragment_to_recipeDetailFragment, bundle)
-
                 }
 
                 override fun onButtonFavouriteClicked(data: Any) {
@@ -211,7 +211,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
             isNetworkError = it is ResponseStatus.Failure
 
             toggleLoading(isLoading)
-            toggleNetworkError(isNetworkError)
+//            toggleNetworkError(isNetworkError)
 
             when (it) {
                 is ResponseStatus.Loading -> {
@@ -224,6 +224,10 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
                     Log.d(TAG, "getRecipeByPage: State is success! ${it.value.recipes}")
                 }
                 is ResponseStatus.Failure -> {
+                    handleRequestError(it) {
+                        viewModel.getRecipeByPage(nextPage)
+                    }
+
                     Log.d(TAG, "getRecipeByPage:State is failure! ${it.exception}")
                 }
                 else -> {
@@ -240,7 +244,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
             isNetworkError = it is ResponseStatus.Failure
 
             toggleLoading(isLoading)
-            toggleNetworkError(isNetworkError)
+//            toggleNetworkError(isNetworkError)
 
             when (it) {
                 is ResponseStatus.Loading -> {
@@ -253,6 +257,10 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
                     Log.d(TAG, "getLatestRecipe: State is success! ${it.value.recipes}")
                 }
                 is ResponseStatus.Failure -> {
+                    handleRequestError(it) {
+                        viewModel.getLatestRecipe()
+                    }
+
                     Log.d(TAG, "getLatestRecipe: State is failure! ${it.exception}")
                 }
                 else -> {

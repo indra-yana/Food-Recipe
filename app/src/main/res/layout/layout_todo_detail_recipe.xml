@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutBottomSheetContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_layout_about"
     android:orientation="vertical"
     app:behavior_hideable="false"
-    android:id="@+id/layoutBottomSheetContainer"
     app:layout_behavior="@string/bottom_sheet_behavior">
 
     <LinearLayout
@@ -48,7 +48,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvRecipeDetailMisc"
+        android:id="@+id/rvRecipeDetailTodo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"

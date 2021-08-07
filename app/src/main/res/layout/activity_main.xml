@@ -83,9 +83,10 @@
         android:focusable="true"
         android:src="@drawable/ic_create"
         app:backgroundTint="@color/colorPrimary"
-        app:fabSize="normal"
+        app:fabCustomSize="@dimen/_40sdp"
         app:layout_anchor="@id/bottomNavBar"
         app:layout_anchorGravity="top|end"
+        app:layout_behavior=".helper.BottomNavigationFABBehavior"
         app:tint="@color/color_text_white"
         app:useCompatPadding="true" />
 
@@ -105,10 +106,11 @@
         app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
         app:itemTextAppearanceInactive="@style/BottomNavigationView.Inactive"
         app:itemTextColor="@drawable/selector_bottom_nav_color"
-        app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
+        app:layout_behavior=".helper.BottomNavigationBehavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_nav_menu" />
 
+    <!--    app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"-->
     <!-- BOTTOM NAVIGATION -->
     <!--    <com.gauravk.bubblenavigation.BubbleNavigationLinearView-->
     <!--        android:id="@+id/bottomNavBar"-->
