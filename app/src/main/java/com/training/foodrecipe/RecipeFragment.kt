@@ -91,8 +91,6 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
         getLatestRecipe()
         getRecipeByPage()
 
-        toggleRetry()
-
         with(viewBinding) {
             etInputSearch.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -197,7 +195,6 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
                     // Scroll up
                     if (recyclerView.canScrollVertically(-1)) {
                         isNetworkError = false
-                        toggleNetworkError(isNetworkError)
                     }
                 }
             })
@@ -211,7 +208,6 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
             isNetworkError = it is ResponseStatus.Failure
 
             toggleLoading(isLoading)
-//            toggleNetworkError(isNetworkError)
 
             when (it) {
                 is ResponseStatus.Loading -> {
@@ -244,7 +240,6 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
             isNetworkError = it is ResponseStatus.Failure
 
             toggleLoading(isLoading)
-//            toggleNetworkError(isNetworkError)
 
             when (it) {
                 is ResponseStatus.Loading -> {
@@ -272,17 +267,6 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
 
     private fun toggleLoading(show: Boolean) {
         viewBinding.pbRecipeList.visibility = if (show) View.VISIBLE else View.GONE
-    }
-
-    private fun toggleNetworkError(show: Boolean) {
-        viewBinding.networkStatusContainer.visibility = if (show) View.VISIBLE else View.GONE
-    }
-
-    private fun toggleRetry() {
-        viewBinding.btnRetryNetwork.setOnClickListener { v ->
-            viewModel.getRecipeByPage(nextPage)
-            viewModel.getLatestRecipe()
-        }
     }
 
     private fun setListMode() {
