@@ -8,7 +8,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -45,7 +48,6 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
 
     // Indicator state
     private var isLoading = false
-    private var isNetworkError = false
 
     /**
      * Init all variable here that need once time initialization
@@ -79,6 +81,10 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
         buildNeededItemRecyclerView()
         buildTodoAdapter()
         updateUI()
+
+        viewBinding.srlRefresh.setOnRefreshListener {
+            viewModel.getRecipeDetail(recipe.key)
+        }
     }
 
     override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRecipeDetailBinding {
@@ -96,10 +102,8 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
     private fun getRecipeDetail() {
         viewModel.recipeDetail.observe(viewLifecycleOwner, Observer {
             isLoading = it is ResponseStatus.Loading
-            isNetworkError = it is ResponseStatus.Failure
 
-//            toggleLoading(isLoading)
-//            toggleNetworkError(isNetworkError)
+            toggleLoading(isLoading)
 
             when (it) {
                 is ResponseStatus.Loading -> {
@@ -143,7 +147,7 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
 
                 neededItemAdapter.bindData(needItem)
 
-                tvReadMore.setOnClickListener { v ->
+                tvReadMore.setOnClickListener {
                     if (tvReadMore.text.toString() == "Read More") {
                         tvItemDescription.maxLines = Int.MAX_VALUE
                         tvItemDescription.ellipsize = null
@@ -232,5 +236,9 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = detailTodoAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    private fun toggleLoading(isLoading: Boolean) {
+        viewBinding.srlRefresh.isRefreshing = isLoading
     }
 }

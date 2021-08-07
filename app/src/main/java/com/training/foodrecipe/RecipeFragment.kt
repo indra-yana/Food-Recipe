@@ -111,6 +111,10 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
                 showPopupMenu(it)
             }
 
+            srlRefresh.setOnRefreshListener {
+                viewModel.getLatestRecipe()
+                viewModel.getRecipeByPage(nextPage)
+            }
         }
     }
 
@@ -265,8 +269,8 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
         })
     }
 
-    private fun toggleLoading(show: Boolean) {
-        viewBinding.pbRecipeList.visibility = if (show) View.VISIBLE else View.GONE
+    private fun toggleLoading(isLoading: Boolean) {
+        viewBinding.srlRefresh.isRefreshing = isLoading
     }
 
     private fun setListMode() {
