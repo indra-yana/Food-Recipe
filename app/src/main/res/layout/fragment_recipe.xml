@@ -7,138 +7,159 @@
     android:layout_height="match_parent"
     tools:context=".RecipeFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmerFramelayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
 
         <LinearLayout
-            android:id="@+id/layoutSearch"
+            android:id="@+id/shimmerPlaceholder"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_40sdp"
-            android:layout_marginEnd="@dimen/_12sdp"
-            android:background="@drawable/bg_item_2"
-            android:elevation="@dimen/_6sdp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingStart="@dimen/_10sdp"
-            android:paddingEnd="@dimen/_10sdp"
-            app:layout_constraintTop_toTopOf="@+id/layoutHeader">
+            android:layout_height="match_parent"
+            android:elevation="@dimen/_5sdp"
+            android:visibility="visible">
 
-            <ImageView
-                android:id="@+id/ivSearch"
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
-                android:contentDescription="@string/app_name"
-                android:src="@drawable/ic_search"
-                app:tint="@color/colorIconGrey60" />
+            <include layout="@layout/fragment_recipe_placeholder" />
 
-            <EditText
-                android:id="@+id/etInputSearch"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_30sdp"
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mainRecipeContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/layoutSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_12sdp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:fontFamily="@font/poppins_regular"
-                android:hint="@string/text_search"
-                android:imeOptions="actionDone"
-                android:importantForAutofill="no"
-                android:includeFontPadding="false"
-                android:inputType="text"
-                android:textColor="@color/colorTextBlack100"
-                android:textColorHint="@color/colorTextGrey40"
-                android:textSize="@dimen/_13ssp" />
+                android:layout_marginTop="@dimen/_40sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:background="@drawable/bg_item_2"
+                android:elevation="@dimen/_6sdp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                app:layout_constraintTop_toTopOf="@+id/layoutHeader">
 
-            <ImageView
-                android:id="@+id/ivClearInputSearch"
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
-                android:contentDescription="@string/app_name"
-                android:src="@drawable/ic_clear"
-                android:visibility="gone"
-                app:tint="@color/colorIconGrey60" />
+                <ImageView
+                    android:id="@+id/ivSearch"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_search"
+                    app:tint="@color/colorIconGrey60" />
 
-        </LinearLayout>
+                <EditText
+                    android:id="@+id/etInputSearch"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:fontFamily="@font/poppins_regular"
+                    android:hint="@string/text_search"
+                    android:imeOptions="actionDone"
+                    android:importantForAutofill="no"
+                    android:includeFontPadding="false"
+                    android:inputType="text"
+                    android:textColor="@color/colorTextBlack100"
+                    android:textColorHint="@color/colorTextGrey40"
+                    android:textSize="@dimen/_13ssp" />
 
-        <include
-            android:id="@+id/layoutHeader"
-            layout="@layout/layout_header" />
+                <ImageView
+                    android:id="@+id/ivClearInputSearch"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_clear"
+                    android:visibility="gone"
+                    app:tint="@color/colorIconGrey60" />
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/vp2Banner"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_110sdp"
-            android:layout_marginTop="@dimen/_2sdp"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:elevation="@dimen/_5sdp"
-            android:paddingTop="@dimen/_3sdp"
-            android:paddingBottom="@dimen/_3sdp"
-            app:layout_constraintTop_toBottomOf="@id/layoutSearch" />
+            </LinearLayout>
 
-        <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
-            android:id="@+id/sliderIndicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:dampingRatio="0.5"
-            app:dotsColor="@color/colorPrimary"
-            app:dotsCornerRadius="@dimen/_100sdp"
-            app:dotsSize="@dimen/_8sdp"
-            app:dotsSpacing="@dimen/_2sdp"
-            app:dotsStrokeColor="@color/colorPrimaryGrey60"
-            app:dotsStrokeWidth="@dimen/_1sdp"
-            app:layout_constraintBottom_toTopOf="@+id/rvRecipe"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vp2Banner"
-            app:stiffness="300" />
+            <include
+                android:id="@+id/layoutHeader"
+                layout="@layout/layout_header" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvRecipe"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/_2sdp"
-            android:clipToPadding="false"
-            android:elevation="@dimen/_5sdp"
-            android:orientation="vertical"
-            android:paddingStart="@dimen/_4sdp"
-            android:paddingTop="@dimen/_4sdp"
-            android:paddingEnd="@dimen/_4sdp"
-            android:paddingBottom="?actionBarSize"
-            android:visibility="visible"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sliderIndicator"
-            tools:listitem="@layout/item_mode_list" />
-
-        <!-- LAYOUT MENU -->
-        <LinearLayout
-            android:id="@+id/layoutMenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_10sdp"
-            android:elevation="@dimen/_5sdp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageButton
-                android:id="@+id/ivMenu"
-                android:layout_width="@dimen/_25sdp"
-                android:layout_height="@dimen/_25sdp"
-                android:background="@android:color/transparent"
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vp2Banner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_110sdp"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:clipChildren="false"
                 android:clipToPadding="false"
-                android:contentDescription="@string/app_name"
-                android:foreground="?selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_more_vert_black_24dp"
-                app:tint="@color/colorPrimaryWhite100" />
+                android:elevation="@dimen/_5sdp"
+                android:paddingTop="@dimen/_3sdp"
+                android:paddingBottom="@dimen/_3sdp"
+                app:layout_constraintTop_toBottomOf="@id/layoutSearch" />
 
-        </LinearLayout>
+            <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+                android:id="@+id/sliderIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:dampingRatio="0.5"
+                app:dotsColor="@color/colorPrimary"
+                app:dotsCornerRadius="@dimen/_100sdp"
+                app:dotsSize="@dimen/_8sdp"
+                app:dotsSpacing="@dimen/_2sdp"
+                app:dotsStrokeColor="@color/colorPrimaryGrey60"
+                app:dotsStrokeWidth="@dimen/_1sdp"
+                app:layout_constraintBottom_toTopOf="@+id/rvRecipe"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vp2Banner"
+                app:stiffness="300" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvRecipe"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:clipToPadding="false"
+                android:elevation="@dimen/_5sdp"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/_4sdp"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingEnd="@dimen/_4sdp"
+                android:paddingBottom="?actionBarSize"
+                android:visibility="visible"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sliderIndicator"
+                tools:listitem="@layout/item_mode_list" />
+
+            <!-- LAYOUT MENU -->
+            <LinearLayout
+                android:id="@+id/layoutMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:elevation="@dimen/_5sdp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageButton
+                    android:id="@+id/ivMenu"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:background="@android:color/transparent"
+                    android:clipToPadding="false"
+                    android:contentDescription="@string/app_name"
+                    android:foreground="?selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_more_vert_black_24dp"
+                    app:tint="@color/colorPrimaryWhite100" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

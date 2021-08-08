@@ -49,6 +49,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
     // Indicator state
     private var isLoading = false
     private var isNetworkError = false
+    private var isRequestNextPage = false
 
     // Api paging
     private var initialPage = 1
@@ -112,6 +113,10 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
             }
 
             srlRefresh.setOnRefreshListener {
+                isLoading = false
+                isNetworkError = false
+                isRequestNextPage = false
+
                 viewModel.getLatestRecipe()
                 viewModel.getRecipeByPage(nextPage)
             }
@@ -177,8 +182,21 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
 
             rvRecipe.setHasFixedSize(true)
             rvRecipe.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    /*
+                    * TODO: Not implemented yet
+                    when(recyclerView.scrollState) {
+                        RecyclerView.SCROLL_STATE_IDLE -> Log.d(TAG, "onScrollStateChanged: State is SCROLL_STATE_IDLE")
+                        RecyclerView.SCROLL_STATE_DRAGGING -> Log.d(TAG, "onScrollStateChanged: State is SCROLL_STATE_DRAGGING")
+                        RecyclerView.SCROLL_STATE_SETTLING -> Log.d(TAG, "onScrollStateChanged: State is SCROLL_STATE_SETTLING")
+                    }
+                     */
+                }
+
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
+
                     val layoutManager = recyclerView.layoutManager as LinearLayoutManager
                     val visibleItem = layoutManager.findFirstCompletelyVisibleItemPosition()
 
@@ -189,8 +207,13 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
 
                     // Scroll down
                     if (!recyclerView.canScrollVertically(1)) {
-                        if (!isLoading && !isNetworkError) {
-                            nextPage++
+                        if (!isLoading) {
+                            isRequestNextPage = true
+
+                            if (!isNetworkError) {
+                                nextPage++
+                            }
+
                             viewModel.getRecipeByPage(nextPage)
                             Log.d(TAG, "onScrolled: nextPage: $nextPage")
                         }
@@ -270,6 +293,18 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
 
     private fun toggleLoading(isLoading: Boolean) {
         viewBinding.srlRefresh.isRefreshing = isLoading
+        viewBinding.shimmerFramelayout.showShimmer((isLoading || isNetworkError) && !isRequestNextPage)
+
+        if ((isLoading || isNetworkError) && !isRequestNextPage) {
+            viewBinding.shimmerPlaceholder.visibility = View.VISIBLE
+            viewBinding.mainRecipeContainer.visibility = View.GONE
+        } else {
+            viewBinding.shimmerFramelayout.stopShimmer()
+            viewBinding.shimmerFramelayout.hideShimmer()
+
+            viewBinding.shimmerPlaceholder.visibility = View.GONE
+            viewBinding.mainRecipeContainer.visibility = View.VISIBLE
+        }
     }
 
     private fun setListMode() {

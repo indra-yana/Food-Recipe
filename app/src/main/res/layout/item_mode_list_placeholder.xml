@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="@dimen/_5sdp"
+    android:padding="@dimen/_4sdp">
+
+    <View
+        android:id="@+id/viewSupporterExt"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_5sdp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <View
+        android:id="@+id/viewBackgroundExt"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@drawable/bg_item_2"
+        android:paddingBottom="@dimen/_10sdp"
+        app:layout_constraintBottom_toTopOf="@+id/viewSupporterExt"
+        app:layout_constraintTop_toTopOf="@+id/ivItemThumbnailExt" />
+
+    <View
+        android:id="@+id/ivItemThumbnailExt"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_60sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:background="@color/colorPrimaryGrey40"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/tvItemTitleExt"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:background="@color/colorPrimaryGrey40"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivItemThumbnailExt"
+        app:layout_constraintTop_toTopOf="@+id/ivItemThumbnailExt"
+        tools:text="@string/text_lorem_ipsum_title" />
+
+    <!-- Difficulty | Portion | times   -->
+    <View
+        android:id="@+id/tvMiscExt"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_3sdp"
+        android:background="@color/colorPrimaryGrey40"
+        app:layout_constraintEnd_toEndOf="@id/tvItemTitleExt"
+        app:layout_constraintStart_toStartOf="@id/tvItemTitleExt"
+        app:layout_constraintTop_toBottomOf="@id/tvItemTitleExt"
+        tools:text="@string/text_lorem_ipsum_description" />
+
+    <View
+        android:id="@+id/tvServingExt"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_3sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:background="@color/colorPrimaryGrey40"
+        app:layout_constraintBottom_toTopOf="@id/viewSupporterExt"
+        app:layout_constraintEnd_toEndOf="@+id/tvMiscExt"
+        app:layout_constraintStart_toStartOf="@id/tvMiscExt"
+        app:layout_constraintTop_toBottomOf="@id/tvMiscExt"
+        tools:text="@string/text_lorem_ipsum_description" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/viewBackgroundExt"
+        app:layout_constraintEnd_toEndOf="@+id/ivItemThumbnailExt"
+        app:layout_constraintStart_toStartOf="@+id/ivItemThumbnailExt"
+        app:layout_constraintTop_toBottomOf="@+id/ivItemThumbnailExt">
+
+        <View
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_6sdp"
+            android:background="@drawable/bg_rounded_button_dark"
+            android:tint="@color/colorIconGrey80" />
+
+        <View
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_6sdp"
+            android:background="@drawable/bg_rounded_button_dark"
+            android:tint="@color/colorIconGrey80" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
