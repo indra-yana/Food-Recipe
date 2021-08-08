@@ -3,11 +3,13 @@ package com.training.foodrecipe.helper
 import android.animation.ValueAnimator
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
+import androidx.core.view.isVisible
 import com.google.android.material.snackbar.Snackbar
 import kotlin.math.max
 import kotlin.math.min
@@ -115,6 +117,11 @@ class BottomNavigationBehavior<V : View>(context: Context, attrs: AttributeSet) 
 
     private fun updateSnackbar(child: View, snackbarLayout: Snackbar.SnackbarLayout) {
         if (snackbarLayout.layoutParams is CoordinatorLayout.LayoutParams) {
+            if (!child.isVisible) {
+                Log.d(TAG, "updateSnackbar: View is invisible")
+                return
+            }
+
             val params = snackbarLayout.layoutParams as CoordinatorLayout.LayoutParams
 
             params.anchorId = child.id
