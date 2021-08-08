@@ -48,6 +48,7 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
 
     // Indicator state
     private var isLoading = false
+    private var isNetworkError = false
 
     /**
      * Init all variable here that need once time initialization
@@ -102,6 +103,7 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
     private fun getRecipeDetail() {
         viewModel.recipeDetail.observe(viewLifecycleOwner, Observer {
             isLoading = it is ResponseStatus.Loading
+            isNetworkError = it is ResponseStatus.Failure
 
             toggleLoading(isLoading)
 
@@ -240,5 +242,17 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
 
     private fun toggleLoading(isLoading: Boolean) {
         viewBinding.srlRefresh.isRefreshing = isLoading
+        viewBinding.shimmerFramelayout.showShimmer(isLoading || isNetworkError)
+
+        if (isLoading || isNetworkError) {
+            viewBinding.shimmerRecipeDetailPlaceholder.visibility = View.VISIBLE
+            viewBinding.mainRecipeDetailContainer.visibility = View.GONE
+        } else {
+            viewBinding.shimmerFramelayout.stopShimmer()
+            viewBinding.shimmerFramelayout.hideShimmer()
+
+            viewBinding.shimmerRecipeDetailPlaceholder.visibility = View.GONE
+            viewBinding.mainRecipeDetailContainer.visibility = View.VISIBLE
+        }
     }
 }
