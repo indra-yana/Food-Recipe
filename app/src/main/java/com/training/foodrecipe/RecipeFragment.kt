@@ -1,5 +1,7 @@
 package com.training.foodrecipe
 
+import android.annotation.SuppressLint
+import android.content.res.Resources
 import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
@@ -8,7 +10,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.*
+import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.children
 import androidx.lifecycle.Observer
@@ -17,6 +20,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.training.foodrecipe.adapter.BannerAdapter
 import com.training.foodrecipe.adapter.IOnItemClickListener
 import com.training.foodrecipe.adapter.RecipeAdapter
@@ -40,6 +45,8 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
     companion object {
         private val TAG = RecipeFragment::class.java.simpleName
     }
+
+    private var bottomSheetAbout: BottomSheetDialog? = null
 
     // Adapter
     private lateinit var recipeAdapter: RecipeAdapter
@@ -349,6 +356,10 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
                         Toast.makeText(view.context, "Changed to grid", Toast.LENGTH_SHORT).show()
                         return@OnMenuItemClickListener true
                     }
+                    R.id.menu_act_about -> {
+                        openBottomSheetAbout()
+                        return@OnMenuItemClickListener true
+                    }
                 }
                 return@OnMenuItemClickListener false
             })
@@ -406,4 +417,24 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
 
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun openBottomSheetAbout() {
+        if (bottomSheetAbout == null) {
+            val view: View = LayoutInflater.from(requireContext()).inflate(R.layout.layout_about_bottom_sheet, requireView().findViewById<LinearLayout>(R.id.layoutAboutContainer), true) //View.inflate(this, R.layout.layout_about_bottom_sheet, findViewById(R.id.layout_about_container))
+            with(view) {
+                (findViewById<ImageButton>(R.id.btnBottomSheetClose)).setOnClickListener { bottomSheetAbout?.dismiss() }
+                (findViewById<ImageView>(R.id.ivAbout)).setImageDrawable(getDrawable(requireContext(), R.drawable.ic_user_smile))
+                minimumHeight = Resources.getSystem().displayMetrics.heightPixels
+            }
+
+            bottomSheetAbout = BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
+            bottomSheetAbout?.setContentView(view)
+
+            val bottomSheetBehavior = BottomSheetBehavior.from(view.parent as View)
+            bottomSheetBehavior.peekHeight = BottomSheetBehavior.PEEK_HEIGHT_AUTO
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_SETTLING
+        }
+
+        bottomSheetAbout?.show()
+    }
 }

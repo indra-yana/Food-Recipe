@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout_about_container"
+    android:id="@+id/layoutAboutContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_layout_about"
@@ -20,19 +20,19 @@
         android:padding="@dimen/_6sdp">
 
         <TextView
-            android:id="@+id/tvItemTitle"
+            android:id="@+id/tvBottomSheetTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_33sdp"
+            android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_8sdp"
             android:layout_weight="1"
             android:ellipsize="end"
+            android:fontFamily="@font/poppins_light"
             android:includeFontPadding="false"
             android:maxLines="1"
-            android:text="@string/text_menu_about"
-            android:textAlignment="center"
-            android:textColor="@color/colorPrimaryWhite100"
-            android:textSize="@dimen/_14ssp" />
+            android:textColor="@color/colorTextWhite100"
+            android:textSize="@dimen/_14ssp"
+            android:text="@string/text_menu_about"/>
 
         <ImageButton
             android:id="@+id/btnBottomSheetClose"
@@ -46,21 +46,6 @@
             android:src="@drawable/ic_clear"
             android:tint="@color/colorPrimaryWhite100" />
 
-        <!--                <Button-->
-        <!--                    android:id="@+id/btn_close"-->
-        <!--                    style="@style/Widget.App.Button.IconOnly"-->
-        <!--                    android:layout_width="@dimen/_30sdp"-->
-        <!--                    android:layout_height="@dimen/_30sdp"-->
-        <!--                    android:layout_marginEnd="@dimen/_8sdp"-->
-        <!--                    android:foreground="?selectableItemBackground"-->
-        <!--                    app:backgroundTint="@color/colorPrimaryDarkTransparent"-->
-        <!--                    app:icon="@drawable/ic_clear"-->
-        <!--                    app:iconSize="@dimen/_18sdp"-->
-        <!--                    app:iconTint="@color/color_text_white"-->
-        <!--                    app:layout_constraintStart_toStartOf="parent"-->
-        <!--                    app:layout_constraintTop_toTopOf="parent"-->
-        <!--                    app:tint="@color/color_text_white" />-->
-
     </LinearLayout>
 
     <LinearLayout
@@ -71,7 +56,7 @@
         android:padding="@dimen/_8sdp">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/iv_about_photo"
+            android:id="@+id/ivAbout"
             android:layout_width="@dimen/_80sdp"
             android:layout_height="@dimen/_80sdp"
             android:layout_margin="@dimen/_6sdp"
@@ -94,7 +79,7 @@
                 android:includeFontPadding="false"
                 android:maxLines="1"
                 android:text="@string/text_about_name"
-                android:textColor="@color/colorPrimaryGrey80"
+                android:textColor="@color/colorTextBlack100"
                 android:textSize="@dimen/_16ssp"
                 android:textStyle="bold" />
 
@@ -105,7 +90,7 @@
                 android:includeFontPadding="false"
                 android:maxLines="1"
                 android:text="@string/text_about_address"
-                android:textColor="@color/colorPrimaryGrey80"
+                android:textColor="@color/colorTextBlack100"
                 android:textSize="@dimen/_14ssp" />
 
         </LinearLayout>
@@ -115,7 +100,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1sdp"
-        android:background="@color/colorPrimaryGrey80" />
+        android:background="@color/colorPrimaryGrey40" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -144,7 +129,7 @@
             android:includeFontPadding="false"
             android:maxLines="1"
             android:text="@string/text_about_email"
-            android:textColor="@color/colorPrimaryGrey80"
+            android:textColor="@color/colorTextBlack100"
             android:textSize="@dimen/_12ssp" />
 
     </LinearLayout>
@@ -176,7 +161,7 @@
             android:includeFontPadding="false"
             android:maxLines="1"
             android:text="@string/text_about_phone"
-            android:textColor="@color/colorPrimaryGrey80"
+            android:textColor="@color/colorTextBlack100"
             android:textSize="@dimen/_12ssp" />
 
     </LinearLayout>
@@ -208,7 +193,7 @@
             android:includeFontPadding="false"
             android:maxLines="1"
             android:text="@string/text_about_repo"
-            android:textColor="@color/colorPrimaryGrey80"
+            android:textColor="@color/colorTextBlack100"
             android:textSize="@dimen/_12ssp" />
 
     </LinearLayout>
