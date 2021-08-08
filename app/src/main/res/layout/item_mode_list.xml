@@ -34,7 +34,7 @@
         android:src="@drawable/ic_launcher_background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:riv_border_color="@color/color_text_black_80"
+        app:riv_border_color="@color/colorPrimaryGrey40"
         app:riv_border_width="@dimen/_2sdp"
         app:riv_corner_radius="@dimen/_4sdp"
         tools:src="@tools:sample/avatars" />
@@ -50,7 +50,7 @@
         android:fontFamily="@font/poppins_semibold"
         android:includeFontPadding="false"
         android:maxLines="2"
-        android:textColor="@color/color_text_black_80"
+        android:textColor="@color/colorTextBlack100"
         android:textSize="@dimen/_13ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ivItemThumbnail"
@@ -67,7 +67,7 @@
         android:fontFamily="@font/poppins_regular"
         android:includeFontPadding="false"
         android:maxLines="1"
-        android:textColor="@color/color_text_black_80"
+        android:textColor="@color/colorTextBlack100"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintEnd_toEndOf="@id/tvItemTitle"
         app:layout_constraintStart_toStartOf="@id/tvItemTitle"
@@ -83,7 +83,7 @@
         android:fontFamily="@font/poppins_regular"
         android:includeFontPadding="false"
         android:maxLines="1"
-        android:textColor="@color/color_text_black_80"
+        android:textColor="@color/colorTextBlack100"
         android:textSize="@dimen/_8ssp"
         app:layout_constraintBottom_toTopOf="@id/viewSupporter"
         app:layout_constraintEnd_toEndOf="@+id/tvMisc"
@@ -113,7 +113,7 @@
             android:includeFontPadding="false"
             android:src="@drawable/ic_favorite_border"
             android:textAllCaps="false"
-            android:tint="@color/color_text_black_80" />
+            android:tint="@color/colorIconGrey80" />
 
         <ImageButton
             android:id="@+id/btnShare"
@@ -127,7 +127,7 @@
             android:includeFontPadding="false"
             android:src="@drawable/ic_share"
             android:textAllCaps="false"
-            android:tint="@color/color_text_black_80" />
+            android:tint="@color/colorIconGrey80" />
 
     </LinearLayout>
 

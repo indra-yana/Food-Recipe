@@ -19,7 +19,7 @@
     <style name="TextSpec.Field">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/color_text_black_80</item>
+        <item name="android:textColor">@color/colorPrimaryGrey80</item>
         <item name="android:textStyle">bold</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">@dimen/_14ssp</item>
@@ -28,7 +28,7 @@
     <style name="TextSpec.Value">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/color_text_black_80</item>
+        <item name="android:textColor">@color/colorPrimaryGrey80</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:layout_marginStart">@dimen/_8sdp</item>
         <item name="android:textSize">@dimen/_14ssp</item>
@@ -54,7 +54,7 @@
     <style name="RippleWhite">
         <item name="background">@drawable/bg_rounded_button_dark</item>
         <item name="android:foreground">?android:attr/selectableItemBackgroundBorderless</item>
-        <item name="android:colorControlHighlight">@color/colorPrimaryDarkTransparent3</item>
+        <item name="android:colorControlHighlight">@color/colorPrimaryGreyTransparent50</item>
         <item name="android:radius">@dimen/_100sdp</item>
         <item name="cornerRadius">@dimen/_20sdp</item>
     </style>

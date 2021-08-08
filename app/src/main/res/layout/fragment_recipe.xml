@@ -18,7 +18,7 @@
             android:layout_marginStart="@dimen/_12sdp"
             android:layout_marginTop="@dimen/_40sdp"
             android:layout_marginEnd="@dimen/_12sdp"
-            android:background="@drawable/background_search"
+            android:background="@drawable/bg_item_2"
             android:elevation="@dimen/_6sdp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
@@ -32,7 +32,7 @@
                 android:layout_height="@dimen/_20sdp"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/ic_search"
-                app:tint="@color/colorSearchIcon" />
+                app:tint="@color/colorIconGrey60" />
 
             <EditText
                 android:id="@+id/etInputSearch"
@@ -47,8 +47,8 @@
                 android:importantForAutofill="no"
                 android:includeFontPadding="false"
                 android:inputType="text"
-                android:textColor="@color/color_text_white"
-                android:textColorHint="@color/colorTextSearchHint"
+                android:textColor="@color/colorTextBlack100"
+                android:textColorHint="@color/colorTextGrey40"
                 android:textSize="@dimen/_13ssp" />
 
             <ImageView
@@ -58,7 +58,7 @@
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/ic_clear"
                 android:visibility="gone"
-                app:tint="@color/colorTextSearchHint" />
+                app:tint="@color/colorIconGrey60" />
 
         </LinearLayout>
 
@@ -87,7 +87,7 @@
             app:dotsCornerRadius="@dimen/_100sdp"
             app:dotsSize="@dimen/_8sdp"
             app:dotsSpacing="@dimen/_2sdp"
-            app:dotsStrokeColor="@color/color_text_black_60"
+            app:dotsStrokeColor="@color/colorPrimaryGrey60"
             app:dotsStrokeWidth="@dimen/_1sdp"
             app:layout_constraintBottom_toTopOf="@+id/rvRecipe"
             app:layout_constraintEnd_toEndOf="parent"
@@ -130,12 +130,12 @@
                 android:id="@+id/ivMenu"
                 android:layout_width="@dimen/_25sdp"
                 android:layout_height="@dimen/_25sdp"
-                android:background="@drawable/bg_rounded_button_transparent"
+                android:background="@android:color/transparent"
                 android:clipToPadding="false"
                 android:contentDescription="@string/app_name"
                 android:foreground="?selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_more_vert_black_24dp"
-                app:tint="@color/color_text_white" />
+                app:tint="@color/colorPrimaryWhite100" />
 
         </LinearLayout>
 

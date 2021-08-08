@@ -72,7 +72,7 @@
                     android:src="@drawable/ic_back"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/color_text_white" />
+                    app:tint="@color/colorIconWhite100" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -96,7 +96,7 @@
                             android:drawablePadding="@dimen/_3sdp"
                             android:gravity="center"
                             android:includeFontPadding="false"
-                            android:textColor="@color/color_text_white"
+                            android:textColor="@color/colorTextWhite100"
                             android:textSize="@dimen/_11ssp"
                             app:drawableStartCompat="@drawable/ic_grade"
                             app:drawableTint="@color/colorWarning"
@@ -110,7 +110,7 @@
                             android:drawablePadding="@dimen/_3sdp"
                             android:gravity="center"
                             android:includeFontPadding="false"
-                            android:textColor="@color/color_text_white"
+                            android:textColor="@color/colorTextWhite100"
                             android:textSize="@dimen/_11ssp"
                             app:drawableStartCompat="@drawable/ic_portion"
                             app:drawableTint="@color/colorWarning"
@@ -124,7 +124,7 @@
                             android:drawablePadding="@dimen/_3sdp"
                             android:gravity="center"
                             android:includeFontPadding="false"
-                            android:textColor="@color/color_text_white"
+                            android:textColor="@color/colorTextWhite100"
                             android:textSize="@dimen/_11ssp"
                             app:drawableStartCompat="@drawable/ic_timer"
                             app:drawableTint="@color/colorWarning"
@@ -140,7 +140,7 @@
                         android:fontFamily="@font/poppins_semibold"
                         android:gravity="center"
                         android:includeFontPadding="false"
-                        android:textColor="@color/color_text_white"
+                        android:textColor="@color/colorTextWhite100"
                         tools:text="@string/text_lorem_ipsum_title" />
 
                 </LinearLayout>
@@ -155,7 +155,7 @@
                     android:ellipsize="end"
                     android:includeFontPadding="false"
                     android:maxLines="2"
-                    android:textColor="@color/color_text_black_80"
+                    android:textColor="@color/colorTextBlack100"
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="bold"
                     android:visibility="visible"
@@ -175,7 +175,7 @@
                     android:includeFontPadding="false"
                     android:lineSpacingExtra="@dimen/_2sdp"
                     android:maxLines="4"
-                    android:textColor="@color/color_text_black_80"
+                    android:textColor="@color/colorTextBlack100"
                     android:textSize="@dimen/_14ssp"
                     android:visibility="visible"
                     app:layout_constraintTop_toBottomOf="@id/tvItemTitle"
@@ -203,7 +203,7 @@
                     android:layout_marginTop="@dimen/_8sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_8sdp"
-                    android:background="@color/color_text_black_60"
+                    android:background="@color/colorPrimaryGrey40"
                     android:visibility="visible"
                     app:layout_constraintTop_toBottomOf="@+id/tvReadMore" />
 
@@ -226,7 +226,7 @@
                         android:includeFontPadding="false"
                         android:maxLines="1"
                         android:text="@string/text_needed_items"
-                        android:textColor="@color/color_text_black_80"
+                        android:textColor="@color/colorTextBlack100"
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         android:visibility="visible"
@@ -258,7 +258,7 @@
                     android:layout_marginTop="@dimen/_8sdp"
                     android:layout_marginEnd="@dimen/_8sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
-                    android:background="@color/color_text_black_60"
+                    android:background="@color/colorPrimaryGrey40"
                     android:visibility="visible"
                     app:layout_constraintTop_toBottomOf="@+id/layoutNeededItem" />
 
@@ -272,7 +272,7 @@
                     android:fontFamily="@font/poppins_regular"
                     android:includeFontPadding="false"
                     android:text="@string/text_ingredients"
-                    android:textColor="@color/color_text_white"
+                    android:textColor="@color/colorTextWhite100"
                     android:textSize="@dimen/_12ssp"
                     android:visibility="visible"
                     app:cornerRadius="@dimen/_6sdp"
@@ -293,7 +293,7 @@
                     android:fontFamily="@font/poppins_regular"
                     android:includeFontPadding="false"
                     android:text="@string/text_steps"
-                    android:textColor="@color/color_text_white"
+                    android:textColor="@color/colorTextWhite100"
                     android:textSize="@dimen/_12ssp"
                     android:visibility="visible"
                     app:cornerRadius="@dimen/_6sdp"

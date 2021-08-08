@@ -5,20 +5,37 @@
     <color name="colorAccent">#2e87eb</color>
 
     <!-- Custom Color -->
-    <color name="colorPrimaryDarkTransparent">#CC2464AC</color>
-    <color name="colorPrimaryDarkTransparent2">#992464AC</color>
-    <color name="colorPrimaryDarkTransparent3">#73081029</color>
-    <color name="color_text_white">#FFFFFF</color>
-    <color name="color_text_black_100">#000000</color>
-    <color name="color_text_black_80">#2B2B2B</color>
-    <color name="color_text_black_60">#4E4E4E</color>
-    <color name="color_text_hint">#434343</color>
+    <color name="colorPrimaryTransparent50">#802E87EB</color>
+    <color name="colorPrimaryDarkTransparent50">#802464AC</color>
+    <color name="colorPrimaryGreyTransparent50">#803D3D3D</color>
+
+    <color name="colorPrimaryWhite100">#FFFFFF</color>
+    <color name="colorPrimaryBlack100">#000000</color>
+    <color name="colorPrimaryGrey80">#616161</color>
+    <color name="colorPrimaryGrey60">#757575</color>
+    <color name="colorPrimaryGrey40">#9E9E9E</color>
+    <color name="colorPrimaryGrey20">#BDBDBD</color>
+
     <color name="colorSuccess">#1C8721</color>
     <color name="colorWarning">#FDBE3B</color>
-    <color name="colorDanger">#FF4842</color>
-    <color name="colorSearchBackground">#333333</color>
-    <color name="colorSearchIcon">#DBDBDB</color>
-    <color name="colorTextSearchHint">#A6A6A6</color>
-    <color name="colorTextHint">#787B7B</color>
-    <color name="colorGrey">#DBDBDB</color>
+    <color name="colorDanger">#D32F2F</color>
+
+    <color name="colorIconWhite100">#FFFFFF</color>
+    <color name="colorIconBlack100">#000000</color>
+    <color name="colorIconGrey100">#3d3d3d</color>
+    <color name="colorIconGrey80">#616161</color>
+    <color name="colorIconGrey60">#757575</color>
+    <color name="colorIconGrey40">#9E9E9E</color>
+    <color name="colorIconGrey20">#BDBDBD</color>
+    <color name="colorIconGrey10">#EEEEEE</color>
+
+    <color name="colorTextWhite100">#FFFFFF</color>
+    <color name="colorTextBlack100">#000000</color>
+    <color name="colorTextGrey100">#3d3d3d</color>
+    <color name="colorTextGrey80">#616161</color>
+    <color name="colorTextGrey60">#757575</color>
+    <color name="colorTextGrey40">#9E9E9E</color>
+    <color name="colorTextGrey20">#BDBDBD</color>
+    <color name="colorTextGrey10">#EEEEEE</color>
+
 </resources>

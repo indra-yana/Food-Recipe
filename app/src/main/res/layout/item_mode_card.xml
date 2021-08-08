@@ -54,7 +54,7 @@
             android:includeFontPadding="false"
             android:maxLines="2"
             android:textAllCaps="false"
-            android:textColor="@color/color_text_white"
+            android:textColor="@color/colorTextWhite100"
             android:textSize="@dimen/_12ssp"
             app:layout_constraintBottom_toBottomOf="@+id/viewFadingEdgeTop"
             app:layout_constraintStart_toStartOf="parent"
@@ -78,11 +78,8 @@
                 android:layout_marginEnd="@dimen/_6sdp"
                 android:contentDescription="@string/app_name"
                 android:foreground="?selectableItemBackground"
-                android:includeFontPadding="false"
                 android:src="@drawable/ic_favorite_border"
-                android:textAllCaps="false"
-                android:textColor="@color/color_text_white"
-                android:tint="@color/color_text_white" />
+                android:tint="@color/colorIconGrey10" />
 
             <ImageButton
                 android:id="@+id/btnShare"
@@ -93,11 +90,8 @@
                 android:layout_marginEnd="@dimen/_6sdp"
                 android:contentDescription="@string/app_name"
                 android:foreground="?selectableItemBackground"
-                android:includeFontPadding="false"
                 android:src="@drawable/ic_share"
-                android:textAllCaps="false"
-                android:textColor="@color/color_text_white"
-                android:tint="@color/color_text_white" />
+                android:tint="@color/colorIconGrey10" />
 
         </LinearLayout>
 

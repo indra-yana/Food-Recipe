@@ -29,7 +29,7 @@
             android:fontFamily="@font/poppins_light"
             android:includeFontPadding="false"
             android:maxLines="1"
-            android:textColor="@color/color_text_white"
+            android:textColor="@color/colorTextWhite100"
             android:textSize="@dimen/_14ssp"
             tools:text="@string/text_lorem_ipsum_title" />
 
@@ -43,7 +43,7 @@
             android:contentDescription="@string/app_name"
             android:foreground="?selectableItemBackgroundBorderless"
             android:src="@drawable/ic_clear"
-            android:tint="@color/color_text_white" />
+            android:tint="@color/colorIconGrey10" />
 
     </LinearLayout>
 

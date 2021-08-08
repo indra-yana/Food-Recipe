@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_160sdp"
         android:layout_marginBottom="@dimen/_4sdp"
-        android:background="@color/colorGrey"
+        android:background="@color/colorIconGrey80"
         android:contentDescription="@string/app_name"
         android:scaleType="centerCrop"
         app:layout_constraintTop_toTopOf="parent" />
@@ -61,7 +61,7 @@
                 android:layout_height="@dimen/_20sdp"
                 android:layout_marginStart="@dimen/_2sdp"
                 android:layout_marginEnd="@dimen/_2sdp"
-                android:background="@color/colorGrey"
+                android:background="@color/colorIconGrey80"
                 android:gravity="center" />
 
             <View
@@ -70,7 +70,7 @@
                 android:layout_height="@dimen/_20sdp"
                 android:layout_marginStart="@dimen/_2sdp"
                 android:layout_marginEnd="@dimen/_2sdp"
-                android:background="@color/colorGrey"
+                android:background="@color/colorIconGrey80"
                 android:gravity="center" />
 
             <View
@@ -79,7 +79,7 @@
                 android:layout_height="@dimen/_20sdp"
                 android:layout_marginStart="@dimen/_2sdp"
                 android:layout_marginEnd="@dimen/_2sdp"
-                android:background="@color/colorGrey"
+                android:background="@color/colorIconGrey80"
                 android:gravity="center" />
 
         </LinearLayout>
@@ -89,7 +89,7 @@
             android:layout_width="@dimen/_120sdp"
             android:layout_height="@dimen/_20sdp"
             android:layout_margin="@dimen/_4sdp"
-            android:background="@color/colorGrey"
+            android:background="@color/colorIconGrey80"
             android:gravity="center" />
 
     </LinearLayout>
@@ -101,7 +101,7 @@
         android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_12sdp"
         android:layout_marginEnd="@dimen/_10sdp"
-        android:background="@color/colorGrey"
+        android:background="@color/colorIconGrey80"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivDetailThumbExt" />
@@ -113,7 +113,7 @@
         android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_8sdp"
         android:layout_marginEnd="@dimen/_10sdp"
-        android:background="@color/colorGrey"
+        android:background="@color/colorIconGrey80"
         app:layout_constraintTop_toBottomOf="@id/tvItemTitleExt" />
 
     <View
@@ -124,7 +124,7 @@
         android:layout_marginTop="@dimen/_8sdp"
         android:layout_marginEnd="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_8sdp"
-        android:background="@color/colorGrey"
+        android:background="@color/colorIconGrey80"
         app:layout_constraintTop_toBottomOf="@+id/tvItemDescriptionExt" />
 
     <LinearLayout
@@ -141,7 +141,7 @@
             android:id="@+id/tvNeededItemExt"
             android:layout_width="@dimen/_100sdp"
             android:layout_height="@dimen/_20sdp"
-            android:background="@color/colorGrey"
+            android:background="@color/colorIconGrey80"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivDetailThumbExt" />
@@ -156,7 +156,7 @@
                 android:layout_width="@dimen/_120sdp"
                 android:layout_height="@dimen/_90sdp"
                 android:layout_marginBottom="@dimen/_4sdp"
-                android:background="@color/colorGrey"
+                android:background="@color/colorIconGrey80"
                 android:scaleType="centerCrop"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -165,7 +165,7 @@
                 android:layout_height="@dimen/_90sdp"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginBottom="@dimen/_4sdp"
-                android:background="@color/colorGrey"
+                android:background="@color/colorIconGrey80"
                 android:scaleType="centerCrop"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -181,7 +181,7 @@
         android:layout_marginTop="@dimen/_8sdp"
         android:layout_marginEnd="@dimen/_8sdp"
         android:layout_marginBottom="@dimen/_8sdp"
-        android:background="@color/colorGrey"
+        android:background="@color/colorIconGrey80"
         android:visibility="visible"
         app:layout_constraintTop_toBottomOf="@+id/layoutNeededItemExt" />
 
@@ -193,7 +193,7 @@
         android:layout_marginTop="@dimen/_8sdp"
         android:layout_marginEnd="@dimen/_5sdp"
         android:layout_marginBottom="@dimen/_8sdp"
-        android:background="@color/colorGrey"
+        android:background="@color/colorIconGrey80"
         app:layout_constraintEnd_toStartOf="@+id/btnStepsExt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/viewDivider2Ext" />
@@ -206,7 +206,7 @@
         android:layout_marginTop="@dimen/_8sdp"
         android:layout_marginEnd="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_8sdp"
-        android:background="@color/colorGrey"
+        android:background="@color/colorIconGrey80"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnIngredientsExt"
         app:layout_constraintTop_toBottomOf="@id/viewDivider2Ext" />

@@ -42,7 +42,7 @@
             android:includeFontPadding="false"
             android:maxLines="2"
             android:text="@string/text_lorem_ipsum_title"
-            android:textColor="@color/color_text_white"
+            android:textColor="@color/colorTextWhite100"
             android:textSize="@dimen/_12ssp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/viewFadingEdgeBottom"
