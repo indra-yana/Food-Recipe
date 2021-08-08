@@ -62,13 +62,13 @@ fun Fragment.handleRequestError(failure: ResponseStatus.Failure, action: (() -> 
                 403 -> requireView().snackBar("$errorCode: Not authorize!")
                 404 -> requireView().snackBar("$errorCode: Resource not found!")
                 500 -> requireView().snackBar("$errorCode: Internal server error!")
-                else -> requireView().snackBar("$errorCode: ${exception.response()?.errorBody()?.string().toString()}")
+                else -> requireView().snackBar("Http response failure with status code $errorCode")
             }
 
-            Log.e(TAG, "handleRequestError: ${exception.message}")
+            Log.e(TAG, "handleRequestError: ${exception.response()?.errorBody()?.string().toString()}")
         }
         is UnknownHostException -> {
-            requireView().snackBar("Unknown host!", action)
+            requireView().snackBar("Please check your internet connection!", action)
 
             Log.e(TAG, "handleRequestError: ${exception.message}")
         }

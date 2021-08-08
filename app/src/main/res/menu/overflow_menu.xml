@@ -2,17 +2,28 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/menu_act_list"
-        android:title="@string/text_menu_list"
-        app:showAsAction="never" />
+        android:title="@string/text_list_mode"
+        app:showAsAction="never" >
+        <menu>
+            <item
+                android:id="@+id/menu_act_list"
+                android:title="@string/text_menu_list"
+                app:showAsAction="never" />
+
+            <item
+                android:id="@+id/menu_act_cardview"
+                android:title="@string/text_menu_card"
+                app:showAsAction="never" />
+
+            <item
+                android:id="@+id/menu_act_grid"
+                android:title="@string/text_menu_grid"
+                app:showAsAction="never" />
+        </menu>
+    </item>
 
     <item
-        android:id="@+id/menu_act_cardview"
-        android:title="@string/text_menu_card"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/menu_act_grid"
-        android:title="@string/text_menu_grid"
+        android:id="@+id/menu_act_about"
+        android:title="@string/text_menu_about"
         app:showAsAction="never" />
 </menu>
