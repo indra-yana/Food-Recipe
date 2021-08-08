@@ -51,7 +51,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
     private var isNetworkError = false
 
     // Api paging
-    private val initialPage = 1
+    private var initialPage = 1
     private var nextPage = initialPage
 
     private var lastVisibleItem: Int = RecyclerView.NO_POSITION
@@ -187,18 +187,18 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
 //                        Log.d(TAG, "onScrolled: visibleItemAnchorPoint: $visibleItemAnchorPoint")
                     }
 
-                    // Scroll bottom
+                    // Scroll down
                     if (!recyclerView.canScrollVertically(1)) {
                         if (!isLoading && !isNetworkError) {
+                            nextPage++
                             viewModel.getRecipeByPage(nextPage)
-
-//                            Log.d(TAG, "onScrolled: nextPage: $nextPage")
+                            Log.d(TAG, "onScrolled: nextPage: $nextPage")
                         }
                     }
 
                     // Scroll up
                     if (recyclerView.canScrollVertically(-1)) {
-                        isNetworkError = false
+//                        isNetworkError = false
                     }
                 }
             })
@@ -220,7 +220,6 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
                 is ResponseStatus.Success -> {
                     recipeAdapter.bindData(it.value.recipes)
 
-                    nextPage++
                     Log.d(TAG, "getRecipeByPage: State is success! ${it.value.recipes}")
                 }
                 is ResponseStatus.Failure -> {

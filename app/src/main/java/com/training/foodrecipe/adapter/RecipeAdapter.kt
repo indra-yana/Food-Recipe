@@ -40,8 +40,11 @@ class RecipeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     fun bindData(listRecipe: List<Recipe>) {
         val oldCount: Int = itemCount
+        val filtered = listRecipe.filterNot {
+            this.listRecipe.contains(it)
+        }
 
-        this.listRecipe.addAll(listRecipe)
+        this.listRecipe.addAll(filtered)
         notifyItemRangeInserted(oldCount, itemCount)
     }
 
