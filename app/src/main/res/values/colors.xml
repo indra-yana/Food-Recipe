@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#2e87eb</color>
-    <color name="colorPrimaryDark">#2464AC</color>
-    <color name="colorAccent">#2e87eb</color>
+    <color name="colorPrimary">#229A67</color>
+    <color name="colorPrimaryDark">#17754D</color>
+    <color name="colorAccent">#96bb82</color>
 
     <!-- Custom Color -->
-    <color name="colorPrimaryTransparent50">#802E87EB</color>
-    <color name="colorPrimaryDarkTransparent50">#802464AC</color>
-    <color name="colorPrimaryGreyTransparent50">#803D3D3D</color>
+    <color name="colorPrimaryTransparent50">#80229A67</color>
+    <color name="colorPrimaryDarkTransparent50">#8017754D</color>
+    <color name="colorPrimaryGreyTransparent50">#B33D3D3D</color>
 
     <color name="colorPrimaryWhite100">#FFFFFF</color>
     <color name="colorPrimaryBlack100">#000000</color>

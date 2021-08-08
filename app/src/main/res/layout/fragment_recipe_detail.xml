@@ -268,7 +268,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:backgroundTint="@color/colorAccent"
+                    android:backgroundTint="@color/colorPrimary"
                     android:fontFamily="@font/poppins_regular"
                     android:includeFontPadding="false"
                     android:text="@string/text_ingredients"
