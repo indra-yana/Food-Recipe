@@ -19,12 +19,12 @@ import com.training.foodrecipe.model.Recipe
  ****************************************************/
 
 class RecipeListViewHolder(itemView: View) : BaseViewHolder(itemView) {
-    private var tvTitle: TextView = itemView.findViewById(R.id.tvTitle)
+    private var tvItemTitle: TextView = itemView.findViewById(R.id.tvItemTitle)
     private var tvMisc: TextView = itemView.findViewById(R.id.tvMisc)
     private var tvServing: TextView = itemView.findViewById(R.id.tvServing)
-    private var imgPhoto: ImageView = itemView.findViewById(R.id.ivThumbnail)
-    private var btnFavourite: ImageButton = itemView.findViewById(R.id.btn_set_favourite)
-    private var btnShare: ImageButton = itemView.findViewById(R.id.btn_set_share)
+    private var ivItemThumbnail: ImageView = itemView.findViewById(R.id.ivItemThumbnail)
+    private var btnAddFavourite: ImageButton = itemView.findViewById(R.id.btnAddFavourite)
+    private var btnShare: ImageButton = itemView.findViewById(R.id.btnShare)
 
     constructor(parent: ViewGroup) : this(
         LayoutInflater.from(parent.context).inflate(R.layout.item_mode_list, parent, false)
@@ -37,20 +37,20 @@ class RecipeListViewHolder(itemView: View) : BaseViewHolder(itemView) {
     override fun bind(data: Any, listener: IOnItemClickListener?) {
         val recipe = data as Recipe
 
-        tvTitle.text = recipe.title
+        tvItemTitle.text = recipe.title
         tvMisc.text = ("${recipe.dificulty ?: "-"} | ${recipe.portion} | ${recipe.times}")
         tvServing.text = recipe.serving
 
         Glide.with(itemView.context)
             .load(recipe.thumb)
             .apply(RequestOptions().override(100, 60))
-            .into(imgPhoto)
+            .into(ivItemThumbnail)
 
         itemView.setOnClickListener {
             listener?.onItemClicked(recipe)
         }
 
-        btnFavourite.setOnClickListener {
+        btnAddFavourite.setOnClickListener {
             listener?.onButtonFavouriteClicked(recipe)
         }
 

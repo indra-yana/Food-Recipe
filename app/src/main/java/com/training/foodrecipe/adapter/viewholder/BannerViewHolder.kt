@@ -16,25 +16,25 @@ import com.training.foodrecipe.model.Recipe
  * On 08/04/2020 10.49
  ****************************************************/
 class BannerViewHolder(itemView: View) : BaseViewHolder(itemView) {
-    private var tvTitle: TextView = itemView.findViewById(R.id.tv_item_title_2)
-    private var imgPhoto: ImageView = itemView.findViewById(R.id.iv_item_banner_2)
+    private var tvItemTitle: TextView = itemView.findViewById(R.id.tvItemTitle)
+    private var ivItemThumbnail: ImageView = itemView.findViewById(R.id.ivItemThumbnail)
 
     constructor(parent: ViewGroup) : this(
-        LayoutInflater.from(parent.context).inflate(R.layout.item_card_type_2, parent, false)
+        LayoutInflater.from(parent.context).inflate(R.layout.item_card_banner, parent, false)
     )
 
     override fun bindView(viewGroup: ViewGroup): View {
-        return LayoutInflater.from(viewGroup.context).inflate(R.layout.item_card_type_2, viewGroup, false)
+        return LayoutInflater.from(viewGroup.context).inflate(R.layout.item_card_banner, viewGroup, false)
     }
 
     override fun bind(data: Any, listener: IOnItemClickListener?) {
         val recipe = data as Recipe
 
-        tvTitle.text = recipe.title
+        tvItemTitle.text = recipe.title
         Glide.with(itemView.context)
             .load(recipe.thumb)
             .apply(RequestOptions().override(350, 350))
-            .into(imgPhoto)
+            .into(ivItemThumbnail)
 
         itemView.setOnClickListener {
             listener?.onItemClicked(recipe)

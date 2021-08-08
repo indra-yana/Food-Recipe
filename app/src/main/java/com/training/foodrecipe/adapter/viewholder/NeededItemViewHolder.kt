@@ -18,8 +18,8 @@ import com.training.foodrecipe.model.NeedItem
  ****************************************************/
 
 class NeededItemViewHolder(itemView: View) : BaseViewHolder(itemView) {
-    private var tvTitle: TextView = itemView.findViewById(R.id.tv_item_title_2)
-    private var imgPhoto: ImageView = itemView.findViewById(R.id.ivNeededItem)
+    private var tvItemTitle: TextView = itemView.findViewById(R.id.tvItemTitle)
+    private var ivNeededItem: ImageView = itemView.findViewById(R.id.ivNeededItem)
 
     constructor(parent: ViewGroup) : this(
         LayoutInflater.from(parent.context).inflate(R.layout.item_neededitem, parent, false)
@@ -32,11 +32,11 @@ class NeededItemViewHolder(itemView: View) : BaseViewHolder(itemView) {
     override fun bind(data: Any, listener: IOnItemClickListener?) {
         val needItem = data as NeedItem
 
-        tvTitle.text = needItem.itemName
+        tvItemTitle.text = needItem.itemName
         Glide.with(itemView.context)
             .load(needItem.thumbItem)
             .apply(RequestOptions().override(450, 250))
-            .into(imgPhoto)
+            .into(ivNeededItem)
 
         itemView.setOnClickListener {
             listener?.onItemClicked(needItem)

@@ -22,10 +22,10 @@
         android:foreground="?selectableItemBackground"
         android:paddingBottom="@dimen/_10sdp"
         app:layout_constraintBottom_toTopOf="@+id/viewSupporter"
-        app:layout_constraintTop_toTopOf="@+id/ivThumbnail" />
+        app:layout_constraintTop_toTopOf="@+id/ivItemThumbnail" />
 
     <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/ivThumbnail"
+        android:id="@+id/ivItemThumbnail"
         android:layout_width="@dimen/_100sdp"
         android:layout_height="@dimen/_60sdp"
         android:layout_marginStart="@dimen/_10sdp"
@@ -40,7 +40,7 @@
         tools:src="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tvTitle"
+        android:id="@+id/tvItemTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_8sdp"
@@ -53,8 +53,8 @@
         android:textColor="@color/color_text_black_80"
         android:textSize="@dimen/_13ssp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ivThumbnail"
-        app:layout_constraintTop_toTopOf="@+id/ivThumbnail"
+        app:layout_constraintStart_toEndOf="@+id/ivItemThumbnail"
+        app:layout_constraintTop_toTopOf="@+id/ivItemThumbnail"
         tools:text="@string/text_lorem_ipsum_title" />
 
     <!-- Difficulty | Portion | times   -->
@@ -69,24 +69,10 @@
         android:maxLines="1"
         android:textColor="@color/color_text_black_80"
         android:textSize="@dimen/_12ssp"
-        app:layout_constraintEnd_toEndOf="@id/tvTitle"
-        app:layout_constraintStart_toStartOf="@id/tvTitle"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintEnd_toEndOf="@id/tvItemTitle"
+        app:layout_constraintStart_toStartOf="@id/tvItemTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvItemTitle"
         tools:text="@string/text_lorem_ipsum_description" />
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/tvPortion"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="@dimen/_3sdp"-->
-    <!--        android:fontFamily="@font/poppins_regular"-->
-    <!--        android:includeFontPadding="false"-->
-    <!--        android:text='@{"Started on: " +tvShow.startDate}'-->
-    <!--        android:textColor="@android:color/holo_green_light"-->
-    <!--        android:textSize="@dimen/_12ssp"-->
-    <!--        app:layout_constraintEnd_toEndOf="@id/tvDifficulty"-->
-    <!--        app:layout_constraintStart_toStartOf="@id/tvDifficulty"-->
-    <!--        app:layout_constraintTop_toBottomOf="@id/tvDifficulty" />-->
 
     <TextView
         android:id="@+id/tvServing"
@@ -98,7 +84,7 @@
         android:includeFontPadding="false"
         android:maxLines="1"
         android:textColor="@color/color_text_black_80"
-        android:textSize="@dimen/_10ssp"
+        android:textSize="@dimen/_8ssp"
         app:layout_constraintBottom_toTopOf="@id/viewSupporter"
         app:layout_constraintEnd_toEndOf="@+id/tvMisc"
         app:layout_constraintStart_toStartOf="@id/tvMisc"
@@ -111,12 +97,12 @@
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="@+id/viewBackground"
-        app:layout_constraintEnd_toEndOf="@+id/ivThumbnail"
-        app:layout_constraintStart_toStartOf="@+id/ivThumbnail"
-        app:layout_constraintTop_toBottomOf="@+id/ivThumbnail">
+        app:layout_constraintEnd_toEndOf="@+id/ivItemThumbnail"
+        app:layout_constraintStart_toStartOf="@+id/ivItemThumbnail"
+        app:layout_constraintTop_toBottomOf="@+id/ivItemThumbnail">
 
         <ImageButton
-            android:id="@+id/btn_set_favourite"
+            android:id="@+id/btnAddFavourite"
             style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
             android:layout_width="@dimen/_25sdp"
             android:layout_height="@dimen/_25sdp"
@@ -130,7 +116,7 @@
             android:tint="@color/color_text_black_80" />
 
         <ImageButton
-            android:id="@+id/btn_set_share"
+            android:id="@+id/btnShare"
             style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
             android:layout_width="@dimen/_25sdp"
             android:layout_height="@dimen/_25sdp"
@@ -144,20 +130,5 @@
             android:tint="@color/color_text_black_80" />
 
     </LinearLayout>
-
-    <!--        <ImageView-->
-    <!--            android:id="@+id/ivMoreAction"-->
-    <!--            android:layout_width="@dimen/_22sdp"-->
-    <!--            android:layout_height="@dimen/_22sdp"-->
-    <!--            android:layout_marginStart="@dimen/_5sdp"-->
-    <!--            android:layout_marginEnd="@dimen/_4sdp"-->
-    <!--            android:contentDescription="@string/app_name"-->
-    <!--            android:src="@drawable/ic_more_vert_black_24dp"-->
-    <!--            android:visibility="visible"-->
-    <!--            app:layout_constraintBottom_toBottomOf="@id/tvServing"-->
-    <!--            app:layout_constraintStart_toStartOf="parent"-->
-    <!--            app:layout_constraintTop_toTopOf="@+id/tvServing"-->
-    <!--            app:tint="@color/color_text_black_60" />-->
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

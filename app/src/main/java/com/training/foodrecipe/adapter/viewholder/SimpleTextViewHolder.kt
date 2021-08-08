@@ -19,7 +19,7 @@ import com.training.foodrecipe.helper.hasEllipsis
  ****************************************************/
 
 class SimpleTextViewHolder(itemView: View) : BaseViewHolder(itemView) {
-    private var tvTitle: TextView = itemView.findViewById(R.id.tv_item_title)
+    private var tvItemTitle: TextView = itemView.findViewById(R.id.tvItemTitle)
     private var btnToggleReadMore: ImageButton = itemView.findViewById(R.id.btnToggleReadMore)
 
     constructor(parent: ViewGroup) : this(
@@ -33,7 +33,7 @@ class SimpleTextViewHolder(itemView: View) : BaseViewHolder(itemView) {
     override fun bind(data: Any, listener: IOnItemClickListener?) {
         val item = data as String
 
-        tvTitle.text = item
+        tvItemTitle.text = item
         btnToggleReadMore.setOnClickListener {
             expandText()
         }
@@ -46,14 +46,14 @@ class SimpleTextViewHolder(itemView: View) : BaseViewHolder(itemView) {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun expandText() {
-        if (tvTitle.maxLines == Int.MAX_VALUE) {
-            tvTitle.maxLines = 2
-            tvTitle.ellipsize = TextUtils.TruncateAt.END
+        if (tvItemTitle.maxLines == Int.MAX_VALUE) {
+            tvItemTitle.maxLines = 2
+            tvItemTitle.ellipsize = TextUtils.TruncateAt.END
 
             btnToggleReadMore.setImageDrawable(itemView.resources.getDrawable(R.drawable.ic_arrow_down, null))
-        } else if (tvTitle.ellipsize == TextUtils.TruncateAt.END && tvTitle.hasEllipsis()) {
-            tvTitle.maxLines = Int.MAX_VALUE
-            tvTitle.ellipsize = null
+        } else if (tvItemTitle.ellipsize == TextUtils.TruncateAt.END && tvItemTitle.hasEllipsis()) {
+            tvItemTitle.maxLines = Int.MAX_VALUE
+            tvItemTitle.ellipsize = null
 
             btnToggleReadMore.setImageDrawable(itemView.resources.getDrawable(R.drawable.ic_arrow_up, null))
         }

@@ -17,7 +17,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/iv_item_banner_2"
+            android:id="@+id/ivItemThumbnail"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_120sdp"
             android:scaleType="centerCrop"
@@ -32,10 +32,10 @@
             android:layout_height="@dimen/_40sdp"
             android:background="@drawable/bg_fading_edge_bottom"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_item_banner_2" />
+            app:layout_constraintBottom_toBottomOf="@+id/ivItemThumbnail" />
 
         <TextView
-            android:id="@+id/tv_item_title_2"
+            android:id="@+id/tvItemTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_12sdp"
@@ -46,7 +46,7 @@
             android:textColor="@color/color_text_white"
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_item_banner_2" />
+            app:layout_constraintBottom_toBottomOf="@+id/ivItemThumbnail" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

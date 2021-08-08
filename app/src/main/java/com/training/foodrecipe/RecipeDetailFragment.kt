@@ -140,7 +140,7 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
             Glide.with(requireView().context)
                 .load(recipe.thumb)
                 .apply(RequestOptions().override(450, 250))
-                .into(ivDetailThumb)
+                .into(ivItemThumbnail)
 
             recipeDetail?.apply {
                 tvAuthor.text = ("By ${author.user}, ${author.datePublished}")

@@ -17,7 +17,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/ivDetailThumb"
+            android:id="@+id/ivItemThumbnail"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_140sdp"
             android:layout_marginBottom="@dimen/_4sdp"
@@ -32,7 +32,7 @@
             android:layout_height="@dimen/_30sdp"
             android:background="@drawable/bg_fading_edge_top"
             android:visibility="visible"
-            app:layout_constraintTop_toTopOf="@+id/ivDetailThumb" />
+            app:layout_constraintTop_toTopOf="@+id/ivItemThumbnail" />
 
         <View
             android:id="@+id/viewFadingEdgeBottom"
@@ -40,10 +40,10 @@
             android:layout_height="@dimen/_30sdp"
             android:background="@drawable/bg_fading_edge_bottom"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/ivDetailThumb" />
+            app:layout_constraintBottom_toBottomOf="@+id/ivItemThumbnail" />
 
         <TextView
-            android:id="@+id/tv_item_title"
+            android:id="@+id/tvItemTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_8sdp"
@@ -70,7 +70,7 @@
             app:layout_constraintTop_toTopOf="@+id/viewFadingEdgeBottom">
 
             <ImageButton
-                android:id="@+id/btn_set_favourite"
+                android:id="@+id/btnAddFavourite"
                 style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                 android:layout_width="@dimen/_25sdp"
                 android:layout_height="@dimen/_25sdp"
@@ -85,7 +85,7 @@
                 android:tint="@color/color_text_white" />
 
             <ImageButton
-                android:id="@+id/btn_set_share"
+                android:id="@+id/btnShare"
                 style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                 android:layout_width="@dimen/_25sdp"
                 android:layout_height="@dimen/_25sdp"

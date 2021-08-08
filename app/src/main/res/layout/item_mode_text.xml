@@ -9,7 +9,7 @@
     android:padding="@dimen/_8sdp">
 
     <TextView
-        android:id="@+id/tv_item_title"
+        android:id="@+id/tvItemTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"

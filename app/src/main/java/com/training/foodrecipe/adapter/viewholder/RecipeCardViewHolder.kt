@@ -19,10 +19,10 @@ import com.training.foodrecipe.model.Recipe
  ****************************************************/
 
 class RecipeCardViewHolder(itemView: View) : BaseViewHolder(itemView) {
-    private var tvName: TextView = itemView.findViewById(R.id.tv_item_title)
-    private var imgPhoto: ImageView = itemView.findViewById(R.id.ivDetailThumb)
-    private var btnFavourite: ImageButton = itemView.findViewById(R.id.btn_set_favourite)
-    private var btnShare: ImageButton = itemView.findViewById(R.id.btn_set_share)
+    private var tvItemTitle: TextView = itemView.findViewById(R.id.tvItemTitle)
+    private var ivItemThumbnail: ImageView = itemView.findViewById(R.id.ivItemThumbnail)
+    private var btnAddFavourite: ImageButton = itemView.findViewById(R.id.btnAddFavourite)
+    private var btnShare: ImageButton = itemView.findViewById(R.id.btnShare)
 
     constructor(parent: ViewGroup) : this(
         LayoutInflater.from(parent.context).inflate(R.layout.item_mode_card, parent, false)
@@ -35,13 +35,13 @@ class RecipeCardViewHolder(itemView: View) : BaseViewHolder(itemView) {
     override fun bind(data: Any, listener: IOnItemClickListener?) {
         val recipe = data as Recipe
 
-        tvName.text = recipe.title
+        tvItemTitle.text = recipe.title
         Glide.with(itemView.context)
             .load(recipe.thumb)
             .apply(RequestOptions().override(450, 250))
-            .into(imgPhoto)
+            .into(ivItemThumbnail)
 
-        btnFavourite.setOnClickListener {
+        btnAddFavourite.setOnClickListener {
             listener?.onButtonFavouriteClicked(recipe)
         }
 

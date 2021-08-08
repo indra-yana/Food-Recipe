@@ -20,7 +20,7 @@
         android:padding="@dimen/_6sdp">
 
         <TextView
-            android:id="@+id/tvTitle"
+            android:id="@+id/tvItemTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_33sdp"

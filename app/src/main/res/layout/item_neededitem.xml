@@ -34,7 +34,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/ivNeededItem" />
 
         <TextView
-            android:id="@+id/tv_item_title_2"
+            android:id="@+id/tvItemTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_6sdp"

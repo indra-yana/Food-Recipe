@@ -35,7 +35,7 @@
                 android:paddingBottom="@dimen/_12sdp">
 
                 <ImageView
-                    android:id="@+id/ivDetailThumb"
+                    android:id="@+id/ivItemThumbnail"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_160sdp"
                     android:layout_marginBottom="@dimen/_4sdp"
@@ -50,7 +50,7 @@
                     android:layout_height="@dimen/_30sdp"
                     android:background="@drawable/bg_fading_edge_top"
                     android:visibility="visible"
-                    app:layout_constraintTop_toTopOf="@+id/ivDetailThumb" />
+                    app:layout_constraintTop_toTopOf="@+id/ivItemThumbnail" />
 
                 <View
                     android:id="@+id/viewFadingEdgeBottom"
@@ -58,10 +58,10 @@
                     android:layout_height="@dimen/_50sdp"
                     android:background="@drawable/bg_fading_edge_bottom"
                     android:visibility="visible"
-                    app:layout_constraintBottom_toBottomOf="@+id/ivDetailThumb" />
+                    app:layout_constraintBottom_toBottomOf="@+id/ivItemThumbnail" />
 
                 <ImageButton
-                    android:id="@+id/btn_back"
+                    android:id="@+id/btnBack"
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginStart="@dimen/_10sdp"
@@ -146,7 +146,7 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/tv_item_title"
+                    android:id="@+id/tvItemTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
@@ -161,11 +161,11 @@
                     android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ivDetailThumb"
+                    app:layout_constraintTop_toBottomOf="@+id/ivItemThumbnail"
                     tools:text="@string/text_lorem_ipsum_title" />
 
                 <TextView
-                    android:id="@+id/tv_item_description"
+                    android:id="@+id/tvItemDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
@@ -178,11 +178,11 @@
                     android:textColor="@color/color_text_black_80"
                     android:textSize="@dimen/_14ssp"
                     android:visibility="visible"
-                    app:layout_constraintTop_toBottomOf="@id/tv_item_title"
+                    app:layout_constraintTop_toBottomOf="@id/tvItemTitle"
                     tools:text="@string/text_lorem_ipsum_description" />
 
                 <TextView
-                    android:id="@+id/tv_read_more"
+                    android:id="@+id/tvReadMore"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_3sdp"
@@ -192,8 +192,8 @@
                     android:textColor="@color/colorAccent"
                     android:textSize="@dimen/_12ssp"
                     android:visibility="visible"
-                    app:layout_constraintStart_toStartOf="@id/tv_item_description"
-                    app:layout_constraintTop_toBottomOf="@id/tv_item_description" />
+                    app:layout_constraintStart_toStartOf="@id/tvItemDescription"
+                    app:layout_constraintTop_toBottomOf="@id/tvItemDescription" />
 
                 <View
                     android:id="@+id/viewDivider1"
@@ -205,14 +205,14 @@
                     android:layout_marginBottom="@dimen/_8sdp"
                     android:background="@color/color_text_black_60"
                     android:visibility="visible"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_read_more" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvReadMore" />
 
                 <LinearLayout
                     android:id="@+id/layoutNeededItem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:gravity="start"
                     android:orientation="vertical"
@@ -220,7 +220,6 @@
                     app:layout_constraintTop_toBottomOf="@id/viewDivider1">
 
                     <TextView
-                        android:id="@+id/tvNeededItem"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
@@ -233,7 +232,7 @@
                         android:visibility="visible"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/ivDetailThumb" />
+                        app:layout_constraintTop_toBottomOf="@+id/ivItemThumbnail" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvNeededItem"
