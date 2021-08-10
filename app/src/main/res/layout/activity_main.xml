@@ -81,7 +81,7 @@
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/ic_create"
-        app:backgroundTint="@color/colorPrimaryDark"
+        app:backgroundTint="@color/colorPrimary2"
         app:fabCustomSize="@dimen/_40sdp"
         app:layout_anchor="@id/bottomNavBar"
         app:layout_anchorGravity="top|end"

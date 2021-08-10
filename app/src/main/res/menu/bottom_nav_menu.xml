@@ -15,4 +15,14 @@
         android:icon="@drawable/ic_favorite_border"
         android:contentDescription="@string/app_name"
         android:title="@string/text_menu_favourite_title" />
+
+<!--    <item-->
+<!--        android:enabled="false"-->
+<!--        android:id="@+id/placeholder"-->
+<!--        android:title="" />-->
+
+<!--    <item-->
+<!--        android:enabled="false"-->
+<!--        android:id="@+id/placeholder2"-->
+<!--        android:title="" />-->
 </menu>

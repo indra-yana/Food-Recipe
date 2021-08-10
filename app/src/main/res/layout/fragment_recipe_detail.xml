@@ -10,7 +10,7 @@
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmerFramelayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center">
 
         <LinearLayout
@@ -23,272 +23,286 @@
 
         </LinearLayout>
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/scrollViewContainer"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mainRecipeDetailContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/mainRecipeDetailContainer"
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/scrollViewContainer"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/_12sdp">
+                android:layout_height="0dp"
+                android:layout_marginBottom="@dimen/_2sdp"
+                app:layout_constraintBottom_toTopOf="@+id/layoutTodoAction"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
-                    android:id="@+id/ivItemThumbnail"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_160sdp"
-                    android:layout_marginBottom="@dimen/_4sdp"
-                    android:contentDescription="@string/app_name"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@tools:sample/avatars" />
+                    android:layout_height="match_parent">
 
-                <View
-                    android:id="@+id/viewFadingEdgeTop"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_30sdp"
-                    android:background="@drawable/bg_fading_edge_top"
-                    android:visibility="visible"
-                    app:layout_constraintTop_toTopOf="@+id/ivItemThumbnail" />
+                    <ImageView
+                        android:id="@+id/ivItemThumbnail"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_160sdp"
+                        android:layout_marginBottom="@dimen/_4sdp"
+                        android:contentDescription="@string/app_name"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:src="@tools:sample/avatars" />
 
-                <View
-                    android:id="@+id/viewFadingEdgeBottom"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_50sdp"
-                    android:background="@drawable/bg_fading_edge_bottom"
-                    android:visibility="visible"
-                    app:layout_constraintBottom_toBottomOf="@+id/ivItemThumbnail" />
+                    <View
+                        android:id="@+id/viewFadingEdgeTop"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_30sdp"
+                        android:background="@drawable/bg_fading_edge_top"
+                        android:visibility="visible"
+                        app:layout_constraintTop_toTopOf="@+id/ivItemThumbnail" />
 
-                <ImageButton
-                    android:id="@+id/btnBack"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:background="@drawable/bg_rounded_button_dark"
-                    android:contentDescription="@string/app_name"
-                    android:foreground="?selectableItemBackgroundBorderless"
-                    android:src="@drawable/ic_back"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/colorIconWhite100" />
+                    <View
+                        android:id="@+id/viewFadingEdgeBottom"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_50sdp"
+                        android:background="@drawable/bg_fading_edge_bottom"
+                        android:visibility="visible"
+                        app:layout_constraintBottom_toBottomOf="@+id/ivItemThumbnail" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="@+id/viewFadingEdgeBottom"
-                    app:layout_constraintTop_toTopOf="@+id/viewFadingEdgeBottom">
+                    <ImageButton
+                        android:id="@+id/btnBack"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:background="@drawable/bg_rounded_button_dark"
+                        android:contentDescription="@string/app_name"
+                        android:foreground="?selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_back"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/colorIconWhite100" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:orientation="horizontal">
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="@+id/viewFadingEdgeBottom"
+                        app:layout_constraintTop_toTopOf="@+id/viewFadingEdgeBottom">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvLevel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/_4sdp"
+                                android:drawablePadding="@dimen/_3sdp"
+                                android:gravity="center"
+                                android:includeFontPadding="false"
+                                android:textColor="@color/colorTextWhite100"
+                                android:textSize="@dimen/_11ssp"
+                                app:drawableStartCompat="@drawable/ic_grade"
+                                app:drawableTint="@color/colorPrimary2"
+                                tools:text="Level" />
+
+                            <TextView
+                                android:id="@+id/tvPortion"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/_4sdp"
+                                android:drawablePadding="@dimen/_3sdp"
+                                android:gravity="center"
+                                android:includeFontPadding="false"
+                                android:textColor="@color/colorTextWhite100"
+                                android:textSize="@dimen/_11ssp"
+                                app:drawableStartCompat="@drawable/ic_portion"
+                                app:drawableTint="@color/colorPrimary2"
+                                tools:text="Portion" />
+
+                            <TextView
+                                android:id="@+id/tvTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/_4sdp"
+                                android:drawablePadding="@dimen/_3sdp"
+                                android:gravity="center"
+                                android:includeFontPadding="false"
+                                android:textColor="@color/colorTextWhite100"
+                                android:textSize="@dimen/_11ssp"
+                                app:drawableStartCompat="@drawable/ic_timer"
+                                app:drawableTint="@color/colorPrimary2"
+                                tools:text="Time" />
+
+                        </LinearLayout>
 
                         <TextView
-                            android:id="@+id/tvLevel"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/tvAuthor"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/_4sdp"
-                            android:drawablePadding="@dimen/_3sdp"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:fontFamily="@font/poppins_semibold"
                             android:gravity="center"
                             android:includeFontPadding="false"
                             android:textColor="@color/colorTextWhite100"
-                            android:textSize="@dimen/_11ssp"
-                            app:drawableStartCompat="@drawable/ic_grade"
-                            app:drawableTint="@color/colorWarning"
-                            tools:text="Level" />
-
-                        <TextView
-                            android:id="@+id/tvPortion"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/_4sdp"
-                            android:drawablePadding="@dimen/_3sdp"
-                            android:gravity="center"
-                            android:includeFontPadding="false"
-                            android:textColor="@color/colorTextWhite100"
-                            android:textSize="@dimen/_11ssp"
-                            app:drawableStartCompat="@drawable/ic_portion"
-                            app:drawableTint="@color/colorWarning"
-                            tools:text="Portion" />
-
-                        <TextView
-                            android:id="@+id/tvTime"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/_4sdp"
-                            android:drawablePadding="@dimen/_3sdp"
-                            android:gravity="center"
-                            android:includeFontPadding="false"
-                            android:textColor="@color/colorTextWhite100"
-                            android:textSize="@dimen/_11ssp"
-                            app:drawableStartCompat="@drawable/ic_timer"
-                            app:drawableTint="@color/colorWarning"
-                            tools:text="Time" />
+                            tools:text="@string/text_lorem_ipsum_title" />
 
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/tvAuthor"
-                        android:layout_width="match_parent"
+                        android:id="@+id/tvItemTitle"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_5sdp"
-                        android:fontFamily="@font/poppins_semibold"
-                        android:gravity="center"
-                        android:includeFontPadding="false"
-                        android:textColor="@color/colorTextWhite100"
-                        tools:text="@string/text_lorem_ipsum_title" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tvItemTitle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:ellipsize="end"
-                    android:includeFontPadding="false"
-                    android:maxLines="2"
-                    android:textColor="@color/colorTextBlack100"
-                    android:textSize="@dimen/_14ssp"
-                    android:textStyle="bold"
-                    android:visibility="visible"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ivItemThumbnail"
-                    tools:text="@string/text_lorem_ipsum_title" />
-
-                <TextView
-                    android:id="@+id/tvItemDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:ellipsize="end"
-                    android:includeFontPadding="false"
-                    android:lineSpacingExtra="@dimen/_2sdp"
-                    android:maxLines="4"
-                    android:textColor="@color/colorTextBlack100"
-                    android:textSize="@dimen/_14ssp"
-                    android:visibility="visible"
-                    app:layout_constraintTop_toBottomOf="@id/tvItemTitle"
-                    tools:text="@string/text_lorem_ipsum_description" />
-
-                <TextView
-                    android:id="@+id/tvReadMore"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_3sdp"
-                    android:includeFontPadding="false"
-                    android:maxLines="1"
-                    android:text="@string/text_read_more"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/_12ssp"
-                    android:visibility="visible"
-                    app:layout_constraintStart_toStartOf="@id/tvItemDescription"
-                    app:layout_constraintTop_toBottomOf="@id/tvItemDescription" />
-
-                <View
-                    android:id="@+id/viewDivider1"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_2sdp"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_8sdp"
-                    android:background="@color/colorPrimaryGrey40"
-                    android:visibility="visible"
-                    app:layout_constraintTop_toBottomOf="@+id/tvReadMore" />
-
-                <LinearLayout
-                    android:id="@+id/layoutNeededItem"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:gravity="start"
-                    android:orientation="vertical"
-                    android:visibility="visible"
-                    app:layout_constraintTop_toBottomOf="@id/viewDivider1">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
                         android:ellipsize="end"
                         android:includeFontPadding="false"
-                        android:maxLines="1"
-                        android:text="@string/text_needed_items"
+                        android:maxLines="2"
                         android:textColor="@color/colorTextBlack100"
                         android:textSize="@dimen/_14ssp"
                         android:textStyle="bold"
                         android:visibility="visible"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/ivItemThumbnail" />
+                        app:layout_constraintTop_toBottomOf="@+id/ivItemThumbnail"
+                        tools:text="@string/text_lorem_ipsum_title" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvNeededItem"
+                    <TextView
+                        android:id="@+id/tvItemDescription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_4sdp"
-                        android:clipToPadding="false"
-                        android:elevation="@dimen/_5sdp"
-                        android:orientation="horizontal"
-                        android:paddingStart="@dimen/_4sdp"
-                        android:paddingEnd="@dimen/_4sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:ellipsize="end"
+                        android:includeFontPadding="false"
+                        android:lineSpacingExtra="@dimen/_2sdp"
+                        android:maxLines="4"
+                        android:textColor="@color/colorTextBlack100"
+                        android:textSize="@dimen/_14ssp"
                         android:visibility="visible"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/item_neededitem" />
+                        app:layout_constraintTop_toBottomOf="@id/tvItemTitle"
+                        tools:text="@string/text_lorem_ipsum_description" />
 
-                </LinearLayout>
+                    <TextView
+                        android:id="@+id/tvReadMore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_3sdp"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:text="@string/text_read_more"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/_12ssp"
+                        android:visibility="visible"
+                        app:layout_constraintStart_toStartOf="@id/tvItemDescription"
+                        app:layout_constraintTop_toBottomOf="@id/tvItemDescription" />
 
-                <View
-                    android:id="@+id/viewDivider2"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_2sdp"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:layout_marginEnd="@dimen/_8sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    android:background="@color/colorPrimaryGrey40"
-                    android:visibility="visible"
-                    app:layout_constraintTop_toBottomOf="@+id/layoutNeededItem" />
+                    <View
+                        android:id="@+id/viewDivider1"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_2sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_8sdp"
+                        android:background="@color/colorPrimaryGrey40"
+                        android:visibility="visible"
+                        app:layout_constraintTop_toBottomOf="@+id/tvReadMore" />
+
+                    <LinearLayout
+                        android:id="@+id/layoutNeededItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:gravity="start"
+                        android:orientation="vertical"
+                        android:visibility="visible"
+                        app:layout_constraintTop_toBottomOf="@id/viewDivider1">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:includeFontPadding="false"
+                            android:maxLines="1"
+                            android:text="@string/text_needed_items"
+                            android:textColor="@color/colorTextBlack100"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="bold"
+                            android:visibility="visible"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/ivItemThumbnail" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvNeededItem"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_4sdp"
+                            android:clipToPadding="false"
+                            android:elevation="@dimen/_5sdp"
+                            android:orientation="horizontal"
+                            android:paddingStart="@dimen/_4sdp"
+                            android:paddingEnd="@dimen/_4sdp"
+                            android:visibility="visible"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            tools:listitem="@layout/item_neededitem" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/viewDivider2"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_2sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:background="@color/colorPrimaryGrey40"
+                        android:visibility="visible"
+                        app:layout_constraintTop_toBottomOf="@+id/layoutNeededItem" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+            <LinearLayout
+                android:id="@+id/layoutTodoAction"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_4sdp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnIngredients"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_5sdp"
-                    android:backgroundTint="@color/colorPrimary"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/colorPrimary2"
                     android:fontFamily="@font/poppins_regular"
                     android:includeFontPadding="false"
                     android:text="@string/text_ingredients"
                     android:textColor="@color/colorTextWhite100"
                     android:textSize="@dimen/_12ssp"
                     android:visibility="visible"
-                    app:cornerRadius="@dimen/_6sdp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/btnSteps"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/viewDivider2" />
+                    app:cornerRadius="@dimen/_6sdp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSteps"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_weight="1"
                     android:backgroundTint="@color/colorPrimaryDark"
                     android:fontFamily="@font/poppins_regular"
                     android:includeFontPadding="false"
@@ -296,15 +310,11 @@
                     android:textColor="@color/colorTextWhite100"
                     android:textSize="@dimen/_12ssp"
                     android:visibility="visible"
-                    app:cornerRadius="@dimen/_6sdp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/btnIngredients"
-                    app:layout_constraintTop_toBottomOf="@id/viewDivider2" />
+                    app:cornerRadius="@dimen/_6sdp" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
 
-        </androidx.core.widget.NestedScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.facebook.shimmer.ShimmerFrameLayout>
 
