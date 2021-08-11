@@ -106,6 +106,7 @@
             android:layout_gravity="bottom"
             android:background="@android:color/transparent"
             app:itemIconSize="@dimen/_20sdp"
+            app:labelVisibilityMode="selected"
             app:itemIconTint="@drawable/selector_bottom_nav_color"
             app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
             app:itemTextAppearanceInactive="@style/BottomNavigationView.Inactive"

@@ -253,9 +253,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
                     Log.d(TAG, "getRecipeByPage: State is success! ${it.value.recipes}")
                 }
                 is ResponseStatus.Failure -> {
-                    handleRequestError(it) {
-                        viewModel.getRecipeByPage(nextPage)
-                    }
+                    handleRequestError(it) { retry() }
 
                     Log.d(TAG, "getRecipeByPage:State is failure! ${it.exception}")
                 }
@@ -285,9 +283,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
                     Log.d(TAG, "getLatestRecipe: State is success! ${it.value.recipes}")
                 }
                 is ResponseStatus.Failure -> {
-                    handleRequestError(it) {
-                        viewModel.getLatestRecipe()
-                    }
+                    handleRequestError(it) { retry() }
 
                     Log.d(TAG, "getLatestRecipe: State is failure! ${it.exception}")
                 }
@@ -296,6 +292,11 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
                 }
             }
         })
+    }
+
+    private fun retry() {
+        viewModel.getLatestRecipe()
+        viewModel.getRecipeByPage(nextPage)
     }
 
     private fun toggleLoading(isLoading: Boolean) {
