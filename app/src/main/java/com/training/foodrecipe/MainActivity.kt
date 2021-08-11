@@ -11,10 +11,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.training.foodrecipe.databinding.ActivityMainBinding
 import com.training.foodrecipe.helper.ConnectivityHelper
 import com.training.foodrecipe.helper.setupWithNavController
-import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -23,14 +22,14 @@ class MainActivity : AppCompatActivity() {
         private val TAG = MainActivity::class.java.simpleName
     }
 
+    private lateinit var binding: ActivityMainBinding
     private var currentNavController: LiveData<NavController>? = null
     private var backPressedOnce = false
 
-    private lateinit var fabAction: FloatingActionButton
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         ConnectivityHelper(applicationContext).observe(this, Observer { isConnected ->
             if (isConnected) {
@@ -46,8 +45,8 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        fabAction = findViewById(R.id.fabCreate)
-        fabAction.setOnClickListener {
+
+        binding.fabCreate.setOnClickListener {
             Toast.makeText(this, "Fab Clicked!", Toast.LENGTH_SHORT).show()
         }
 
@@ -68,6 +67,8 @@ class MainActivity : AppCompatActivity() {
      * Called on first creation and when restoring state.
      */
     private fun setupBottomNavigationBar() {
+        binding.bottomNavBar.background = null
+
         val navGraphIds = listOf(
             R.navigation.nav_home,
             R.navigation.nav_article,
@@ -75,7 +76,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         // Setup the bottom navigation view with a list of navigation graphs
-        val controller = bottomNavBar.setupWithNavController(
+        val controller = binding.bottomNavBar.setupWithNavController(
             navGraphIds = navGraphIds,
             fragmentManager = supportFragmentManager,
             containerId = R.id.navHostContainer,
@@ -135,20 +136,31 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun hideFabAction() {
-        fabAction.visibility = View.GONE
+        binding.fabCreate.visibility = View.GONE
+        binding.bottomNavBar.menu.findItem(R.id.placeholder).isVisible = false
+        binding.bottomAppBar.fabCradleMargin = 0f
+        binding.bottomAppBar.cradleVerticalOffset = 0f
+        binding.bottomAppBar.fabCradleRoundedCornerRadius = 0f
     }
 
     fun showFabAction() {
-        fabAction.visibility = View.VISIBLE
+        binding.fabCreate.visibility = View.VISIBLE
+        binding.bottomNavBar.menu.findItem(R.id.placeholder).isVisible = true
+        binding.bottomAppBar.fabCradleMargin = resources.getDimension(R.dimen._6sdp)
+        binding.bottomAppBar.cradleVerticalOffset = resources.getDimension(R.dimen._4sdp)
+        binding.bottomAppBar.fabCradleRoundedCornerRadius = resources.getDimension(R.dimen._8sdp)
     }
 
     fun showBottomNavigation() {
-        bottomNavBar.visibility = View.VISIBLE
+        binding.bottomNavBar.visibility = View.VISIBLE
+        binding.bottomAppBar.visibility = View.VISIBLE
     }
 
     fun hideBottomNavigation() {
-        bottomNavBar.visibility = View.GONE
+        binding.bottomNavBar.visibility = View.GONE
+        binding.bottomAppBar.visibility = View.GONE
     }
+
 
 
 //    fun setupNavigationBar() {

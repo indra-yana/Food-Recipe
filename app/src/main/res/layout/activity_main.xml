@@ -2,6 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainActivityLayoutRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -77,37 +78,77 @@
         android:id="@+id/fabCreate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top"
         android:clickable="true"
         android:focusable="true"
-        android:src="@drawable/ic_create"
+        android:src="@drawable/ic_receipt"
         app:backgroundTint="@color/colorPrimary2"
         app:fabCustomSize="@dimen/_40sdp"
-        app:layout_anchor="@id/bottomNavBar"
-        app:layout_anchorGravity="top|end"
-        app:layout_behavior=".helper.BottomNavigationFABBehavior"
-        app:tint="@color/colorTextWhite100"
-        app:useCompatPadding="true" />
+        app:layout_anchor="@id/bottomAppBar"
+        app:layout_behavior=""
+        app:tint="@color/colorTextWhite100" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavBar"
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomAppBar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
         android:layout_gravity="bottom"
-        android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginEnd="@dimen/_8sdp"
-        android:layout_marginBottom="@dimen/_5sdp"
-        android:background="@drawable/bg_item_1"
-        android:paddingTop="@dimen/_4sdp"
-        android:paddingBottom="@dimen/_4sdp"
-        app:itemIconSize="@dimen/_20sdp"
-        app:itemIconTint="@drawable/selector_bottom_nav_color"
-        app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
-        app:itemTextAppearanceInactive="@style/BottomNavigationView.Inactive"
-        app:itemTextColor="@drawable/selector_bottom_nav_color"
-        app:layout_behavior=".helper.BottomNavigationBehavior"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottom_nav_menu" />
+        app:backgroundTint="@color/colorPrimaryDark"
+        app:fabAlignmentMode="end"
+        app:fabCradleMargin="@dimen/_6sdp"
+        app:fabCradleRoundedCornerRadius="@dimen/_8sdp"
+        app:fabCradleVerticalOffset="@dimen/_4sdp"
+        app:hideOnScroll="true">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:background="@android:color/transparent"
+            app:itemIconSize="@dimen/_20sdp"
+            app:itemIconTint="@drawable/selector_bottom_nav_color"
+            app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
+            app:itemTextAppearanceInactive="@style/BottomNavigationView.Inactive"
+            app:itemTextColor="@drawable/selector_bottom_nav_color"
+            app:menu="@menu/bottom_nav_menu" />
+
+    </com.google.android.material.bottomappbar.BottomAppBar>
+
+    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+    <!--        android:id="@+id/fabCreate"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_gravity="bottom"-->
+    <!--        android:clickable="true"-->
+    <!--        android:focusable="true"-->
+    <!--        android:src="@drawable/ic_create"-->
+    <!--        app:backgroundTint="@color/colorPrimary2"-->
+    <!--        app:fabCustomSize="@dimen/_40sdp"-->
+    <!--        app:layout_anchor="@id/bottomNavBar"-->
+    <!--        app:layout_anchorGravity="top|end"-->
+    <!--        app:layout_behavior=".helper.BottomNavigationFABBehavior"-->
+    <!--        app:tint="@color/colorTextWhite100"-->
+    <!--        app:useCompatPadding="true" />-->
+
+    <!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
+    <!--        android:id="@+id/bottomNavBar"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="@dimen/_40sdp"-->
+    <!--        android:layout_gravity="bottom"-->
+    <!--        android:layout_marginStart="@dimen/_8sdp"-->
+    <!--        android:layout_marginEnd="@dimen/_8sdp"-->
+    <!--        android:layout_marginBottom="@dimen/_5sdp"-->
+    <!--        android:background="@drawable/bg_item_1"-->
+    <!--        android:paddingTop="@dimen/_4sdp"-->
+    <!--        android:paddingBottom="@dimen/_4sdp"-->
+    <!--        app:itemIconSize="@dimen/_20sdp"-->
+    <!--        app:itemIconTint="@drawable/selector_bottom_nav_color"-->
+    <!--        app:itemTextAppearanceActive="@style/BottomNavigationView.Active"-->
+    <!--        app:itemTextAppearanceInactive="@style/BottomNavigationView.Inactive"-->
+    <!--        app:itemTextColor="@drawable/selector_bottom_nav_color"-->
+    <!--        app:layout_behavior=".helper.BottomNavigationBehavior"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:menu="@menu/bottom_nav_menu" />-->
 
     <!--    app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"-->
     <!-- BOTTOM NAVIGATION -->

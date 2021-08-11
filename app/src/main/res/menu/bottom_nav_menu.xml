@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/nav_home"
-        android:icon="@drawable/ic_home"
         android:contentDescription="@string/app_name"
+        android:icon="@drawable/ic_home"
         android:title="@string/text_menu_home_title" />
     <item
         android:id="@+id/nav_article"
-        android:icon="@drawable/ic_note"
         android:contentDescription="@string/app_name"
+        android:icon="@drawable/ic_note"
         android:title="@string/text_menu_article_title" />
     <item
         android:id="@+id/nav_favourite"
-        android:icon="@drawable/ic_favorite_border"
         android:contentDescription="@string/app_name"
+        android:icon="@drawable/ic_favorite_border"
         android:title="@string/text_menu_favourite_title" />
+    <item
+        android:id="@+id/placeholder"
+        android:enabled="false"
+        android:title="" />
 
-<!--    <item-->
-<!--        android:enabled="false"-->
-<!--        android:id="@+id/placeholder"-->
-<!--        android:title="" />-->
-
-<!--    <item-->
-<!--        android:enabled="false"-->
-<!--        android:id="@+id/placeholder2"-->
-<!--        android:title="" />-->
+    <!--    <item-->
+    <!--        android:enabled="false"-->
+    <!--        android:id="@+id/placeholder2"-->
+    <!--        android:title="" />-->
 </menu>
