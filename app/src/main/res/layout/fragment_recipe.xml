@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="@dimen/_5sdp"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <include layout="@layout/fragment_recipe_placeholder" />
 
@@ -159,7 +159,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.facebook.shimmer.ShimmerFrameLayout>
-
 
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
