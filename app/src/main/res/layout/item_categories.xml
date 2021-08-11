@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_6sdp"
+    app:cardBackgroundColor="@android:color/transparent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_item_2"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/_8sdp">
+
+        <TextView
+            android:id="@+id/tvItemTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="@color/colorTextBlack100"
+            android:textSize="@dimen/_14sdp"
+            tools:text="Resep Tradisional" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
