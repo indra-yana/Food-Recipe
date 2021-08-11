@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -71,9 +72,6 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
         (activity as MainActivity).apply {
             hideFabAction()
             hideBottomNavigation()
-            viewBinding.btnBack.setOnClickListener {
-                onBackPressed()
-            }
         }
 
         getRecipeDetail()
@@ -83,9 +81,16 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
         buildTodoAdapter()
         updateUI()
 
-        viewBinding.srlRefresh.setOnRefreshListener {
-            viewModel.getRecipeDetail(recipe.key)
+        with(viewBinding) {
+            srlRefresh.setOnRefreshListener {
+                viewModel.getRecipeDetail(recipe.key)
+            }
+
+            btnBack.setOnClickListener {
+                findNavController().navigateUp()
+            }
         }
+
     }
 
     override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRecipeDetailBinding {
