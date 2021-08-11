@@ -2,30 +2,32 @@ package com.training.foodrecipe
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.core.view.children
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.training.foodrecipe.adapter.IOnItemClickListener
 import com.training.foodrecipe.adapter.CategoryAdapter
+import com.training.foodrecipe.adapter.IOnItemClickListener
+import com.training.foodrecipe.adapter.RecipeAdapter
 import com.training.foodrecipe.databinding.FragmentSearchBinding
 import com.training.foodrecipe.datasource.remote.IRecipeApi
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.helper.handleRequestError
+import com.training.foodrecipe.model.Recipe
 import com.training.foodrecipe.model.RecipeCategory
 import com.training.foodrecipe.repository.RecipeRepository
 import com.training.foodrecipe.viewmodel.RecipeViewModel
+import java.util.*
 
 class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, RecipeRepository>() {
 
@@ -35,10 +37,15 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
 
     // Adapter
     private lateinit var categoryAdapter: CategoryAdapter
+    private lateinit var recipeAdapter: RecipeAdapter
 
     // Indicator state
     private var isLoading = false
     private var isNetworkError = false
+
+    private var currentQuery: Editable? = null
+
+    private var timerTask: Timer? = null
 
     /**
      * Init all variable here that need once time initialization
@@ -62,31 +69,60 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
         buildCategoryRecyclerView()
         getCategory()
 
+        buildRecipeAdapter()
+        buildRecipeRecyclerView()
+        getSearchRecipe()
+
         with(viewBinding) {
+            currentQuery?.let {
+                // TODO: Set the current query on edit text
+            }
+
             etInputSearch.apply {
                 addTextChangedListener(object : TextWatcher {
                     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                        timerTask?.cancel()
+                    }
                     override fun afterTextChanged(s: Editable?) {
                         // TODO: Run search query with s param
+                        if (s.toString().trim().isNotEmpty()) {
+                            timerTask = Timer()
+                            timerTask?.schedule(object : TimerTask() {
+                                override fun run() {
+                                    Handler(Looper.getMainLooper()).post {
+                                        viewModel.searchRecipe(s.toString().trim())
+                                        showSoftKey(this@apply, false)
+                                    }
+                                }
+                            }, 800)
+                        } else {
+                            recipeAdapter.clearData()
+                        }
 
                         ivClearInputSearch.visibility = if (s.toString().trim().isEmpty()) View.GONE else View.VISIBLE
                     }
                 })
 
+                /*
                 setOnKeyListener { v, keyCode, event ->
-                    val textResult = etInputSearch.editableText.toString()
-                    if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
-                        Log.d(TAG, textResult)
+                    val query = etInputSearch.editableText.toString()
+
+                    if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                        Log.d(TAG, query)
 
                         // TODO: Run search query with textResult param
-                        showSoftKey(v, false)
+                        Handler().postDelayed({
+                            viewModel.searchRecipe(query)
+                            showSoftKey(v, false)
+                        }, 1000)
 
                         return@setOnKeyListener true
                     }
 
                     false
                 }
+                */
 
                 requestFocus()
             }
@@ -184,6 +220,73 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
                 }
                 else -> {
                     Log.d(TAG, "getRecipeDetail: State is unknown!")
+                }
+            }
+        })
+    }
+
+    private fun buildRecipeAdapter() {
+        recipeAdapter = RecipeAdapter().apply {
+            iOnItemClickListener = object : IOnItemClickListener {
+                override fun onItemClicked(data: Any) {
+                    data as Recipe
+                    val bundle = Bundle().apply {
+                        putString("args", "This is my args!")
+                        putParcelable("recipe", data)
+                    }
+
+                    findNavController().navigate(R.id.action_searchFragment_to_recipeDetailFragment, bundle)
+                }
+
+                override fun onButtonFavouriteClicked(data: Any) {
+                    super.onButtonFavouriteClicked(data)
+                    data as Recipe
+
+                    Toast.makeText(requireContext(), "${data.title} Added to favourite!", Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onButtonShareClicked(data: Any) {
+                    super.onButtonShareClicked(data)
+                    data as Recipe
+
+                    Toast.makeText(requireContext(), "${data.title} Shared to social media!", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun buildRecipeRecyclerView() {
+        with(viewBinding) {
+            rvRecipe.setHasFixedSize(true)
+            rvRecipe.adapter = recipeAdapter
+            rvRecipe.layoutManager = LinearLayoutManager(requireContext())
+        }
+    }
+
+    private fun getSearchRecipe() {
+        viewModel.searchRecipe.observe(viewLifecycleOwner, Observer {
+            isLoading = it is ResponseStatus.Loading
+            isNetworkError = it is ResponseStatus.Failure
+
+            toggleLoading(isLoading)
+
+            when (it) {
+                is ResponseStatus.Loading -> {
+                    Log.d(TAG, "getRecipeByPage: State is loading!")
+                }
+                is ResponseStatus.Success -> {
+                    val item = it.value.recipes
+                    recipeAdapter.bindData(item)
+
+                    Log.d(TAG, "getRecipeByPage: State is success! $item")
+                }
+                is ResponseStatus.Failure -> {
+                    handleRequestError(it) { retry() }
+
+                    Log.d(TAG, "getRecipeByPage:State is failure! ${it.exception}")
+                }
+                else -> {
+                    Log.d(TAG, "getRecipeByPage: State is unknown!")
                 }
             }
         })

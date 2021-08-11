@@ -48,4 +48,8 @@ class RecipeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         notifyItemRangeInserted(oldCount, itemCount)
     }
 
+    fun clearData() {
+        this.listRecipe.clear()
+        notifyDataSetChanged()
+    }
 }

@@ -33,4 +33,7 @@
     <string name="text_menu_favourite_title">Favourite</string>
     <string name="text_needed_items">Needed Items</string>
     <string name="text_list_mode">List Mode</string>
+    <string name="text_search_title">Pencarian</string>
+    <string name="text_recipe_popular">Resep Populer</string>
+    <string name="text_search_result">Hasil Pencarian</string>
 </resources>
