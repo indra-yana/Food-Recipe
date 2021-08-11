@@ -4,13 +4,14 @@ import android.annotation.SuppressLint
 import android.content.res.Resources
 import android.os.Bundle
 import android.os.Handler
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.children
@@ -88,6 +89,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        // Connect to activity
         (activity as MainActivity).apply {
             showFabAction()
             showBottomNavigation()
@@ -100,19 +102,8 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
         getRecipeByPage()
 
         with(viewBinding) {
-            etInputSearch.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-                override fun afterTextChanged(s: Editable?) {
-                    // TODO: Run search query with s param
-
-                    ivClearInputSearch.visibility = if (s.toString().trim().isEmpty()) View.GONE else View.VISIBLE
-                }
-            })
-
-            ivClearInputSearch.setOnClickListener {
-                etInputSearch.text = null
-                it.visibility = View.GONE
+            layoutSearch.setOnClickListener {
+                findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
             }
 
             ivMenu.setOnClickListener {
