@@ -138,8 +138,8 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
 
     private fun updateUI() {
         with(viewBinding) {
-            tvLevel.text = recipe.dificulty
-            tvPortion.text = recipe.portion
+            tvLevel.text = recipe.dificulty ?: (recipe.difficulty ?: "-")
+            tvPortion.text = recipe.portion ?: (recipe.serving ?: "-")
             tvTime.text = recipe.times
 
             Glide.with(requireView().context)

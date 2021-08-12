@@ -35,27 +35,27 @@ class RecipeListViewHolder(itemView: View) : BaseViewHolder(itemView) {
     }
 
     override fun bind(data: Any, listener: IOnItemClickListener?) {
-        val recipe = data as Recipe
+        data as Recipe
 
-        tvItemTitle.text = recipe.title
-        tvMisc.text = ("${recipe.dificulty ?: "-"} | ${recipe.portion} | ${recipe.times}")
-        tvServing.text = recipe.serving
+        tvItemTitle.text = data.title
+        tvMisc.text = ("${data.dificulty ?: (data.difficulty ?: "-")} | ${data.portion ?: (data.serving ?: "-")} | ${data.times}")
+        // tvServing.text = recipe.serving
 
         Glide.with(itemView.context)
-            .load(recipe.thumb)
+            .load(data.thumb)
             .apply(RequestOptions().override(100, 60))
             .into(ivItemThumbnail)
 
         itemView.setOnClickListener {
-            listener?.onItemClicked(recipe)
+            listener?.onItemClicked(data)
         }
 
         btnAddFavourite.setOnClickListener {
-            listener?.onButtonFavouriteClicked(recipe)
+            listener?.onButtonFavouriteClicked(data)
         }
 
         btnShare.setOnClickListener {
-            listener?.onButtonShareClicked(recipe)
+            listener?.onButtonShareClicked(data)
         }
 
     }

@@ -20,9 +20,9 @@
             android:id="@+id/layoutSearch"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
-            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_45sdp"
-            android:layout_marginEnd="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
             android:background="@drawable/bg_item_2"
             android:elevation="@dimen/_6sdp"
             android:gravity="center_vertical"
@@ -68,85 +68,151 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/layoutCategory"
+        <TextView
+            android:id="@+id/tvCategoryTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:elevation="@dimen/_5sdp"
-            android:gravity="start"
-            android:orientation="vertical"
-            android:visibility="visible"
-            app:layout_constraintTop_toBottomOf="@id/layoutSearch">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:includeFontPadding="false"
-                android:maxLines="1"
-                android:text="@string/text_recipe_popular"
-                android:textColor="@color/colorTextWhite100"
-                android:textSize="@dimen/_14ssp"
-                android:textStyle="bold" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvCategory"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_4sdp"
-                android:clipToPadding="false"
-                android:elevation="@dimen/_5sdp"
-                android:orientation="horizontal"
-                android:paddingStart="@dimen/_4sdp"
-                android:paddingEnd="@dimen/_4sdp"
-                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-                app:spanCount="2"
-                tools:listitem="@layout/item_categories" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layoutSearchResult"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:elevation="@dimen/_5sdp"
-            android:gravity="start"
-            android:orientation="vertical"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layoutCategory">
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:text="@string/text_recipe_popular"
+            android:textColor="@color/colorTextWhite100"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/layoutSearch" />
 
-            <TextView
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerCategoryFramelayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:elevation="@dimen/_5sdp"
+            app:layout_constraintTop_toBottomOf="@id/tvCategoryTitle">
+
+            <LinearLayout
+                android:id="@+id/layoutCategoryPlaceholder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:includeFontPadding="false"
-                android:maxLines="1"
-                android:text="@string/text_search_result"
-                android:textColor="@color/colorTextBlack100"
-                android:textSize="@dimen/_14ssp"
-                android:textStyle="bold"
-                android:visibility="visible" />
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:orientation="vertical"
+                android:visibility="visible">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvRecipe"
+                <include layout="@layout/item_categories_placeholder" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutCategory"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/_4sdp"
-                android:clipToPadding="false"
+                android:layout_gravity="center_vertical"
                 android:elevation="@dimen/_5sdp"
                 android:orientation="vertical"
-                android:paddingTop="@dimen/_4sdp"
-                android:paddingBottom="?actionBarSize"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_mode_list" />
+                android:visibility="visible">
 
-        </LinearLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:elevation="@dimen/_5sdp"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/_4sdp"
+                    android:paddingEnd="@dimen/_4sdp"
+                    app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                    app:spanCount="2"
+                    tools:listitem="@layout/item_categories" />
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <TextView
+            android:id="@+id/tvSearchResultTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:text="@string/text_search_result"
+            android:textColor="@color/colorTextBlack100"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/shimmerCategoryFramelayout" />
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerFramelayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSearchResultTitle">
+
+            <LinearLayout
+                android:id="@+id/layoutSearchResultPlaceholder"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/_10sdp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sliderIndicatorExt">
+
+                <include layout="@layout/item_mode_list_placeholder" />
+
+                <include layout="@layout/item_mode_list_placeholder" />
+
+                <include layout="@layout/item_mode_list_placeholder" />
+
+                <include layout="@layout/item_mode_list_placeholder" />
+
+                <include layout="@layout/item_mode_list_placeholder" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutSearchResult"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:elevation="@dimen/_5sdp"
+                android:gravity="start"
+                android:orientation="vertical"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layoutCategory">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvRecipe"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:clipToPadding="false"
+                    android:elevation="@dimen/_5sdp"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/_4sdp"
+                    android:paddingBottom="?actionBarSize"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_mode_list" />
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

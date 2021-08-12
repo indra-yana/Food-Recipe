@@ -42,8 +42,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
     // Indicator state
     private var isLoading = false
     private var isNetworkError = false
-
-    private var currentQuery: Editable? = null
+    private var currentSearchQuery: String = ""
 
     private var timerTask: Timer? = null
 
@@ -58,7 +57,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        Log.d(TAG, "onActivityCreated: ")
         // Connect to activity
         (activity as MainActivity).apply {
             hideFabAction()
@@ -74,33 +73,42 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
         getSearchRecipe()
 
         with(viewBinding) {
-            currentQuery?.let {
-                // TODO: Set the current query on edit text
-            }
-
             etInputSearch.apply {
                 addTextChangedListener(object : TextWatcher {
                     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
                     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                         timerTask?.cancel()
                     }
+
                     override fun afterTextChanged(s: Editable?) {
                         // TODO: Run search query with s param
-                        if (s.toString().trim().isNotEmpty()) {
+                        val q = s.toString().trim()
+
+                        if (q.isNotEmpty()) {
+                            ivClearInputSearch.visibility = View.VISIBLE
+
+                            if (currentSearchQuery == q) {
+                                timerTask?.cancel()
+                                return
+                            }
+
                             timerTask = Timer()
                             timerTask?.schedule(object : TimerTask() {
                                 override fun run() {
                                     Handler(Looper.getMainLooper()).post {
-                                        viewModel.searchRecipe(s.toString().trim())
+                                        clearSearchResult()
                                         showSoftKey(this@apply, false)
+                                        viewModel.searchRecipe(q)
+
+                                        currentSearchQuery = q
                                     }
                                 }
-                            }, 800)
+                            }, 1000)
                         } else {
-                            recipeAdapter.clearData()
+                            currentSearchQuery = ""
+                            ivClearInputSearch.visibility = View.GONE
+                            clearSearchResult()
                         }
-
-                        ivClearInputSearch.visibility = if (s.toString().trim().isEmpty()) View.GONE else View.VISIBLE
                     }
                 })
 
@@ -124,7 +132,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
                 }
                 */
 
-                requestFocus()
+                setOnClickListener {
+                    showSoftKey(it, true)
+                }
             }
 
             ivClearInputSearch.setOnClickListener {
@@ -181,7 +191,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
                 override fun onItemClicked(data: Any) {
                     data as RecipeCategory
 
-                    Toast.makeText(requireContext(), data.category, Toast.LENGTH_SHORT).show()
+                    viewBinding.etInputSearch.setText(data.key)
                 }
             }
         }
@@ -201,7 +211,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
             isNetworkError = it is ResponseStatus.Failure
 
             toggleLoading(isLoading)
-            showSoftKey(viewBinding.etInputSearch, !isNetworkError)
 
             when (it) {
                 is ResponseStatus.Loading -> {
@@ -294,16 +303,40 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
 
     private fun toggleLoading(isLoading: Boolean) {
         viewBinding.srlRefresh.isRefreshing = isLoading
+        viewBinding.shimmerFramelayout.showShimmer(isLoading || isNetworkError)
+        viewBinding.shimmerCategoryFramelayout.showShimmer(isLoading || isNetworkError)
 
         if (isLoading || isNetworkError) {
-            viewBinding.mainRecipeContainer.visibility = View.GONE
+            // Search result
+            viewBinding.layoutSearchResultPlaceholder.visibility = View.VISIBLE
+            viewBinding.layoutSearchResult.visibility = View.GONE
+
+            // Category
+            viewBinding.layoutCategoryPlaceholder.visibility = View.VISIBLE
+            viewBinding.layoutCategory.visibility = View.GONE
         } else {
-            viewBinding.mainRecipeContainer.visibility = View.VISIBLE
+            // Search result
+            viewBinding.shimmerFramelayout.stopShimmer()
+            viewBinding.shimmerFramelayout.hideShimmer()
+
+            viewBinding.layoutSearchResultPlaceholder.visibility = View.GONE
+            viewBinding.layoutSearchResult.visibility = View.VISIBLE
+
+            // Category
+            viewBinding.shimmerCategoryFramelayout.stopShimmer()
+            viewBinding.shimmerCategoryFramelayout.hideShimmer()
+
+            viewBinding.layoutCategoryPlaceholder.visibility = View.GONE
+            viewBinding.layoutCategory.visibility = View.VISIBLE
         }
     }
 
     private fun retry() {
         viewModel.getCategory()
+    }
+
+    private fun clearSearchResult() {
+        recipeAdapter.clearData()
     }
 
 }
