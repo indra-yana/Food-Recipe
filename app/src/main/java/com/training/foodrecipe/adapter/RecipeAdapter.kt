@@ -17,7 +17,7 @@ import com.training.foodrecipe.model.Recipe
 
 class RecipeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var listRecipe: ArrayList<Recipe> = arrayListOf()
+    private var itemList: MutableList<Recipe> = mutableListOf()
 
     var iOnItemClickListener: IOnItemClickListener? = null
     var holderType = ViewHolderType.LIST
@@ -32,24 +32,24 @@ class RecipeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as BaseViewHolder).bind(listRecipe[position], iOnItemClickListener)
+        (holder as BaseViewHolder).bind(itemList[position], iOnItemClickListener)
         vHolder = holder
     }
 
-    override fun getItemCount(): Int = listRecipe.size
+    override fun getItemCount(): Int = itemList.size
 
-    fun bindData(listRecipe: List<Recipe>) {
+    fun bindData(itemList: List<Recipe>) {
         val oldCount: Int = itemCount
-        val filtered = listRecipe.filterNot {
-            this.listRecipe.contains(it)
+        val filtered = itemList.filterNot {
+            this.itemList.contains(it)
         }
 
-        this.listRecipe.addAll(filtered)
+        this.itemList.addAll(filtered)
         notifyItemRangeInserted(oldCount, itemCount)
     }
 
     fun clearData() {
-        this.listRecipe.clear()
+        this.itemList.clear()
         notifyDataSetChanged()
     }
 }
