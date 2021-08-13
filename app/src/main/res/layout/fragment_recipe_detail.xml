@@ -105,7 +105,7 @@
                                 android:textColor="@color/colorTextWhite100"
                                 android:textSize="@dimen/_11ssp"
                                 app:drawableStartCompat="@drawable/ic_grade"
-                                app:drawableTint="@color/colorPrimary2"
+                                app:drawableTint="@color/colorWarning"
                                 tools:text="Level" />
 
                             <TextView
@@ -119,7 +119,7 @@
                                 android:textColor="@color/colorTextWhite100"
                                 android:textSize="@dimen/_11ssp"
                                 app:drawableStartCompat="@drawable/ic_portion"
-                                app:drawableTint="@color/colorPrimary2"
+                                app:drawableTint="@color/colorWarning"
                                 tools:text="Portion" />
 
                             <TextView
@@ -133,7 +133,7 @@
                                 android:textColor="@color/colorTextWhite100"
                                 android:textSize="@dimen/_11ssp"
                                 app:drawableStartCompat="@drawable/ic_timer"
-                                app:drawableTint="@color/colorPrimary2"
+                                app:drawableTint="@color/colorWarning"
                                 tools:text="Time" />
 
                         </LinearLayout>
@@ -195,7 +195,7 @@
                         android:includeFontPadding="false"
                         android:maxLines="1"
                         android:text="@string/text_read_more"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/_12ssp"
                         android:visibility="visible"
                         app:layout_constraintStart_toStartOf="@id/tvItemDescription"
@@ -217,9 +217,7 @@
                         android:id="@+id/layoutNeededItem"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_8sdp"
-                        android:layout_marginEnd="@dimen/_10sdp"
                         android:gravity="start"
                         android:orientation="vertical"
                         android:visibility="visible"
@@ -230,6 +228,8 @@
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:includeFontPadding="false"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
                             android:maxLines="1"
                             android:text="@string/text_needed_items"
                             android:textColor="@color/colorTextBlack100"

@@ -158,9 +158,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="center"
-            android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_2sdp"
-            android:layout_marginEnd="@dimen/_10sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvSearchResultTitle">
 
@@ -169,7 +167,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:paddingStart="@dimen/_4sdp"
                 android:paddingTop="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_4sdp"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/sliderIndicatorExt">
@@ -193,6 +193,8 @@
                 android:elevation="@dimen/_5sdp"
                 android:gravity="start"
                 android:orientation="vertical"
+                android:paddingStart="@dimen/_4sdp"
+                android:paddingEnd="@dimen/_4sdp"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layoutCategory">
