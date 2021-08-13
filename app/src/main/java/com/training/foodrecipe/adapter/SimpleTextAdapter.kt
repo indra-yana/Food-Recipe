@@ -1,9 +1,11 @@
 package com.training.foodrecipe.adapter
 
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.training.foodrecipe.adapter.viewholder.BaseViewHolder
 import com.training.foodrecipe.adapter.viewholder.SimpleTextViewHolder
+import com.training.foodrecipe.helper.DiffUtils
 
 /****************************************************
  * Created by Indra Muliana (indra.ndra26@gmail.com)
@@ -12,7 +14,7 @@ import com.training.foodrecipe.adapter.viewholder.SimpleTextViewHolder
  ****************************************************/
 class SimpleTextAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var itemList: List<String> = listOf()
+    private var itemList: MutableList<String> = mutableListOf()
 
     var iOnItemClickListener: IOnItemClickListener? = null
     var vHolder: RecyclerView.ViewHolder? = null
@@ -29,8 +31,13 @@ class SimpleTextAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemCount(): Int = itemList.size
 
     fun bindData(itemList: List<String>) {
-        this.itemList = itemList
-        notifyDataSetChanged()
+        val diffCallback = DiffUtils(this.itemList, itemList)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+
+        this.itemList.clear()
+        this.itemList.addAll(itemList)
+
+        diffResult.dispatchUpdatesTo(this)
     }
 
 }

@@ -1,9 +1,11 @@
 package com.training.foodrecipe.adapter
 
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.training.foodrecipe.adapter.viewholder.BaseViewHolder
 import com.training.foodrecipe.adapter.viewholder.NeededItemViewHolder
+import com.training.foodrecipe.helper.DiffUtils
 import com.training.foodrecipe.model.NeedItem
 
 /****************************************************
@@ -13,7 +15,7 @@ import com.training.foodrecipe.model.NeedItem
  ****************************************************/
 class NeededItemAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var listNeededItem: List<NeedItem> = listOf()
+    private var itemList: MutableList<NeedItem> = mutableListOf()
 
     var iOnItemClickListener: IOnItemClickListener? = null
     var vHolder: RecyclerView.ViewHolder? = null
@@ -23,15 +25,20 @@ class NeededItemAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as BaseViewHolder).bind(listNeededItem[position], iOnItemClickListener)
+        (holder as BaseViewHolder).bind(itemList[position], iOnItemClickListener)
         vHolder = holder
     }
 
-    override fun getItemCount(): Int = listNeededItem.size
+    override fun getItemCount(): Int = itemList.size
 
-    fun bindData(neededItem: List<NeedItem>) {
-        this.listNeededItem = neededItem
-        notifyDataSetChanged()
+    fun bindData(itemList: List<NeedItem>) {
+        val diffCallback = DiffUtils(this.itemList, itemList)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+
+        this.itemList.clear()
+        this.itemList.addAll(itemList)
+
+        diffResult.dispatchUpdatesTo(this)
     }
 
 }
