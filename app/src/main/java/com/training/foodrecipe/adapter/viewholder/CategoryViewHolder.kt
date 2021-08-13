@@ -27,12 +27,12 @@ class CategoryViewHolder(itemView: View) : BaseViewHolder(itemView) {
     }
 
     override fun bind(data: Any, listener: IOnItemClickListener?) {
-        val item = data as RecipeCategory
+        data as RecipeCategory
 
-        tvItemTitle.text = item.category
+        tvItemTitle.text = data.category
 
         itemView.setOnClickListener {
-            listener?.onItemClicked(item)
+            listener?.onItemClicked(data)
         }
     }
 

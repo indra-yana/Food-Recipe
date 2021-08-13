@@ -28,15 +28,15 @@ class RecipeGridViewHolder(itemView: View) : BaseViewHolder(itemView) {
     }
 
     override fun bind(data: Any, listener: IOnItemClickListener?) {
-        val recipe = data as Recipe
+        data as Recipe
 
         Glide.with(itemView.context)
-            .load(recipe.thumb)
+            .load(data.thumb)
             .apply(RequestOptions().override(350, 350))
             .into(ivItemThumbnail)
 
         itemView.setOnClickListener {
-            listener?.onItemClicked(recipe)
+            listener?.onItemClicked(data)
         }
     }
 }

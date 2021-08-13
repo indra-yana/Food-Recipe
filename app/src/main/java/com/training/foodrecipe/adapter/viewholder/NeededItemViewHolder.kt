@@ -30,16 +30,16 @@ class NeededItemViewHolder(itemView: View) : BaseViewHolder(itemView) {
     }
 
     override fun bind(data: Any, listener: IOnItemClickListener?) {
-        val needItem = data as NeedItem
+        data as NeedItem
 
-        tvItemTitle.text = needItem.itemName
+        tvItemTitle.text = data.itemName
         Glide.with(itemView.context)
-            .load(needItem.thumbItem)
+            .load(data.thumbItem)
             .apply(RequestOptions().override(450, 250))
             .into(ivNeededItem)
 
         itemView.setOnClickListener {
-            listener?.onItemClicked(needItem)
+            listener?.onItemClicked(data)
         }
     }
 

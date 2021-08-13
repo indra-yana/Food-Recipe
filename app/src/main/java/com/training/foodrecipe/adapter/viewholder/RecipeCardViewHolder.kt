@@ -33,24 +33,24 @@ class RecipeCardViewHolder(itemView: View) : BaseViewHolder(itemView) {
     }
 
     override fun bind(data: Any, listener: IOnItemClickListener?) {
-        val recipe = data as Recipe
+        data as Recipe
 
-        tvItemTitle.text = recipe.title
+        tvItemTitle.text = data.title
         Glide.with(itemView.context)
-            .load(recipe.thumb)
+            .load(data.thumb)
             .apply(RequestOptions().override(450, 250))
             .into(ivItemThumbnail)
 
         btnAddFavourite.setOnClickListener {
-            listener?.onButtonFavouriteClicked(recipe)
+            listener?.onButtonFavouriteClicked(data)
         }
 
         btnShare.setOnClickListener {
-            listener?.onButtonShareClicked(recipe)
+            listener?.onButtonShareClicked(data)
         }
 
         itemView.setOnClickListener {
-            listener?.onItemClicked(recipe)
+            listener?.onItemClicked(data)
         }
     }
 

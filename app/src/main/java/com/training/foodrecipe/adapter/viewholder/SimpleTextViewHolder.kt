@@ -31,15 +31,15 @@ class SimpleTextViewHolder(itemView: View) : BaseViewHolder(itemView) {
     }
 
     override fun bind(data: Any, listener: IOnItemClickListener?) {
-        val item = data as String
+        data as String
 
-        tvItemTitle.text = item
+        tvItemTitle.text = data
         btnToggleReadMore.setOnClickListener {
             expandText()
         }
 
         itemView.setOnClickListener {
-            listener?.onItemClicked(item)
+            listener?.onItemClicked(data)
             expandText()
         }
     }
