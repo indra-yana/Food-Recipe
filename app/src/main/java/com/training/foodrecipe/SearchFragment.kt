@@ -216,6 +216,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
             isNetworkError = it is ResponseStatus.Failure
 
             toggleLoading(isLoading)
+            showSoftKey(viewBinding.etInputSearch, it is ResponseStatus.Success)
 
             when (it) {
                 is ResponseStatus.Loading -> {
