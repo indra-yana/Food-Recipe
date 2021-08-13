@@ -292,17 +292,31 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
 
     private fun toggleLoading(isLoading: Boolean) {
         viewBinding.srlRefresh.isRefreshing = isLoading
-        viewBinding.shimmerFramelayout.showShimmer((isLoading || isNetworkError) && !isRequestNextPage)
+        viewBinding.shimmerRecipeContainer.showShimmer((isLoading || isNetworkError) && !isRequestNextPage)
+        viewBinding.shimmerBannerContainer.showShimmer((isLoading || isNetworkError) && !isRequestNextPage)
 
         if ((isLoading || isNetworkError) && !isRequestNextPage) {
-            viewBinding.shimmerPlaceholder.visibility = View.VISIBLE
-            viewBinding.mainRecipeContainer.visibility = View.GONE
-        } else {
-            viewBinding.shimmerFramelayout.stopShimmer()
-            viewBinding.shimmerFramelayout.hideShimmer()
+            // Banner
+            viewBinding.shimmerBannerPlaceholder.visibility = View.VISIBLE
+            viewBinding.layoutBannerContainer.visibility = View.GONE
 
-            viewBinding.shimmerPlaceholder.visibility = View.GONE
-            viewBinding.mainRecipeContainer.visibility = View.VISIBLE
+            // Recipe
+            viewBinding.shimmerRecipePlaceholder.visibility = View.VISIBLE
+            viewBinding.layoutRecipeContainer.visibility = View.GONE
+        } else {
+            // Banner
+            viewBinding.shimmerBannerContainer.stopShimmer()
+            viewBinding.shimmerBannerContainer.hideShimmer()
+
+            viewBinding.shimmerBannerPlaceholder.visibility = View.GONE
+            viewBinding.layoutBannerContainer.visibility = View.VISIBLE
+
+            // Recipe
+            viewBinding.shimmerRecipeContainer.stopShimmer()
+            viewBinding.shimmerRecipeContainer.hideShimmer()
+
+            viewBinding.shimmerRecipePlaceholder.visibility = View.GONE
+            viewBinding.layoutRecipeContainer.visibility = View.VISIBLE
         }
     }
 

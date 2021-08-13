@@ -7,149 +7,189 @@
     android:layout_height="match_parent"
     tools:context=".RecipeFragment">
 
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/shimmerFramelayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mainRecipeContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/layoutHeader"
+            layout="@layout/layout_header" />
 
         <LinearLayout
-            android:id="@+id/shimmerPlaceholder"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/layoutMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
             android:elevation="@dimen/_5sdp"
-            android:visibility="gone">
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <include layout="@layout/fragment_recipe_placeholder" />
+            <ImageButton
+                android:id="@+id/ivMenu"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:background="@android:color/transparent"
+                android:clipToPadding="false"
+                android:contentDescription="@string/app_name"
+                android:foreground="?selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_more_vert_black_24dp"
+                app:tint="@color/colorPrimaryWhite100" />
 
         </LinearLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/mainRecipeContainer"
+        <LinearLayout
+            android:id="@+id/layoutSearch"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_40sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:background="@drawable/bg_item_2"
+            android:clickable="true"
+            android:elevation="@dimen/_6sdp"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            app:layout_constraintTop_toTopOf="@+id/layoutHeader">
 
-            <LinearLayout
-                android:id="@+id/layoutSearch"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginStart="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_40sdp"
-                android:layout_marginEnd="@dimen/_16sdp"
-                android:background="@drawable/bg_item_2"
-                android:clickable="true"
-                android:elevation="@dimen/_6sdp"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="@dimen/_10sdp"
-                android:paddingEnd="@dimen/_10sdp"
-                app:layout_constraintTop_toTopOf="@+id/layoutHeader">
+            <ImageView
+                android:id="@+id/ivSearch"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_search"
+                app:tint="@color/colorIconGrey60" />
 
-                <ImageView
-                    android:id="@+id/ivSearch"
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/app_name"
-                    android:src="@drawable/ic_search"
-                    app:tint="@color/colorIconGrey60" />
-
-                <TextView
-                    android:id="@+id/etInputSearch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_4sdp"
-                    android:background="@null"
-                    android:enabled="false"
-                    android:fontFamily="@font/poppins_regular"
-                    android:gravity="center_vertical"
-                    android:hint="@string/text_search"
-                    android:includeFontPadding="false"
-                    android:textColor="@color/colorTextBlack100"
-                    android:textColorHint="@color/colorTextGrey40"
-                    android:textSize="@dimen/_13ssp" />
-
-            </LinearLayout>
-
-            <include
-                android:id="@+id/layoutHeader"
-                layout="@layout/layout_header" />
-
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/vp2Banner"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_100sdp"
-                android:layout_marginTop="@dimen/_2sdp"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                android:elevation="@dimen/_5sdp"
-                android:paddingTop="@dimen/_3sdp"
-                android:paddingBottom="@dimen/_3sdp"
-                app:layout_constraintTop_toBottomOf="@id/layoutSearch" />
-
-            <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
-                android:id="@+id/sliderIndicator"
+            <TextView
+                android:id="@+id/etInputSearch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:dampingRatio="0.5"
-                app:dotsColor="@color/colorPrimary"
-                app:dotsCornerRadius="@dimen/_100sdp"
-                app:dotsSize="@dimen/_8sdp"
-                app:dotsSpacing="@dimen/_2sdp"
-                app:dotsStrokeColor="@color/colorPrimaryGrey60"
-                app:dotsStrokeWidth="@dimen/_1sdp"
-                app:layout_constraintBottom_toTopOf="@+id/rvRecipe"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/vp2Banner"
-                app:stiffness="300" />
+                android:layout_marginStart="@dimen/_4sdp"
+                android:background="@null"
+                android:enabled="false"
+                android:fontFamily="@font/poppins_regular"
+                android:gravity="center_vertical"
+                android:hint="@string/text_search"
+                android:includeFontPadding="false"
+                android:textColor="@color/colorTextBlack100"
+                android:textColorHint="@color/colorTextGrey40"
+                android:textSize="@dimen/_13ssp" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvRecipe"
+        </LinearLayout>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerBannerContainer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:elevation="@dimen/_5sdp"
+            app:layout_constraintTop_toBottomOf="@+id/layoutSearch">
+
+            <LinearLayout
+                android:id="@+id/shimmerBannerPlaceholder"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="@dimen/_2sdp"
-                android:clipToPadding="false"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
                 android:elevation="@dimen/_5sdp"
-                android:orientation="vertical"
                 android:paddingStart="@dimen/_4sdp"
                 android:paddingTop="@dimen/_4sdp"
                 android:paddingEnd="@dimen/_4sdp"
-                android:paddingBottom="?actionBarSize"
-                android:visibility="visible"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/sliderIndicator"
-                tools:listitem="@layout/item_mode_list" />
+                android:visibility="gone">
 
-            <!-- LAYOUT MENU -->
-            <LinearLayout
-                android:id="@+id/layoutMenu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:elevation="@dimen/_5sdp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageButton
-                    android:id="@+id/ivMenu"
-                    android:layout_width="@dimen/_25sdp"
-                    android:layout_height="@dimen/_25sdp"
-                    android:background="@android:color/transparent"
-                    android:clipToPadding="false"
-                    android:contentDescription="@string/app_name"
-                    android:foreground="?selectableItemBackgroundBorderless"
-                    android:src="@drawable/ic_more_vert_black_24dp"
-                    app:tint="@color/colorPrimaryWhite100" />
+                <include layout="@layout/item_card_banner_placeholder" />
 
             </LinearLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.facebook.shimmer.ShimmerFrameLayout>
+            <LinearLayout
+                android:id="@+id/layoutBannerContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:elevation="@dimen/_5sdp"
+                android:orientation="vertical"
+                android:visibility="visible">
 
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/vp2Banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_100sdp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:elevation="@dimen/_5sdp"
+                    android:paddingTop="@dimen/_3sdp"
+                    android:paddingBottom="@dimen/_3sdp" />
+
+                <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+                    android:id="@+id/sliderIndicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    app:dampingRatio="0.5"
+                    app:dotsColor="@color/colorPrimary"
+                    app:dotsCornerRadius="@dimen/_100sdp"
+                    app:dotsSize="@dimen/_6sdp"
+                    app:dotsSpacing="@dimen/_2sdp"
+                    app:dotsStrokeColor="@color/colorPrimaryGrey60"
+                    app:dotsStrokeWidth="@dimen/_1sdp"
+                    app:stiffness="300" />
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerRecipeContainer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_2sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/shimmerBannerContainer">
+
+            <LinearLayout
+                android:id="@+id/shimmerRecipePlaceholder"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:elevation="@dimen/_5sdp"
+                android:paddingStart="@dimen/_4sdp"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingEnd="@dimen/_4sdp"
+                android:visibility="visible">
+
+                <include layout="@layout/fragment_recipe_placeholder" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutRecipeContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:elevation="@dimen/_5sdp"
+                android:paddingStart="@dimen/_4sdp"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingEnd="@dimen/_4sdp"
+                android:visibility="visible">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvRecipe"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    android:paddingBottom="?actionBarSize"
+                    android:visibility="visible"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_mode_list" />
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
