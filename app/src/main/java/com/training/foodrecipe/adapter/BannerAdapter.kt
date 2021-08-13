@@ -1,9 +1,11 @@
 package com.training.foodrecipe.adapter
 
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.training.foodrecipe.adapter.viewholder.BannerViewHolder
 import com.training.foodrecipe.adapter.viewholder.BaseViewHolder
+import com.training.foodrecipe.helper.DiffUtils
 import com.training.foodrecipe.model.Recipe
 
 /****************************************************
@@ -13,7 +15,7 @@ import com.training.foodrecipe.model.Recipe
  ****************************************************/
 class BannerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var listRecipe: ArrayList<Recipe> = arrayListOf()
+    private var itemList: MutableList<Recipe> = mutableListOf()
 
     var iOnItemClickListener: IOnItemClickListener? = null
     var vHolder: RecyclerView.ViewHolder? = null
@@ -23,18 +25,29 @@ class BannerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as BaseViewHolder).bind(listRecipe[position], iOnItemClickListener)
+        (holder as BaseViewHolder).bind(itemList[position], iOnItemClickListener)
         vHolder = holder
     }
 
-    override fun getItemCount(): Int = listRecipe.size
+    override fun getItemCount(): Int = itemList.size
 
-    fun bindData(listRecipe: List<Recipe>) {
-        val oldCount: Int = itemCount
+    fun bindData(itemList: List<Recipe>) {
+        val diffCallback = DiffUtils(this.itemList, itemList)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
 
-        this.listRecipe.clear()
-        this.listRecipe.addAll(listRecipe)
-        notifyItemRangeInserted(oldCount, itemCount)
+        this.itemList.clear()
+        this.itemList.addAll(itemList)
+
+        diffResult.dispatchUpdatesTo(this)
     }
 
+    /*
+    fun bindData(itemList: List<Recipe>) {
+        val oldCount: Int = itemCount
+
+        this.itemList.clear()
+        this.itemList.addAll(itemList)
+        notifyItemRangeInserted(oldCount, itemCount)
+    }
+    */
 }

@@ -390,7 +390,9 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
                     bannerHandler.removeCallbacks(bannerRunnable)
                     bannerHandler.postDelayed(bannerRunnable, bannerInterval)
 
-                    viewBinding.sliderIndicator.refreshDots()
+                    Handler().post {
+                        viewBinding.sliderIndicator.refreshDots()
+                    }
                 }
             })
 
