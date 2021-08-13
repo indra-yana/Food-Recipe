@@ -57,7 +57,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        Log.d(TAG, "onActivityCreated: ")
+
         // Connect to activity
         (activity as MainActivity).apply {
             hideFabAction()
@@ -135,6 +135,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
                 setOnClickListener {
                     showSoftKey(it, true)
                 }
+
+                requestFocus()
             }
 
             ivClearInputSearch.setOnClickListener {
@@ -191,7 +193,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
                 override fun onItemClicked(data: Any) {
                     data as RecipeCategory
 
-                    viewBinding.etInputSearch.setText(data.key)
+                    with(viewBinding.etInputSearch) {
+                        setText(data.key)
+                        setSelection(data.key.length)
+                    }
                 }
             }
         }

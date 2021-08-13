@@ -81,7 +81,7 @@
             android:maxLines="1"
             android:text="@string/text_recipe_popular"
             android:textColor="@color/colorTextWhite100"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="@dimen/_12ssp"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@id/layoutSearch" />
 
@@ -114,6 +114,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:elevation="@dimen/_5sdp"
+                android:gravity="center_vertical"
                 android:orientation="vertical"
                 android:visibility="visible">
 
@@ -124,8 +125,8 @@
                     android:clipToPadding="false"
                     android:elevation="@dimen/_5sdp"
                     android:orientation="horizontal"
-                    android:paddingStart="@dimen/_4sdp"
-                    android:paddingEnd="@dimen/_4sdp"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
                     app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                     app:spanCount="2"
                     tools:listitem="@layout/item_categories" />
@@ -146,7 +147,7 @@
             android:maxLines="1"
             android:text="@string/text_search_result"
             android:textColor="@color/colorTextBlack100"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="@dimen/_12ssp"
             android:textStyle="bold"
             android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"

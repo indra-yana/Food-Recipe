@@ -78,7 +78,7 @@
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/vp2Banner"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_110sdp"
+                android:layout_height="@dimen/_100sdp"
                 android:layout_marginTop="@dimen/_2sdp"
                 android:clipChildren="false"
                 android:clipToPadding="false"

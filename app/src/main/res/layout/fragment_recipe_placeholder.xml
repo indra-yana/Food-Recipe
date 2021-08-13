@@ -43,8 +43,6 @@
         android:layout_marginEnd="@dimen/_10sdp"
         android:background="@color/colorPrimaryGrey40"
         android:elevation="@dimen/_5sdp"
-        android:paddingTop="@dimen/_3sdp"
-        android:paddingBottom="@dimen/_3sdp"
         app:layout_constraintTop_toBottomOf="@id/layoutSearchExt" />
 
     <View
