@@ -220,21 +220,21 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
 
             when (it) {
                 is ResponseStatus.Loading -> {
-                    Log.d(TAG, "getRecipeDetail: State is loading!")
+                    Log.d(TAG, "getCategory: State is loading!")
                 }
                 is ResponseStatus.Success -> {
                     val item = it.value.recipeCategories
                     categoryAdapter.bindData(item)
 
-                    Log.d(TAG, "getRecipeDetail: State is success! $item")
+                    Log.d(TAG, "getCategory: State is success! $item")
                 }
                 is ResponseStatus.Failure -> {
                     handleRequestError(it) { retry() }
 
-                    Log.d(TAG, "getRecipeDetail:State is failure! ${it.exception}")
+                    Log.d(TAG, "getCategory:State is failure! ${it.exception}")
                 }
                 else -> {
-                    Log.d(TAG, "getRecipeDetail: State is unknown!")
+                    Log.d(TAG, "getCategory: State is unknown!")
                 }
             }
         })
@@ -287,21 +287,21 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
 
             when (it) {
                 is ResponseStatus.Loading -> {
-                    Log.d(TAG, "getRecipeByPage: State is loading!")
+                    Log.d(TAG, "getSearchRecipe: State is loading!")
                 }
                 is ResponseStatus.Success -> {
                     val item = it.value.recipes
                     recipeAdapter.bindData(item)
 
-                    Log.d(TAG, "getRecipeByPage: State is success! $item")
+                    Log.d(TAG, "getSearchRecipe: State is success! $item")
                 }
                 is ResponseStatus.Failure -> {
                     handleRequestError(it) { retry() }
 
-                    Log.d(TAG, "getRecipeByPage:State is failure! ${it.exception}")
+                    Log.d(TAG, "getSearchRecipe:State is failure! ${it.exception}")
                 }
                 else -> {
-                    Log.d(TAG, "getRecipeByPage: State is unknown!")
+                    Log.d(TAG, "getSearchRecipe: State is unknown!")
                 }
             }
         })
