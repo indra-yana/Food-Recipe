@@ -1,8 +1,5 @@
 package com.training.foodrecipe.repository
 
-import com.training.foodrecipe.datasource.remote.response.RecipeCategoryResponse
-import com.training.foodrecipe.datasource.remote.response.RecipeDetailResponse
-import com.training.foodrecipe.datasource.remote.response.RecipeResponse
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -24,12 +21,5 @@ interface BaseRepository {
             }
         }
     }
-
-    suspend fun getLatestRecipe(): ResponseStatus<RecipeResponse>
-    suspend fun getRecipeByPage(page: Int): ResponseStatus<RecipeResponse>
-    suspend fun searchRecipe(query: String): ResponseStatus<RecipeResponse>
-    suspend fun getRecipeDetail(key: String): ResponseStatus<RecipeDetailResponse>
-    suspend fun getCategory(): ResponseStatus<RecipeCategoryResponse>
-    suspend fun getRecipeByCategory(key: String): ResponseStatus<RecipeResponse>
 
 }

@@ -14,11 +14,11 @@ import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 
 class RecipeRepository(private val api: IRecipeApi) : BaseRepository {
 
-    override suspend fun getLatestRecipe(): ResponseStatus<RecipeResponse> = safeApiCall { api.getLatestRecipe() }
-    override suspend fun getRecipeByPage(page: Int): ResponseStatus<RecipeResponse> = safeApiCall { api.getRecipeByPage(page) }
-    override suspend fun searchRecipe(query: String): ResponseStatus<RecipeResponse> = safeApiCall { api.searchRecipe(query) }
-    override suspend fun getRecipeDetail(key: String): ResponseStatus<RecipeDetailResponse> = safeApiCall { api.getRecipeDetail(key) }
-    override suspend fun getCategory(): ResponseStatus<RecipeCategoryResponse> = safeApiCall { api.getCategory() }
-    override suspend fun getRecipeByCategory(key: String): ResponseStatus<RecipeResponse> = safeApiCall { api.getRecipeByCategory(key) }
+    suspend fun getLatestRecipe(): ResponseStatus<RecipeResponse> = safeApiCall { api.getLatestRecipe() }
+    suspend fun getRecipeByPage(page: Int): ResponseStatus<RecipeResponse> = safeApiCall { api.getRecipeByPage(page) }
+    suspend fun searchRecipe(query: String): ResponseStatus<RecipeResponse> = safeApiCall { api.searchRecipe(query) }
+    suspend fun getRecipeDetail(key: String): ResponseStatus<RecipeDetailResponse> = safeApiCall { api.getRecipeDetail(key) }
+    suspend fun getCategory(): ResponseStatus<RecipeCategoryResponse> = safeApiCall { api.getCategory() }
+    suspend fun getRecipeByCategory(key: String): ResponseStatus<RecipeResponse> = safeApiCall { api.getRecipeByCategory(key) }
 
 }

@@ -8,6 +8,7 @@ import com.training.foodrecipe.datasource.remote.response.RecipeDetailResponse
 import com.training.foodrecipe.datasource.remote.response.RecipeResponse
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.repository.RecipeRepository
+import com.training.foodrecipe.viewmodel.base.BaseRecipeViewModel
 import kotlinx.coroutines.launch
 
 /****************************************************
@@ -16,7 +17,7 @@ import kotlinx.coroutines.launch
  * https://gitlab.com/indra-yana
  ****************************************************/
 
-class RecipeViewModel(private val repository: RecipeRepository) : BaseViewModel() {
+class RecipeViewModel(private val repository: RecipeRepository) : BaseRecipeViewModel() {
 
     private val _latestRecipe: MutableLiveData<ResponseStatus<RecipeResponse>> = MutableLiveData()
     private val _recipe: MutableLiveData<ResponseStatus<RecipeResponse>> = MutableLiveData()

@@ -8,6 +8,7 @@ import com.training.foodrecipe.datasource.remote.response.ArticleDetailResponse
 import com.training.foodrecipe.datasource.remote.response.ArticleResponse
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.repository.ArticleRepository
+import com.training.foodrecipe.viewmodel.base.BaseArticleViewModel
 import kotlinx.coroutines.launch
 
 /****************************************************

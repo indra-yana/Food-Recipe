@@ -9,8 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.training.foodrecipe.datasource.remote.RecipeApiClient
 import com.training.foodrecipe.repository.BaseRepository
-import com.training.foodrecipe.viewmodel.BaseViewModel
 import com.training.foodrecipe.viewmodel.ViewModelFactory
+import com.training.foodrecipe.viewmodel.base.BaseViewModel
 
 /****************************************************
  * Created by Indra Muliana (indra.ndra26@gmail.com)
