@@ -5,25 +5,24 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.training.foodrecipe.adapter.viewholder.ArticleViewHolder
 import com.training.foodrecipe.adapter.viewholder.BaseViewHolder
-import com.training.foodrecipe.adapter.viewholder.CategoryViewHolder
 import com.training.foodrecipe.helper.DiffUtils
-import com.training.foodrecipe.model.ArticleCategory
-import com.training.foodrecipe.model.RecipeCategory
+import com.training.foodrecipe.model.Article
 
 /****************************************************
  * Created by Indra Muliana (indra.ndra26@gmail.com)
- * On Wednesday, 12/05/2021 09.11
+ * On Friday, 14/08/2021 13.02
  * https://gitlab.com/indra-yana
  ****************************************************/
-class CategoryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var itemList: MutableList<Any> = mutableListOf()
+class ArticleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private var itemList: MutableList<Article> = mutableListOf()
 
     var iOnItemClickListener: IOnItemClickListener? = null
     var vHolder: RecyclerView.ViewHolder? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return CategoryViewHolder(parent)
+        return ArticleViewHolder(parent)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -33,7 +32,7 @@ class CategoryAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int = itemList.size
 
-    fun bindData(itemList: List<Any>) {
+    fun bindData(itemList: List<Article>) {
         val diffCallback = DiffUtils(this.itemList, itemList)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
 

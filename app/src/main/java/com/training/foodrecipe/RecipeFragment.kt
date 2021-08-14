@@ -118,6 +118,8 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
                 viewModel.getLatestRecipe()
                 viewModel.getRecipeByPage(nextPage)
             }
+
+            layoutHeader.tvHeaderTitle.text = getString(R.string.text_welcome_user)
         }
     }
 
