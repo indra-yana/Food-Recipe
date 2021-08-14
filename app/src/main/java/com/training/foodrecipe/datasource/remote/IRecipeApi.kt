@@ -1,8 +1,6 @@
 package com.training.foodrecipe.datasource.remote
 
-import com.training.foodrecipe.datasource.remote.response.RecipeCategoryResponse
-import com.training.foodrecipe.datasource.remote.response.RecipeDetailResponse
-import com.training.foodrecipe.datasource.remote.response.RecipeResponse
+import com.training.foodrecipe.datasource.remote.response.*
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -32,5 +30,17 @@ interface IRecipeApi {
 
     @GET("/api/categorys/recipes/{key}")
     suspend fun getRecipeByCategory(@Path("key") key: String): RecipeResponse
+
+    @GET("/api/categorys/article")
+    suspend fun getArticleCategory(): ArticleCategoryResponse
+
+    @GET("/api/articles/new")
+    suspend fun getLatestArticle(): ArticleResponse
+
+    @GET("/api/categorys/article/{key}")
+    suspend fun getArticleByCategory(@Path("key") key: String): ArticleResponse
+
+    @GET("/api/article/{key}")
+    suspend fun getArticleDetail(@Path("key") key: String): ArticleDetailResponse
 
 }
