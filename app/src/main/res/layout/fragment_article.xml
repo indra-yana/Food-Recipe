@@ -40,7 +40,9 @@
             android:layout_gravity="center_vertical"
             android:layout_marginTop="@dimen/_2sdp"
             android:elevation="@dimen/_5sdp"
-            app:layout_constraintTop_toBottomOf="@id/tvCategoryTitle">
+            app:layout_constraintTop_toBottomOf="@id/tvCategoryTitle"
+            app:shimmer_base_alpha="0.6"
+            app:shimmer_highlight_alpha="0.3">
 
             <LinearLayout
                 android:id="@+id/layoutCategoryPlaceholder"
@@ -90,6 +92,7 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_10sdp"
+            android:elevation="@dimen/_5sdp"
             android:ellipsize="end"
             android:includeFontPadding="false"
             android:maxLines="1"
@@ -107,8 +110,11 @@
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/_2sdp"
+            android:elevation="@dimen/_5sdp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvLatestArticleTitle">
+            app:layout_constraintTop_toBottomOf="@id/tvLatestArticleTitle"
+            app:shimmer_base_alpha="0.6"
+            app:shimmer_highlight_alpha="0.3">
 
             <LinearLayout
                 android:id="@+id/layoutArticlePlaceholder"
@@ -122,15 +128,19 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/sliderIndicatorExt">
 
-                <include layout="@layout/item_mode_list_placeholder" />
+                <include layout="@layout/item_card_article_placeholder" />
 
-                <include layout="@layout/item_mode_list_placeholder" />
+                <include layout="@layout/item_card_article_placeholder" />
 
-                <include layout="@layout/item_mode_list_placeholder" />
+                <include layout="@layout/item_card_article_placeholder" />
 
-                <include layout="@layout/item_mode_list_placeholder" />
+                <include layout="@layout/item_card_article_placeholder" />
 
-                <include layout="@layout/item_mode_list_placeholder" />
+                <include layout="@layout/item_card_article_placeholder" />
+
+                <include layout="@layout/item_card_article_placeholder" />
+
+                <include layout="@layout/item_card_article_placeholder" />
 
             </LinearLayout>
 

@@ -90,7 +90,9 @@
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/_2sdp"
             android:elevation="@dimen/_5sdp"
-            app:layout_constraintTop_toBottomOf="@+id/layoutSearch">
+            app:layout_constraintTop_toBottomOf="@+id/layoutSearch"
+            app:shimmer_base_alpha="0.6"
+            app:shimmer_highlight_alpha="0.3">
 
             <LinearLayout
                 android:id="@+id/shimmerBannerPlaceholder"
@@ -149,7 +151,9 @@
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/_2sdp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/shimmerBannerContainer">
+            app:layout_constraintTop_toBottomOf="@+id/shimmerBannerContainer"
+            app:shimmer_base_alpha="0.6"
+            app:shimmer_highlight_alpha="0.3">
 
             <LinearLayout
                 android:id="@+id/shimmerRecipePlaceholder"
@@ -159,7 +163,7 @@
                 android:paddingStart="@dimen/_4sdp"
                 android:paddingTop="@dimen/_4sdp"
                 android:paddingEnd="@dimen/_4sdp"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <include layout="@layout/fragment_recipe_placeholder" />
 
