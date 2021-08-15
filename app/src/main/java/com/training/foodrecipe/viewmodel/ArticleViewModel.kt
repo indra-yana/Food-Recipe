@@ -21,12 +21,10 @@ class ArticleViewModel(private val repository: ArticleRepository) : BaseArticleV
 
     private val _latestArticle: MutableLiveData<ResponseStatus<ArticleResponse>> = MutableLiveData()
     private val _articleCategory: MutableLiveData<ResponseStatus<ArticleCategoryResponse>> = MutableLiveData()
-    private val _articleByCategory: MutableLiveData<ResponseStatus<ArticleResponse>> = MutableLiveData()
     private val _articleDetail: MutableLiveData<ResponseStatus<ArticleDetailResponse>> = MutableLiveData()
 
     val latestArticle: LiveData<ResponseStatus<ArticleResponse>> get() = _latestArticle
     val recipeCategory: LiveData<ResponseStatus<ArticleCategoryResponse>> get() = _articleCategory
-    val articleByCategory: LiveData<ResponseStatus<ArticleResponse>> get() = _articleByCategory
     val articleDetail: LiveData<ResponseStatus<ArticleDetailResponse>> get() = _articleDetail
 
     override fun getLatestArticle() = viewModelScope.launch {
@@ -39,9 +37,13 @@ class ArticleViewModel(private val repository: ArticleRepository) : BaseArticleV
         _articleCategory.value = repository.getArticleCategory()
     }
 
-    override fun getArticleByCategory(key: String) = viewModelScope.launch {
-        _articleByCategory.value = ResponseStatus.Loading
-        _articleByCategory.value = repository.getArticleByCategory(key)
+    override fun getArticleByCategory(key: String?) = viewModelScope.launch {
+        if (key == null) {
+            getLatestArticle()
+        } else {
+            _latestArticle.value = ResponseStatus.Loading
+            _latestArticle.value = repository.getArticleByCategory(key)
+        }
     }
 
     override fun getArticleDetail(key: String) = viewModelScope.launch {

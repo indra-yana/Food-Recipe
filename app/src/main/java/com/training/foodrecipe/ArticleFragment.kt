@@ -40,6 +40,9 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
     private var isLoading = false
     private var isNetworkError = false
 
+    // Last selected category
+    private var key: String? = null
+
     /**
      * Init all variable here that need once time initialization
      */
@@ -47,7 +50,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
         super.onCreate(savedInstanceState)
 
         viewModel.getArticleCategory()
-        viewModel.getLatestArticle()
+        viewModel.getArticleByCategory(key)
     }
 
     /**
@@ -69,7 +72,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
         // Article
         buildArticleAdapter()
         buildArticleRecyclerView()
-        getLatestArticle()
+        getArticle()
 
         with(viewBinding) {
             srlRefresh.setOnRefreshListener {
@@ -77,7 +80,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
                 isLoading = false
 
                 viewModel.getArticleCategory()
-                viewModel.getLatestArticle()
+                viewModel.getArticleByCategory(key)
             }
 
             layoutHeader.tvHeaderTitle.text = getString(R.string.text_article_title)
@@ -102,7 +105,10 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
                 override fun onItemClicked(data: Any) {
                     data as ArticleCategory
 
-                    // TODO: User click article category
+                    if (key != data.key) {
+                        key = data.key
+                        viewModel.getArticleByCategory(data.key)
+                    }
                 }
             }
         }
@@ -169,7 +175,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
         }
     }
 
-    private fun getLatestArticle() {
+    private fun getArticle() {
         viewModel.latestArticle.observe(viewLifecycleOwner, Observer {
             isLoading = it is ResponseStatus.Loading
             isNetworkError = it is ResponseStatus.Failure
@@ -230,7 +236,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
 
     private fun retry() {
         viewModel.getArticleCategory()
-        viewModel.getLatestArticle()
+        viewModel.getArticleByCategory(key)
     }
 
 }
