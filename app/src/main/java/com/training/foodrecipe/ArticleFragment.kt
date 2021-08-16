@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.training.foodrecipe.adapter.ArticleAdapter
@@ -156,12 +157,12 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
             iOnItemClickListener = object : IOnItemClickListener {
                 override fun onItemClicked(data: Any) {
                     data as Article
+
                     val bundle = Bundle().apply {
                         putParcelable("article", data)
                     }
 
-                    // TODO: Goto article detail fragment
-                    // findNavController().navigate(R.id.action_searchFragment_to_recipeDetailFragment, bundle)
+                    findNavController().navigate(R.id.action_articleFragment_to_articleDetailFragment, bundle)
                 }
             }
         }

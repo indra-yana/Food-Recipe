@@ -14,6 +14,6 @@ class ArticleRepository(private val api: IRecipeApi) : BaseRepository {
     suspend fun getLatestArticle(): ResponseStatus<ArticleResponse> = safeApiCall { api.getLatestArticle() }
     suspend fun getArticleCategory(): ResponseStatus<ArticleCategoryResponse> = safeApiCall { api.getArticleCategory() }
     suspend fun getArticleByCategory(key: String): ResponseStatus<ArticleResponse> = safeApiCall { api.getArticleByCategory(key) }
-    suspend fun getArticleDetail(key: String): ResponseStatus<ArticleDetailResponse> = safeApiCall { api.getArticleDetail(key) }
+    suspend fun getArticleDetail(tag: String, key: String): ResponseStatus<ArticleDetailResponse> = safeApiCall { api.getArticleDetail(tag, key) }
 
 }

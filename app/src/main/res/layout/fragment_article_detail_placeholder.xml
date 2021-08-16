@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/ivDetailThumbExt"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_160sdp"
+        android:layout_marginBottom="@dimen/_4sdp"
+        android:background="@color/colorPrimaryGrey40"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/viewFadingEdgeTopExt"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_30sdp"
+        android:background="@drawable/bg_fading_edge_top"
+        android:visibility="visible"
+        app:layout_constraintTop_toTopOf="@+id/ivDetailThumbExt" />
+
+    <View
+        android:id="@+id/viewFadingEdgeBottomExt"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_30sdp"
+        android:background="@drawable/bg_fading_edge_bottom"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/ivDetailThumbExt" />
+
+    <View
+        android:id="@+id/btnBackExt"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@drawable/bg_rounded_button_dark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/_4sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/viewFadingEdgeBottomExt"
+        app:layout_constraintTop_toTopOf="@+id/viewFadingEdgeBottomExt">
+
+        <View
+            android:id="@+id/tvAuthorExt"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:layout_margin="@dimen/_4sdp"
+            android:background="@color/colorPrimaryGrey40"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/tvItemTitleExt"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:background="@color/colorPrimaryGrey40"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivDetailThumbExt" />
+
+    <View
+        android:id="@+id/tvItemDescriptionExt"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_80sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:background="@color/colorPrimaryGrey40"
+        app:layout_constraintTop_toBottomOf="@id/tvItemTitleExt" />
+
+    <View
+        android:id="@+id/viewDivider1Ext"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_2sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:background="@color/colorPrimaryGrey40"
+        app:layout_constraintTop_toBottomOf="@+id/tvItemDescriptionExt" />
+
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/layoutTodoAction"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="@dimen/_30sdp"-->
+    <!--        android:layout_marginStart="@dimen/_10sdp"-->
+    <!--        android:layout_marginEnd="@dimen/_10sdp"-->
+    <!--        android:paddingStart="@dimen/_30sdp"-->
+    <!--        android:paddingEnd="@dimen/_30sdp"-->
+    <!--        android:layout_marginBottom="@dimen/_10sdp"-->
+    <!--        android:orientation="horizontal"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent">-->
+
+    <!--        <View-->
+    <!--            android:id="@+id/btnIngredientsExt"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginEnd="@dimen/_4sdp"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:background="@color/colorPrimaryGrey40"-->
+    <!--            app:cornerRadius="@dimen/_6sdp" />-->
+    <!--        -->
+    <!--    </LinearLayout>-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

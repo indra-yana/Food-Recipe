@@ -46,9 +46,9 @@ class ArticleViewModel(private val repository: ArticleRepository) : BaseArticleV
         }
     }
 
-    override fun getArticleDetail(key: String) = viewModelScope.launch {
+    override fun getArticleDetail(tag: String, key: String) = viewModelScope.launch {
         _articleDetail.value = ResponseStatus.Loading
-        _articleDetail.value = repository.getArticleDetail(key)
+        _articleDetail.value = repository.getArticleDetail(tag, key)
     }
 
 }

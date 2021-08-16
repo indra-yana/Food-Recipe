@@ -40,7 +40,7 @@ interface IRecipeApi {
     @GET("/api/categorys/article/{key}")
     suspend fun getArticleByCategory(@Path("key") key: String): ArticleResponse
 
-    @GET("/api/article/{key}")
-    suspend fun getArticleDetail(@Path("key") key: String): ArticleDetailResponse
+    @GET("/api/article/{tag}/{key}")
+    suspend fun getArticleDetail(@Path("tag") tag: String, @Path("key") key: String): ArticleDetailResponse
 
 }

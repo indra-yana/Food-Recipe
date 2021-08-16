@@ -13,6 +13,6 @@ abstract class BaseArticleViewModel : BaseViewModel() {
     abstract fun getLatestArticle(): Job
     abstract fun getArticleCategory(): Job
     abstract fun getArticleByCategory(key: String?): Job
-    abstract fun getArticleDetail(key: String): Job
+    abstract fun getArticleDetail(tag: String, key: String): Job
 
 }
