@@ -1,5 +1,7 @@
 package com.training.foodrecipe
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -170,8 +172,10 @@ class ArticleDetailFragment : BaseFragment<FragmentArticleDetailBinding, Article
             return
         }
 
-        // TODO: Open website
-        Toast.makeText(requireContext(), url, Toast.LENGTH_SHORT).show()
+        Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse(url)
+            startActivity(this)
+        }
     }
 
     private fun retry() {
