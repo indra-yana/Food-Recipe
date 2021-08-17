@@ -12,6 +12,7 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -55,6 +56,7 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
     // Indicator state
     private var isLoading = false
     private var isNetworkError = false
+    private var isFavourite = false
 
     /**
      * Init all variable here that need once time initialization
@@ -130,6 +132,9 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
     }
 
     private fun prepareUI() {
+        // TODO: set isFavourite from persistent data (database or shared preferences)
+        toggleFavourite(isFavourite)
+
         with(viewBinding) {
             srlRefresh.setOnRefreshListener {
                 fetchData()
@@ -137,6 +142,11 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
 
             btnBack.setOnClickListener {
                 findNavController().navigateUp()
+            }
+
+            btnAddFavourite.setOnClickListener {
+                isFavourite = !isFavourite
+                toggleFavourite(isFavourite)
             }
         }
     }
@@ -263,6 +273,21 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
 
             viewBinding.shimmerRecipeDetailPlaceholder.visibility = View.GONE
             viewBinding.mainRecipeDetailContainer.visibility = View.VISIBLE
+        }
+    }
+
+    private fun toggleFavourite(isFavourite: Boolean) {
+        if (isFavourite) {
+            // Remove from favourite
+            viewBinding.btnAddFavourite.setImageResource(R.drawable.ic_favourite_border)
+
+            Log.d(TAG, "setFavourite: Remove from favourite")
+        } else {
+            // Add to favourite
+            viewBinding.btnAddFavourite.setImageResource(R.drawable.ic_favourite_filled)
+            viewBinding.btnAddFavourite.drawable.setTint(ContextCompat.getColor(requireContext(), R.color.colorDanger))
+
+            Log.d(TAG, "setFavourite: Added to favourite")
         }
     }
 

@@ -200,7 +200,7 @@
     <!--            android:layout_weight="1"-->
     <!--            app:bt_colorActive="@color/colorSearchIcon"-->
     <!--            app:bt_colorInactive="@color/colorTextSearchHint"-->
-    <!--            app:bt_icon="@drawable/ic_favorite_border"-->
+    <!--            app:bt_icon="@drawable/ic_favourite_border"-->
     <!--            app:bt_shape="@drawable/tab_favourite_color"-->
     <!--            app:bt_title="Favorite"-->
     <!--            app:bt_titlePadding="5dp"-->

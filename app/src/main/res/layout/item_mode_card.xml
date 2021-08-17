@@ -78,7 +78,7 @@
                 android:layout_marginEnd="@dimen/_6sdp"
                 android:contentDescription="@string/app_name"
                 android:foreground="?selectableItemBackground"
-                android:src="@drawable/ic_favorite_border"
+                android:src="@drawable/ic_favourite_border"
                 android:tint="@color/colorIconGrey10" />
 
             <ImageButton

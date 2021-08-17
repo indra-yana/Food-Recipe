@@ -111,7 +111,7 @@
             android:contentDescription="@string/app_name"
             android:foreground="?selectableItemBackground"
             android:includeFontPadding="false"
-            android:src="@drawable/ic_favorite_border"
+            android:src="@drawable/ic_favourite_border"
             android:textAllCaps="false"
             android:tint="@color/colorIconGrey80" />
 
