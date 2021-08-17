@@ -32,6 +32,7 @@ import com.training.foodrecipe.datasource.remote.IRecipeApi
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.helper.OverlapSliderTransformation
 import com.training.foodrecipe.helper.handleRequestError
+import com.training.foodrecipe.helper.visible
 import com.training.foodrecipe.model.Recipe
 import com.training.foodrecipe.repository.RecipeRepository
 import com.training.foodrecipe.viewmodel.RecipeViewModel
@@ -76,7 +77,6 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        buildRecipeAdapter()
         buildBannerAdapter()
 
         viewModel.getLatestRecipe()
@@ -86,8 +86,8 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
     /**
      * Init all variable here that consume view
      */
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // Connect to activity
         (activity as MainActivity).apply {
@@ -95,32 +95,16 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
             showBottomNavigation()
         }
 
-        buildRecyclerView()
+        prepareUI()
+
+        // Banner
         buildBanner()
-
         getLatestRecipe()
+
+        // Recipe
+        buildRecipeAdapter()
+        buildRecipeRV()
         getRecipeByPage()
-
-        with(viewBinding) {
-            layoutSearch.setOnClickListener {
-                findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
-            }
-
-            ivMenu.setOnClickListener {
-                showPopupMenu(it)
-            }
-
-            srlRefresh.setOnRefreshListener {
-                isLoading = false
-                isNetworkError = false
-                isRequestNextPage = false
-
-                viewModel.getLatestRecipe()
-                viewModel.getRecipeByPage(nextPage)
-            }
-
-            layoutHeader.tvHeaderTitle.text = getString(R.string.text_welcome_user)
-        }
     }
 
     override fun onResume() {
@@ -151,7 +135,6 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
                 override fun onItemClicked(data: Any) {
                     val recipe = data as Recipe
                     val bundle = Bundle().apply {
-                        putString("args", "This is my args!")
                         putParcelable("recipe", recipe)
                     }
 
@@ -175,7 +158,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
         }
     }
 
-    private fun buildRecyclerView() {
+    private fun buildRecipeRV() {
         with(viewBinding) {
 
             setListMode()
@@ -257,124 +240,6 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
         })
     }
 
-    private fun getLatestRecipe() {
-//        viewModel.getLatestRecipe()
-        viewModel.latestRecipe.observe(viewLifecycleOwner, Observer {
-            isLoading = it is ResponseStatus.Loading
-            isNetworkError = it is ResponseStatus.Failure
-
-            toggleLoading(isLoading)
-
-            when (it) {
-                is ResponseStatus.Loading -> {
-                    Log.d(TAG, "getLatestRecipe: State is loading!")
-                }
-                is ResponseStatus.Success -> {
-                    bannerAdapter.bindData(it.value.recipes)
-                    viewBinding.sliderIndicator.refreshDots()
-
-                    Log.d(TAG, "getLatestRecipe: State is success! ${it.value.recipes}")
-                }
-                is ResponseStatus.Failure -> {
-                    handleRequestError(it) { retry() }
-
-                    Log.d(TAG, "getLatestRecipe: State is failure! ${it.exception}")
-                }
-                else -> {
-                    Log.d(TAG, "getLatestRecipe: State is unknown!")
-                }
-            }
-        })
-    }
-
-    private fun retry() {
-        viewModel.getLatestRecipe()
-        viewModel.getRecipeByPage(nextPage)
-    }
-
-    private fun toggleLoading(isLoading: Boolean) {
-        viewBinding.srlRefresh.isRefreshing = isLoading
-        viewBinding.shimmerRecipeContainer.showShimmer((isLoading || isNetworkError) && !isRequestNextPage)
-        viewBinding.shimmerBannerContainer.showShimmer((isLoading || isNetworkError) && !isRequestNextPage)
-
-        if ((isLoading || isNetworkError) && !isRequestNextPage) {
-            // Banner
-            viewBinding.shimmerBannerPlaceholder.visibility = View.VISIBLE
-            viewBinding.layoutBannerContainer.visibility = View.GONE
-
-            // Recipe
-            viewBinding.shimmerRecipePlaceholder.visibility = View.VISIBLE
-            viewBinding.layoutRecipeContainer.visibility = View.GONE
-        } else {
-            // Banner
-            viewBinding.shimmerBannerContainer.stopShimmer()
-            viewBinding.shimmerBannerContainer.hideShimmer()
-
-            viewBinding.shimmerBannerPlaceholder.visibility = View.GONE
-            viewBinding.layoutBannerContainer.visibility = View.VISIBLE
-
-            // Recipe
-            viewBinding.shimmerRecipeContainer.stopShimmer()
-            viewBinding.shimmerRecipeContainer.hideShimmer()
-
-            viewBinding.shimmerRecipePlaceholder.visibility = View.GONE
-            viewBinding.layoutRecipeContainer.visibility = View.VISIBLE
-        }
-    }
-
-    private fun setListMode() {
-        recipeAdapter.holderType = viewHolderType
-        viewBinding.rvRecipe.adapter = recipeAdapter
-        viewBinding.rvRecipe.layoutManager = when (viewHolderType) {
-            ViewHolderType.CARD -> LinearLayoutManager(requireContext())
-            ViewHolderType.LIST -> LinearLayoutManager(requireContext())
-            ViewHolderType.GRID -> GridLayoutManager(requireContext(), 2)
-        }
-
-        viewBinding.rvRecipe.scrollToPosition(lastVisibleItem)
-    }
-
-    /**
-     * Showing popup menu when tapping on 3 dots
-     */
-    private fun showPopupMenu(view: View) {
-        // inflate menu
-        PopupMenu(view.context, view).apply {
-            menuInflater.inflate(R.menu.overflow_menu, menu)
-            setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.menu_act_cardview -> {
-                        viewHolderType = ViewHolderType.CARD
-                        setListMode()
-
-                        Toast.makeText(view.context, "Changed to card", Toast.LENGTH_SHORT).show()
-                        return@OnMenuItemClickListener true
-                    }
-                    R.id.menu_act_list -> {
-                        viewHolderType = ViewHolderType.LIST
-                        setListMode()
-
-                        Toast.makeText(view.context, "Changed to list", Toast.LENGTH_SHORT).show()
-                        return@OnMenuItemClickListener true
-                    }
-                    R.id.menu_act_grid -> {
-                        viewHolderType = ViewHolderType.GRID
-                        setListMode()
-
-                        Toast.makeText(view.context, "Changed to grid", Toast.LENGTH_SHORT).show()
-                        return@OnMenuItemClickListener true
-                    }
-                    R.id.menu_act_about -> {
-                        openBottomSheetAbout()
-                        return@OnMenuItemClickListener true
-                    }
-                }
-                return@OnMenuItemClickListener false
-            })
-            show()
-        }
-    }
-
     private fun buildBannerAdapter() {
         bannerAdapter = BannerAdapter().apply {
             iOnItemClickListener = object : IOnItemClickListener {
@@ -424,7 +289,139 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
 
             viewBinding.sliderIndicator.setViewPager2(this)
         }
+    }
 
+    private fun getLatestRecipe() {
+//        viewModel.getLatestRecipe()
+        viewModel.latestRecipe.observe(viewLifecycleOwner, Observer {
+            isLoading = it is ResponseStatus.Loading
+            isNetworkError = it is ResponseStatus.Failure
+
+            toggleLoading(isLoading)
+
+            when (it) {
+                is ResponseStatus.Loading -> {
+                    Log.d(TAG, "getLatestRecipe: State is loading!")
+                }
+                is ResponseStatus.Success -> {
+                    bannerAdapter.bindData(it.value.recipes)
+                    viewBinding.sliderIndicator.refreshDots()
+
+                    Log.d(TAG, "getLatestRecipe: State is success! ${it.value.recipes}")
+                }
+                is ResponseStatus.Failure -> {
+                    handleRequestError(it) { retry() }
+
+                    Log.d(TAG, "getLatestRecipe: State is failure! ${it.exception}")
+                }
+                else -> {
+                    Log.d(TAG, "getLatestRecipe: State is unknown!")
+                }
+            }
+        })
+    }
+
+    private fun prepareUI() {
+        with(viewBinding) {
+            layoutSearch.setOnClickListener {
+                findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+            }
+
+            srlRefresh.setOnRefreshListener {
+                isLoading = false
+                isNetworkError = false
+                isRequestNextPage = false
+
+                viewModel.getLatestRecipe()
+                viewModel.getRecipeByPage(nextPage)
+            }
+
+            layoutHeader.tvHeaderTitle.text = getString(R.string.text_welcome_user)
+            layoutHeader.btnBack.visible(false)
+            layoutHeader.ivHeaderMenu.setOnClickListener {
+                showPopupMenu(it)
+            }
+        }
+    }
+
+    private fun toggleLoading(isLoading: Boolean) {
+        viewBinding.srlRefresh.isRefreshing = isLoading
+        viewBinding.shimmerRecipeContainer.showShimmer((isLoading || isNetworkError) && !isRequestNextPage)
+        viewBinding.shimmerBannerContainer.showShimmer((isLoading || isNetworkError) && !isRequestNextPage)
+
+        if ((isLoading || isNetworkError) && !isRequestNextPage) {
+            // Banner
+            viewBinding.shimmerBannerPlaceholder.visibility = View.VISIBLE
+            viewBinding.layoutBannerContainer.visibility = View.GONE
+
+            // Recipe
+            viewBinding.shimmerRecipePlaceholder.visibility = View.VISIBLE
+            viewBinding.layoutRecipeContainer.visibility = View.GONE
+        } else {
+            // Banner
+            viewBinding.shimmerBannerContainer.stopShimmer()
+            viewBinding.shimmerBannerContainer.hideShimmer()
+
+            viewBinding.shimmerBannerPlaceholder.visibility = View.GONE
+            viewBinding.layoutBannerContainer.visibility = View.VISIBLE
+
+            // Recipe
+            viewBinding.shimmerRecipeContainer.stopShimmer()
+            viewBinding.shimmerRecipeContainer.hideShimmer()
+
+            viewBinding.shimmerRecipePlaceholder.visibility = View.GONE
+            viewBinding.layoutRecipeContainer.visibility = View.VISIBLE
+        }
+    }
+
+    private fun setListMode() {
+        recipeAdapter.holderType = viewHolderType
+        viewBinding.rvRecipe.adapter = recipeAdapter
+        viewBinding.rvRecipe.layoutManager = when (viewHolderType) {
+            ViewHolderType.CARD -> LinearLayoutManager(requireContext())
+            ViewHolderType.LIST -> LinearLayoutManager(requireContext())
+            ViewHolderType.GRID -> GridLayoutManager(requireContext(), 2)
+        }
+
+        viewBinding.rvRecipe.scrollToPosition(lastVisibleItem)
+    }
+
+    private fun showPopupMenu(view: View) {
+        // inflate menu
+        PopupMenu(view.context, view).apply {
+            menuInflater.inflate(R.menu.overflow_menu, menu)
+            setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.menu_act_cardview -> {
+                        viewHolderType = ViewHolderType.CARD
+                        setListMode()
+
+                        Toast.makeText(view.context, "Changed to card", Toast.LENGTH_SHORT).show()
+                        return@OnMenuItemClickListener true
+                    }
+                    R.id.menu_act_list -> {
+                        viewHolderType = ViewHolderType.LIST
+                        setListMode()
+
+                        Toast.makeText(view.context, "Changed to list", Toast.LENGTH_SHORT).show()
+                        return@OnMenuItemClickListener true
+                    }
+                    R.id.menu_act_grid -> {
+                        viewHolderType = ViewHolderType.GRID
+                        setListMode()
+
+                        Toast.makeText(view.context, "Changed to grid", Toast.LENGTH_SHORT).show()
+                        return@OnMenuItemClickListener true
+                    }
+                    R.id.menu_act_about -> {
+                        openBottomSheetAbout()
+                        return@OnMenuItemClickListener true
+                    }
+                }
+                return@OnMenuItemClickListener false
+            })
+            show()
+        }
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -446,5 +443,10 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
         }
 
         bottomSheetAbout?.show()
+    }
+
+    private fun retry() {
+        viewModel.getLatestRecipe()
+        viewModel.getRecipeByPage(nextPage)
     }
 }

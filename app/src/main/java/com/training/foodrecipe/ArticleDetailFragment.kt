@@ -23,7 +23,11 @@ import com.training.foodrecipe.model.ArticleDetail
 import com.training.foodrecipe.repository.ArticleRepository
 import com.training.foodrecipe.viewmodel.ArticleViewModel
 
-
+/****************************************************
+ * Created by Indra Muliana (indra.ndra26@gmail.com)
+ * On Friday, 16/08/2021 22.02
+ * https://gitlab.com/indra-yana
+ ****************************************************/
 class ArticleDetailFragment : BaseFragment<FragmentArticleDetailBinding, ArticleViewModel, ArticleRepository>() {
 
     companion object {

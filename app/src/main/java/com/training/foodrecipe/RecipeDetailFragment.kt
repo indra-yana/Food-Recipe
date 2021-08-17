@@ -33,10 +33,15 @@ import com.training.foodrecipe.model.RecipeDetail
 import com.training.foodrecipe.repository.RecipeRepository
 import com.training.foodrecipe.viewmodel.RecipeViewModel
 
+/****************************************************
+ * Created by Indra Muliana (indra.ndra26@gmail.com)
+ * On Friday, 14/08/2021 22.02
+ * https://gitlab.com/indra-yana
+ ****************************************************/
 class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeViewModel, RecipeRepository>() {
 
     companion object {
-        private val TAG = RecipeFragment::class.java.simpleName
+        private val TAG = RecipeDetailFragment::class.java.simpleName
     }
 
     // Adapter
@@ -74,23 +79,14 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
             hideBottomNavigation()
         }
 
-        getRecipeDetail()
+        prepareUI()
 
         buildNeededItemAdapter()
-        buildNeededItemRecyclerView()
+        buildNeededItemRV()
         buildTodoAdapter()
         updateUI()
 
-        with(viewBinding) {
-            srlRefresh.setOnRefreshListener {
-                viewModel.getRecipeDetail(recipe.key)
-            }
-
-            btnBack.setOnClickListener {
-                findNavController().navigateUp()
-            }
-        }
-
+        getRecipeDetail()
     }
 
     override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRecipeDetailBinding {
@@ -134,6 +130,18 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
                 }
             }
         })
+    }
+
+    private fun prepareUI() {
+        with(viewBinding) {
+            srlRefresh.setOnRefreshListener {
+                viewModel.getRecipeDetail(recipe.key)
+            }
+
+            btnBack.setOnClickListener {
+                findNavController().navigateUp()
+            }
+        }
     }
 
     private fun updateUI() {
@@ -189,7 +197,7 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
         }
     }
 
-    private fun buildNeededItemRecyclerView() {
+    private fun buildNeededItemRV() {
         with(viewBinding) {
             rvNeededItem.setHasFixedSize(true)
             rvNeededItem.adapter = neededItemAdapter
@@ -209,7 +217,7 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
             (findViewById<ImageButton>(R.id.btnBottomSheetClose)).setOnClickListener { bottomSheetDialog.dismiss() }
             (findViewById<TextView>(R.id.tvBottomSheetTitle)).text = title
 
-            buildTodoRecyclerView(findViewById(R.id.rvRecipeDetailTodo))
+            buildTodoRV(findViewById(R.id.rvRecipeDetailTodo))
 
             if (title == "Ingredients") {
                 detailTodoAdapter.bindData(recipeDetail.ingredient)
@@ -239,7 +247,7 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
         }
     }
 
-    private fun buildTodoRecyclerView(recyclerView: RecyclerView) {
+    private fun buildTodoRV(recyclerView: RecyclerView) {
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = detailTodoAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())

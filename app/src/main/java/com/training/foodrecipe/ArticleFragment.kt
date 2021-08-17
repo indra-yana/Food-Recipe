@@ -16,6 +16,7 @@ import com.training.foodrecipe.databinding.FragmentArticleBinding
 import com.training.foodrecipe.datasource.remote.IRecipeApi
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.helper.handleRequestError
+import com.training.foodrecipe.helper.visible
 import com.training.foodrecipe.model.Article
 import com.training.foodrecipe.model.ArticleCategory
 import com.training.foodrecipe.repository.ArticleRepository
@@ -57,35 +58,26 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
     /**
      * Init all variable here that consume view
      */
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // Connect to activity
         (activity as MainActivity).apply {
             hideFabAction()
+            showBottomNavigation()
         }
+
+        prepareUI()
 
         // Category
         buildCategoryAdapter()
-        buildCategoryRecyclerView()
+        buildCategoryRV()
         getArticleCategory()
 
         // Article
         buildArticleAdapter()
-        buildArticleRecyclerView()
+        buildArticleRV()
         getArticle()
-
-        with(viewBinding) {
-            srlRefresh.setOnRefreshListener {
-                isNetworkError = false
-                isLoading = false
-
-                viewModel.getArticleCategory()
-                viewModel.getArticleByCategory(key)
-            }
-
-            layoutHeader.tvHeaderTitle.text = getString(R.string.text_article_title)
-        }
     }
 
     override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentArticleBinding {
@@ -115,7 +107,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
         }
     }
 
-    private fun buildCategoryRecyclerView() {
+    private fun buildCategoryRV() {
         with(viewBinding) {
             rvCategory.setHasFixedSize(true)
             rvCategory.adapter = categoryAdapter
@@ -168,7 +160,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
         }
     }
 
-    private fun buildArticleRecyclerView() {
+    private fun buildArticleRV() {
         with(viewBinding) {
             rvArticle.setHasFixedSize(true)
             rvArticle.adapter = articleAdapter
@@ -185,24 +177,40 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
 
             when (it) {
                 is ResponseStatus.Loading -> {
-                    Log.d(TAG, "getLatestArticle: State is loading!")
+                    Log.d(TAG, "getArticle: State is loading!")
                 }
                 is ResponseStatus.Success -> {
                     val item = it.value.articles
                     articleAdapter.bindData(item)
 
-                    Log.d(TAG, "getLatestArticle: State is success! $item")
+                    Log.d(TAG, "getArticle: State is success! $item")
                 }
                 is ResponseStatus.Failure -> {
                     handleRequestError(it) { retry() }
 
-                    Log.d(TAG, "getLatestArticle:State is failure! ${it.exception}")
+                    Log.d(TAG, "getArticle:State is failure! ${it.exception}")
                 }
                 else -> {
-                    Log.d(TAG, "getLatestArticle: State is unknown!")
+                    Log.d(TAG, "getArticle: State is unknown!")
                 }
             }
         })
+    }
+
+    private fun prepareUI() {
+        with(viewBinding) {
+            srlRefresh.setOnRefreshListener {
+                isNetworkError = false
+                isLoading = false
+
+                viewModel.getArticleCategory()
+                viewModel.getArticleByCategory(key)
+            }
+
+            layoutHeader.tvHeaderTitle.text = getString(R.string.text_article_title)
+            layoutHeader.btnBack.visible(false)
+            layoutHeader.ivHeaderMenu.visible(false)
+        }
     }
 
     private fun toggleLoading(isLoading: Boolean) {

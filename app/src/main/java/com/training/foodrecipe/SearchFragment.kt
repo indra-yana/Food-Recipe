@@ -23,12 +23,18 @@ import com.training.foodrecipe.databinding.FragmentSearchBinding
 import com.training.foodrecipe.datasource.remote.IRecipeApi
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.helper.handleRequestError
+import com.training.foodrecipe.helper.visible
 import com.training.foodrecipe.model.Recipe
 import com.training.foodrecipe.model.RecipeCategory
 import com.training.foodrecipe.repository.RecipeRepository
 import com.training.foodrecipe.viewmodel.RecipeViewModel
 import java.util.*
 
+/****************************************************
+ * Created by Indra Muliana (indra.ndra26@gmail.com)
+ * On Friday, 10/08/2021 22.02
+ * https://gitlab.com/indra-yana
+ ****************************************************/
 class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, RecipeRepository>() {
 
     companion object {
@@ -64,14 +70,169 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
             hideBottomNavigation()
         }
 
+        prepareUI()
+
+        // Category
         buildCategoryAdapter()
-        buildCategoryRecyclerView()
+        buildCategoryRV()
         getCategory()
 
+        // Recipe
         buildRecipeAdapter()
-        buildRecipeRecyclerView()
+        buildRecipeRV()
         getSearchRecipe()
+    }
 
+    override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentSearchBinding {
+        return FragmentSearchBinding.inflate(inflater, container, false)
+    }
+
+    override fun getViewModel(): Class<RecipeViewModel> {
+        return RecipeViewModel::class.java
+    }
+
+    override fun getRepository(): RecipeRepository {
+        return RecipeRepository(apiClient.crete(IRecipeApi::class.java))
+    }
+
+    private fun showSoftKey(view: View, show: Boolean) {
+        when (show) {
+            true -> {
+                view.requestFocus().run {
+                    val input = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    input.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+                }
+            }
+            false -> {
+                view.requestFocus().run {
+                    val input = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    input.hideSoftInputFromWindow(view.windowToken, 0)
+                }
+            }
+        }
+    }
+
+    private fun buildCategoryAdapter() {
+        categoryAdapter = CategoryAdapter().apply {
+            iOnItemClickListener = object : IOnItemClickListener {
+                override fun onItemClicked(data: Any) {
+                    data as RecipeCategory
+
+                    with(viewBinding.etInputSearch) {
+                        setText(data.key)
+                        setSelection(data.key.length)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun buildCategoryRV() {
+        with(viewBinding) {
+            rvCategory.setHasFixedSize(true)
+            rvCategory.adapter = categoryAdapter
+            rvCategory.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL)
+        }
+    }
+
+    private fun getCategory() {
+        viewModel.recipeCategory.observe(viewLifecycleOwner, Observer {
+            isLoading = it is ResponseStatus.Loading
+            isNetworkError = it is ResponseStatus.Failure
+
+            toggleLoading(isLoading)
+            showSoftKey(viewBinding.etInputSearch, it is ResponseStatus.Success)
+
+            when (it) {
+                is ResponseStatus.Loading -> {
+                    Log.d(TAG, "getCategory: State is loading!")
+                }
+                is ResponseStatus.Success -> {
+                    val item = it.value.recipeCategories
+                    categoryAdapter.bindData(item)
+
+                    Log.d(TAG, "getCategory: State is success! $item")
+                }
+                is ResponseStatus.Failure -> {
+                    handleRequestError(it) { retry() }
+
+                    Log.d(TAG, "getCategory:State is failure! ${it.exception}")
+                }
+                else -> {
+                    Log.d(TAG, "getCategory: State is unknown!")
+                }
+            }
+        })
+    }
+
+    private fun buildRecipeAdapter() {
+        recipeAdapter = RecipeAdapter().apply {
+            iOnItemClickListener = object : IOnItemClickListener {
+                override fun onItemClicked(data: Any) {
+                    data as Recipe
+                    val bundle = Bundle().apply {
+                        putString("args", "This is my args!")
+                        putParcelable("recipe", data)
+                    }
+
+                    findNavController().navigate(R.id.action_searchFragment_to_recipeDetailFragment, bundle)
+                }
+
+                override fun onButtonFavouriteClicked(data: Any) {
+                    super.onButtonFavouriteClicked(data)
+                    data as Recipe
+
+                    Toast.makeText(requireContext(), "${data.title} Added to favourite!", Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onButtonShareClicked(data: Any) {
+                    super.onButtonShareClicked(data)
+                    data as Recipe
+
+                    Toast.makeText(requireContext(), "${data.title} Shared to social media!", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun buildRecipeRV() {
+        with(viewBinding) {
+            rvRecipe.setHasFixedSize(true)
+            rvRecipe.adapter = recipeAdapter
+            rvRecipe.layoutManager = LinearLayoutManager(requireContext())
+        }
+    }
+
+    private fun getSearchRecipe() {
+        viewModel.searchRecipe.observe(viewLifecycleOwner, Observer {
+            isLoading = it is ResponseStatus.Loading
+            isNetworkError = it is ResponseStatus.Failure
+
+            toggleLoading(isLoading)
+
+            when (it) {
+                is ResponseStatus.Loading -> {
+                    Log.d(TAG, "getSearchRecipe: State is loading!")
+                }
+                is ResponseStatus.Success -> {
+                    val item = it.value.recipes
+                    recipeAdapter.bindData(item)
+
+                    Log.d(TAG, "getSearchRecipe: State is success! $item")
+                }
+                is ResponseStatus.Failure -> {
+                    handleRequestError(it) { retry() }
+
+                    Log.d(TAG, "getSearchRecipe:State is failure! ${it.exception}")
+                }
+                else -> {
+                    Log.d(TAG, "getSearchRecipe: State is unknown!")
+                }
+            }
+        })
+    }
+
+    private fun prepareUI() {
         with(viewBinding) {
             etInputSearch.apply {
                 addTextChangedListener(object : TextWatcher {
@@ -144,6 +305,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
                 it.visibility = View.GONE
             }
 
+            layoutHeader.tvHeaderTitle.text = getString(R.string.text_search_title)
+            layoutHeader.ivHeaderMenu.visible(false)
             layoutHeader.btnBack.setOnClickListener {
                 findNavController().navigateUp()
                 showSoftKey(it, false)
@@ -156,155 +319,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
                 viewModel.getCategory()
             }
         }
-    }
-
-    override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentSearchBinding {
-        return FragmentSearchBinding.inflate(inflater, container, false)
-    }
-
-    override fun getViewModel(): Class<RecipeViewModel> {
-        return RecipeViewModel::class.java
-    }
-
-    override fun getRepository(): RecipeRepository {
-        return RecipeRepository(apiClient.crete(IRecipeApi::class.java))
-    }
-
-    private fun showSoftKey(view: View, show: Boolean) {
-        when (show) {
-            true -> {
-                view.requestFocus().run {
-                    val input = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                    input.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
-                }
-            }
-            false -> {
-                view.requestFocus().run {
-                    val input = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                    input.hideSoftInputFromWindow(view.windowToken, 0)
-                }
-            }
-        }
-    }
-
-    private fun buildCategoryAdapter() {
-        categoryAdapter = CategoryAdapter().apply {
-            iOnItemClickListener = object : IOnItemClickListener {
-                override fun onItemClicked(data: Any) {
-                    data as RecipeCategory
-
-                    with(viewBinding.etInputSearch) {
-                        setText(data.key)
-                        setSelection(data.key.length)
-                    }
-                }
-            }
-        }
-    }
-
-    private fun buildCategoryRecyclerView() {
-        with(viewBinding) {
-            rvCategory.setHasFixedSize(true)
-            rvCategory.adapter = categoryAdapter
-            rvCategory.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL)
-        }
-    }
-
-    private fun getCategory() {
-        viewModel.recipeCategory.observe(viewLifecycleOwner, Observer {
-            isLoading = it is ResponseStatus.Loading
-            isNetworkError = it is ResponseStatus.Failure
-
-            toggleLoading(isLoading)
-            showSoftKey(viewBinding.etInputSearch, it is ResponseStatus.Success)
-
-            when (it) {
-                is ResponseStatus.Loading -> {
-                    Log.d(TAG, "getCategory: State is loading!")
-                }
-                is ResponseStatus.Success -> {
-                    val item = it.value.recipeCategories
-                    categoryAdapter.bindData(item)
-
-                    Log.d(TAG, "getCategory: State is success! $item")
-                }
-                is ResponseStatus.Failure -> {
-                    handleRequestError(it) { retry() }
-
-                    Log.d(TAG, "getCategory:State is failure! ${it.exception}")
-                }
-                else -> {
-                    Log.d(TAG, "getCategory: State is unknown!")
-                }
-            }
-        })
-    }
-
-    private fun buildRecipeAdapter() {
-        recipeAdapter = RecipeAdapter().apply {
-            iOnItemClickListener = object : IOnItemClickListener {
-                override fun onItemClicked(data: Any) {
-                    data as Recipe
-                    val bundle = Bundle().apply {
-                        putString("args", "This is my args!")
-                        putParcelable("recipe", data)
-                    }
-
-                    findNavController().navigate(R.id.action_searchFragment_to_recipeDetailFragment, bundle)
-                }
-
-                override fun onButtonFavouriteClicked(data: Any) {
-                    super.onButtonFavouriteClicked(data)
-                    data as Recipe
-
-                    Toast.makeText(requireContext(), "${data.title} Added to favourite!", Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onButtonShareClicked(data: Any) {
-                    super.onButtonShareClicked(data)
-                    data as Recipe
-
-                    Toast.makeText(requireContext(), "${data.title} Shared to social media!", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
-
-    private fun buildRecipeRecyclerView() {
-        with(viewBinding) {
-            rvRecipe.setHasFixedSize(true)
-            rvRecipe.adapter = recipeAdapter
-            rvRecipe.layoutManager = LinearLayoutManager(requireContext())
-        }
-    }
-
-    private fun getSearchRecipe() {
-        viewModel.searchRecipe.observe(viewLifecycleOwner, Observer {
-            isLoading = it is ResponseStatus.Loading
-            isNetworkError = it is ResponseStatus.Failure
-
-            toggleLoading(isLoading)
-
-            when (it) {
-                is ResponseStatus.Loading -> {
-                    Log.d(TAG, "getSearchRecipe: State is loading!")
-                }
-                is ResponseStatus.Success -> {
-                    val item = it.value.recipes
-                    recipeAdapter.bindData(item)
-
-                    Log.d(TAG, "getSearchRecipe: State is success! $item")
-                }
-                is ResponseStatus.Failure -> {
-                    handleRequestError(it) { retry() }
-
-                    Log.d(TAG, "getSearchRecipe:State is failure! ${it.exception}")
-                }
-                else -> {
-                    Log.d(TAG, "getSearchRecipe: State is unknown!")
-                }
-            }
-        })
     }
 
     private fun toggleLoading(isLoading: Boolean) {

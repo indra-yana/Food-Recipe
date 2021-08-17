@@ -17,32 +17,6 @@
             layout="@layout/layout_header" />
 
         <LinearLayout
-            android:id="@+id/layoutMenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_10sdp"
-            android:elevation="@dimen/_5sdp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageButton
-                android:id="@+id/ivMenu"
-                android:layout_width="@dimen/_25sdp"
-                android:layout_height="@dimen/_25sdp"
-                android:background="@android:color/transparent"
-                android:clipToPadding="false"
-                android:contentDescription="@string/app_name"
-                android:foreground="?selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_more_vert_black_24dp"
-                app:tint="@color/colorPrimaryWhite100" />
-
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/layoutSearch"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
