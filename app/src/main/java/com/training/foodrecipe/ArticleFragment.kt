@@ -51,8 +51,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.getArticleCategory()
-        viewModel.getArticleByCategory(key)
+        fetchData()
     }
 
     /**
@@ -72,12 +71,12 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
         // Category
         buildCategoryAdapter()
         buildCategoryRV()
-        getArticleCategory()
+        observeArticleCategory()
 
         // Article
         buildArticleAdapter()
         buildArticleRV()
-        getArticle()
+        observeArticle()
     }
 
     override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentArticleBinding {
@@ -115,8 +114,8 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
         }
     }
 
-    private fun getArticleCategory() {
-        viewModel.recipeCategory.observe(viewLifecycleOwner, Observer {
+    private fun observeArticleCategory() {
+        viewModel.articleCategory.observe(viewLifecycleOwner, Observer {
             isLoading = it is ResponseStatus.Loading
             isNetworkError = it is ResponseStatus.Failure
 
@@ -124,21 +123,21 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
 
             when (it) {
                 is ResponseStatus.Loading -> {
-                    Log.d(TAG, "getArticleCategory: State is loading!")
+                    Log.d(TAG, "observeArticleCategory: State is loading!")
                 }
                 is ResponseStatus.Success -> {
                     val item = it.value.articleCategories
                     categoryAdapter.bindData(item)
 
-                    Log.d(TAG, "getArticleCategory: State is success! $item")
+                    Log.d(TAG, "observeArticleCategory: State is success! $item")
                 }
                 is ResponseStatus.Failure -> {
-                    handleRequestError(it) { retry() }
+                    handleRequestError(it) { fetchData() }
 
-                    Log.d(TAG, "getArticleCategory:State is failure! ${it.exception}")
+                    Log.d(TAG, "observeArticleCategory:State is failure! ${it.exception}")
                 }
                 else -> {
-                    Log.d(TAG, "getArticleCategory: State is unknown!")
+                    Log.d(TAG, "observeArticleCategory: State is unknown!")
                 }
             }
         })
@@ -168,7 +167,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
         }
     }
 
-    private fun getArticle() {
+    private fun observeArticle() {
         viewModel.latestArticle.observe(viewLifecycleOwner, Observer {
             isLoading = it is ResponseStatus.Loading
             isNetworkError = it is ResponseStatus.Failure
@@ -177,21 +176,21 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
 
             when (it) {
                 is ResponseStatus.Loading -> {
-                    Log.d(TAG, "getArticle: State is loading!")
+                    Log.d(TAG, "observeArticle: State is loading!")
                 }
                 is ResponseStatus.Success -> {
                     val item = it.value.articles
                     articleAdapter.bindData(item)
 
-                    Log.d(TAG, "getArticle: State is success! $item")
+                    Log.d(TAG, "observeArticle: State is success! $item")
                 }
                 is ResponseStatus.Failure -> {
-                    handleRequestError(it) { retry() }
+                    handleRequestError(it) { fetchData() }
 
-                    Log.d(TAG, "getArticle:State is failure! ${it.exception}")
+                    Log.d(TAG, "observeArticle:State is failure! ${it.exception}")
                 }
                 else -> {
-                    Log.d(TAG, "getArticle: State is unknown!")
+                    Log.d(TAG, "observeArticle: State is unknown!")
                 }
             }
         })
@@ -203,8 +202,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
                 isNetworkError = false
                 isLoading = false
 
-                viewModel.getArticleCategory()
-                viewModel.getArticleByCategory(key)
+                fetchData()
             }
 
             layoutHeader.tvHeaderTitle.text = getString(R.string.text_article_title)
@@ -243,7 +241,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
         }
     }
 
-    private fun retry() {
+    private fun fetchData() {
         viewModel.getArticleCategory()
         viewModel.getArticleByCategory(key)
     }

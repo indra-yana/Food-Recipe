@@ -35,6 +35,7 @@ import java.util.*
  * On Friday, 10/08/2021 22.02
  * https://gitlab.com/indra-yana
  ****************************************************/
+
 class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, RecipeRepository>() {
 
     companion object {
@@ -58,11 +59,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.getCategory()
+        fetchData()
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // Connect to activity
         (activity as MainActivity).apply {
@@ -75,12 +76,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
         // Category
         buildCategoryAdapter()
         buildCategoryRV()
-        getCategory()
+        observeCategory()
 
         // Recipe
         buildRecipeAdapter()
         buildRecipeRV()
-        getSearchRecipe()
+        observeSearchRecipe()
     }
 
     override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentSearchBinding {
@@ -95,7 +96,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
         return RecipeRepository(apiClient.crete(IRecipeApi::class.java))
     }
 
-    private fun showSoftKey(view: View, show: Boolean) {
+    private fun showInputKey(view: View, show: Boolean) {
         when (show) {
             true -> {
                 view.requestFocus().run {
@@ -135,31 +136,31 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
         }
     }
 
-    private fun getCategory() {
+    private fun observeCategory() {
         viewModel.recipeCategory.observe(viewLifecycleOwner, Observer {
             isLoading = it is ResponseStatus.Loading
             isNetworkError = it is ResponseStatus.Failure
 
             toggleLoading(isLoading)
-            showSoftKey(viewBinding.etInputSearch, it is ResponseStatus.Success)
+            showInputKey(viewBinding.etInputSearch, it is ResponseStatus.Success)
 
             when (it) {
                 is ResponseStatus.Loading -> {
-                    Log.d(TAG, "getCategory: State is loading!")
+                    Log.d(TAG, "observeCategory: State is loading!")
                 }
                 is ResponseStatus.Success -> {
                     val item = it.value.recipeCategories
                     categoryAdapter.bindData(item)
 
-                    Log.d(TAG, "getCategory: State is success! $item")
+                    Log.d(TAG, "observeCategory: State is success! $item")
                 }
                 is ResponseStatus.Failure -> {
-                    handleRequestError(it) { retry() }
+                    handleRequestError(it) { fetchData() }
 
-                    Log.d(TAG, "getCategory:State is failure! ${it.exception}")
+                    Log.d(TAG, "observeCategory:State is failure! ${it.exception}")
                 }
                 else -> {
-                    Log.d(TAG, "getCategory: State is unknown!")
+                    Log.d(TAG, "observeCategory: State is unknown!")
                 }
             }
         })
@@ -171,7 +172,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
                 override fun onItemClicked(data: Any) {
                     data as Recipe
                     val bundle = Bundle().apply {
-                        putString("args", "This is my args!")
                         putParcelable("recipe", data)
                     }
 
@@ -203,7 +203,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
         }
     }
 
-    private fun getSearchRecipe() {
+    private fun observeSearchRecipe() {
         viewModel.searchRecipe.observe(viewLifecycleOwner, Observer {
             isLoading = it is ResponseStatus.Loading
             isNetworkError = it is ResponseStatus.Failure
@@ -212,21 +212,21 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
 
             when (it) {
                 is ResponseStatus.Loading -> {
-                    Log.d(TAG, "getSearchRecipe: State is loading!")
+                    Log.d(TAG, "observeSearchRecipe: State is loading!")
                 }
                 is ResponseStatus.Success -> {
                     val item = it.value.recipes
                     recipeAdapter.bindData(item)
 
-                    Log.d(TAG, "getSearchRecipe: State is success! $item")
+                    Log.d(TAG, "observeSearchRecipe: State is success! $item")
                 }
                 is ResponseStatus.Failure -> {
-                    handleRequestError(it) { retry() }
+                    handleRequestError(it) { fetchData() }
 
-                    Log.d(TAG, "getSearchRecipe:State is failure! ${it.exception}")
+                    Log.d(TAG, "observeSearchRecipe:State is failure! ${it.exception}")
                 }
                 else -> {
-                    Log.d(TAG, "getSearchRecipe: State is unknown!")
+                    Log.d(TAG, "observeSearchRecipe: State is unknown!")
                 }
             }
         })
@@ -258,7 +258,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
                                 override fun run() {
                                     Handler(Looper.getMainLooper()).post {
                                         clearSearchResult()
-                                        showSoftKey(this@apply, false)
+                                        showInputKey(this@apply, false)
                                         viewModel.searchRecipe(q)
 
                                         currentSearchQuery = q
@@ -294,7 +294,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
                 */
 
                 setOnClickListener {
-                    showSoftKey(it, true)
+                    showInputKey(it, true)
                 }
 
                 requestFocus()
@@ -309,14 +309,14 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
             layoutHeader.ivHeaderMenu.visible(false)
             layoutHeader.btnBack.setOnClickListener {
                 findNavController().navigateUp()
-                showSoftKey(it, false)
+                showInputKey(it, false)
             }
 
             srlRefresh.setOnRefreshListener {
                 isNetworkError = false
                 isLoading = false
 
-                viewModel.getCategory()
+                fetchData()
             }
         }
     }
@@ -351,7 +351,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
         }
     }
 
-    private fun retry() {
+    private fun fetchData() {
         viewModel.getCategory()
     }
 

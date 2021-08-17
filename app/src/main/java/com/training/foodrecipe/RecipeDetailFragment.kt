@@ -63,8 +63,7 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
         super.onCreate(savedInstanceState)
         recipe = arguments?.getParcelable("recipe")!!
 
-        viewModel.getRecipeDetail(recipe.key)
-        Log.d(TAG, "onCreate: ${recipe.title}")
+        fetchData()
     }
 
     /**
@@ -86,7 +85,7 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
         buildTodoAdapter()
         updateUI()
 
-        getRecipeDetail()
+        observeRecipeDetail()
     }
 
     override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRecipeDetailBinding {
@@ -101,7 +100,7 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
         return RecipeRepository(apiClient.crete(IRecipeApi::class.java))
     }
 
-    private fun getRecipeDetail() {
+    private fun observeRecipeDetail() {
         viewModel.recipeDetail.observe(viewLifecycleOwner, Observer {
             isLoading = it is ResponseStatus.Loading
             isNetworkError = it is ResponseStatus.Failure
@@ -110,23 +109,21 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
 
             when (it) {
                 is ResponseStatus.Loading -> {
-                    Log.d(TAG, "getRecipeDetail: State is loading!")
+                    Log.d(TAG, "observeRecipeDetail: State is loading!")
                 }
                 is ResponseStatus.Success -> {
                     recipeDetail = it.value.recipeDetail
                     updateUI()
 
-                    Log.d(TAG, "getRecipeDetail: State is success! ${it.value.recipeDetail}")
+                    Log.d(TAG, "observeRecipeDetail: State is success! ${it.value.recipeDetail}")
                 }
                 is ResponseStatus.Failure -> {
-                    handleRequestError(it) {
-                        viewModel.getRecipeDetail(recipe.key)
-                    }
+                    handleRequestError(it) { fetchData() }
 
-                    Log.d(TAG, "getRecipeDetail:State is failure! ${it.exception}")
+                    Log.d(TAG, "observeRecipeDetail:State is failure! ${it.exception}")
                 }
                 else -> {
-                    Log.d(TAG, "getRecipeDetail: State is unknown!")
+                    Log.d(TAG, "observeRecipeDetail: State is unknown!")
                 }
             }
         })
@@ -135,7 +132,7 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
     private fun prepareUI() {
         with(viewBinding) {
             srlRefresh.setOnRefreshListener {
-                viewModel.getRecipeDetail(recipe.key)
+                fetchData()
             }
 
             btnBack.setOnClickListener {
@@ -267,5 +264,9 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
             viewBinding.shimmerRecipeDetailPlaceholder.visibility = View.GONE
             viewBinding.mainRecipeDetailContainer.visibility = View.VISIBLE
         }
+    }
+
+    private fun fetchData() {
+        viewModel.getRecipeDetail(recipe.key)
     }
 }

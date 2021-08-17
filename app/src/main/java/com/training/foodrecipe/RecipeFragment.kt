@@ -42,6 +42,7 @@ import com.training.foodrecipe.viewmodel.RecipeViewModel
  * On Friday, 02/04/2021 22.02
  * https://gitlab.com/indra-yana
  ****************************************************/
+
 class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, RecipeRepository>() {
 
     companion object {
@@ -79,8 +80,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
 
         buildBannerAdapter()
 
-        viewModel.getLatestRecipe()
-        viewModel.getRecipeByPage(initialPage)
+        fetchData(initialPage)
     }
 
     /**
@@ -99,12 +99,12 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
 
         // Banner
         buildBanner()
-        getLatestRecipe()
+        observeLatestRecipe()
 
         // Recipe
         buildRecipeAdapter()
         buildRecipeRV()
-        getRecipeByPage()
+        observeRecipeByPage()
     }
 
     override fun onResume() {
@@ -211,8 +211,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
         }
     }
 
-    private fun getRecipeByPage() {
-//        viewModel.getRecipeByPage(initialPage)
+    private fun observeRecipeByPage() {
         viewModel.recipe.observe(viewLifecycleOwner, Observer {
             isLoading = it is ResponseStatus.Loading
             isNetworkError = it is ResponseStatus.Failure
@@ -221,20 +220,20 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
 
             when (it) {
                 is ResponseStatus.Loading -> {
-                    Log.d(TAG, "getRecipeByPage: State is loading!")
+                    Log.d(TAG, "observeRecipeByPage: State is loading!")
                 }
                 is ResponseStatus.Success -> {
                     recipeAdapter.bindData(it.value.recipes)
 
-                    Log.d(TAG, "getRecipeByPage: State is success! ${it.value.recipes}")
+                    Log.d(TAG, "observeRecipeByPage: State is success! ${it.value.recipes}")
                 }
                 is ResponseStatus.Failure -> {
-                    handleRequestError(it) { retry() }
+                    handleRequestError(it) { fetchData(nextPage) }
 
-                    Log.d(TAG, "getRecipeByPage:State is failure! ${it.exception}")
+                    Log.d(TAG, "observeRecipeByPage:State is failure! ${it.exception}")
                 }
                 else -> {
-                    Log.d(TAG, "getRecipeByPage: State is unknown!")
+                    Log.d(TAG, "observeRecipeByPage: State is unknown!")
                 }
             }
         })
@@ -291,8 +290,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
         }
     }
 
-    private fun getLatestRecipe() {
-//        viewModel.getLatestRecipe()
+    private fun observeLatestRecipe() {
         viewModel.latestRecipe.observe(viewLifecycleOwner, Observer {
             isLoading = it is ResponseStatus.Loading
             isNetworkError = it is ResponseStatus.Failure
@@ -301,21 +299,21 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
 
             when (it) {
                 is ResponseStatus.Loading -> {
-                    Log.d(TAG, "getLatestRecipe: State is loading!")
+                    Log.d(TAG, "observeLatestRecipe: State is loading!")
                 }
                 is ResponseStatus.Success -> {
                     bannerAdapter.bindData(it.value.recipes)
                     viewBinding.sliderIndicator.refreshDots()
 
-                    Log.d(TAG, "getLatestRecipe: State is success! ${it.value.recipes}")
+                    Log.d(TAG, "observeLatestRecipe: State is success! ${it.value.recipes}")
                 }
                 is ResponseStatus.Failure -> {
-                    handleRequestError(it) { retry() }
+                    handleRequestError(it) { fetchData(nextPage) }
 
-                    Log.d(TAG, "getLatestRecipe: State is failure! ${it.exception}")
+                    Log.d(TAG, "observeLatestRecipe: State is failure! ${it.exception}")
                 }
                 else -> {
-                    Log.d(TAG, "getLatestRecipe: State is unknown!")
+                    Log.d(TAG, "observeLatestRecipe: State is unknown!")
                 }
             }
         })
@@ -332,8 +330,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
                 isNetworkError = false
                 isRequestNextPage = false
 
-                viewModel.getLatestRecipe()
-                viewModel.getRecipeByPage(nextPage)
+                fetchData(nextPage)
             }
 
             layoutHeader.tvHeaderTitle.text = getString(R.string.text_welcome_user)
@@ -445,8 +442,8 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
         bottomSheetAbout?.show()
     }
 
-    private fun retry() {
+    private fun fetchData(page: Int) {
         viewModel.getLatestRecipe()
-        viewModel.getRecipeByPage(nextPage)
+        viewModel.getRecipeByPage(page)
     }
 }

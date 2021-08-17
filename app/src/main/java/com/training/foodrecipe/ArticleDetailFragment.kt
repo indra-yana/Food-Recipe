@@ -28,6 +28,7 @@ import com.training.foodrecipe.viewmodel.ArticleViewModel
  * On Friday, 16/08/2021 22.02
  * https://gitlab.com/indra-yana
  ****************************************************/
+
 class ArticleDetailFragment : BaseFragment<FragmentArticleDetailBinding, ArticleViewModel, ArticleRepository>() {
 
     companion object {
@@ -48,7 +49,7 @@ class ArticleDetailFragment : BaseFragment<FragmentArticleDetailBinding, Article
         super.onCreate(savedInstanceState)
         article = arguments?.getParcelable("article")!!
 
-        viewModel.getArticleDetail(article.tags ?: "", article.key)
+        fetchData()
     }
 
     /**
@@ -63,7 +64,7 @@ class ArticleDetailFragment : BaseFragment<FragmentArticleDetailBinding, Article
         }
 
         prepareUI()
-        getArticleDetail()
+        observeArticle()
     }
 
     override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentArticleDetailBinding {
@@ -78,7 +79,7 @@ class ArticleDetailFragment : BaseFragment<FragmentArticleDetailBinding, Article
         return ArticleRepository(apiClient.crete(IRecipeApi::class.java))
     }
 
-    private fun getArticleDetail() {
+    private fun observeArticle() {
         viewModel.articleDetail.observe(viewLifecycleOwner, Observer {
             isLoading = it is ResponseStatus.Loading
             isNetworkError = it is ResponseStatus.Failure
@@ -87,21 +88,21 @@ class ArticleDetailFragment : BaseFragment<FragmentArticleDetailBinding, Article
 
             when (it) {
                 is ResponseStatus.Loading -> {
-                    Log.d(TAG, "getArticleDetail: State is loading!")
+                    Log.d(TAG, "observeArticle: State is loading!")
                 }
                 is ResponseStatus.Success -> {
                     val item = it.value.articleDetail
                     updateUI(item)
 
-                    Log.d(TAG, "getArticleDetail: State is success! $item")
+                    Log.d(TAG, "observeArticle: State is success! $item")
                 }
                 is ResponseStatus.Failure -> {
-                    handleRequestError(it) { retry() }
+                    handleRequestError(it) { fetchData() }
 
-                    Log.d(TAG, "getArticleDetail:State is failure! ${it.exception}")
+                    Log.d(TAG, "observeArticle:State is failure! ${it.exception}")
                 }
                 else -> {
-                    Log.d(TAG, "getArticleDetail: State is unknown!")
+                    Log.d(TAG, "observeArticle: State is unknown!")
                 }
             }
         })
@@ -130,7 +131,7 @@ class ArticleDetailFragment : BaseFragment<FragmentArticleDetailBinding, Article
     private fun prepareUI() {
         with(viewBinding) {
             srlRefresh.setOnRefreshListener {
-                viewModel.getArticleDetail(article.tags ?: "", article.key)
+                fetchData()
             }
 
             btnBack.setOnClickListener {
@@ -182,7 +183,7 @@ class ArticleDetailFragment : BaseFragment<FragmentArticleDetailBinding, Article
         }
     }
 
-    private fun retry() {
+    private fun fetchData() {
         viewModel.getArticleDetail(article.tags ?: "", article.key)
     }
 }

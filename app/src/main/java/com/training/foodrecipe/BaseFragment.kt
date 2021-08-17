@@ -17,6 +17,7 @@ import com.training.foodrecipe.viewmodel.base.BaseViewModel
  * On Friday, 02/04/2021 21.29
  * https://gitlab.com/indra-yana
  ****************************************************/
+
 abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel, BR : BaseRepository> : Fragment() {
 
     protected lateinit var viewBinding: VB

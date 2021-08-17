@@ -24,7 +24,7 @@ class ArticleViewModel(private val repository: ArticleRepository) : BaseArticleV
     private val _articleDetail: MutableLiveData<ResponseStatus<ArticleDetailResponse>> = MutableLiveData()
 
     val latestArticle: LiveData<ResponseStatus<ArticleResponse>> get() = _latestArticle
-    val recipeCategory: LiveData<ResponseStatus<ArticleCategoryResponse>> get() = _articleCategory
+    val articleCategory: LiveData<ResponseStatus<ArticleCategoryResponse>> get() = _articleCategory
     val articleDetail: LiveData<ResponseStatus<ArticleDetailResponse>> get() = _articleDetail
 
     override fun getLatestArticle() = viewModelScope.launch {
