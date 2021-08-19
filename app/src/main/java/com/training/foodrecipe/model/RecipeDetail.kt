@@ -6,11 +6,15 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "recipe_details", indices = [Index(value = ["id"], unique = true)])
+@Entity(tableName = "recipe_details", indices = [Index(value = ["id", "key"], unique = true)])
 data class RecipeDetail(
-    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    val id: Int,
+    val id: Int?,
+
+    @PrimaryKey
+    @ColumnInfo(name = "key")
+    @SerializedName("key")
+    var key: String,
 
     @ColumnInfo(name = "author")
     @SerializedName("author")
@@ -42,7 +46,7 @@ data class RecipeDetail(
 
     @ColumnInfo(name = "thumb")
     @SerializedName("thumb")
-    val thumb: String,
+    var thumb: String?,
 
     @ColumnInfo(name = "times")
     @SerializedName("times")

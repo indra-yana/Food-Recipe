@@ -1,8 +1,7 @@
-package com.training.foodrecipe.datasource.local
+package com.training.foodrecipe.datasource.local.dao
 
 import androidx.room.*
 import com.training.foodrecipe.model.Recipe
-import com.training.foodrecipe.model.RecipeDetail
 
 /****************************************************
  * Created by Indra Muliana (indra.ndra26@gmail.com)
@@ -11,17 +10,18 @@ import com.training.foodrecipe.model.RecipeDetail
  ****************************************************/
 
 @Dao
-interface RecipeDetailDao {
+interface RecipeDao {
 
-    @Query("SELECT * FROM recipes WHERE `key` = :key")
-    suspend fun getRecipeDetail(key: String): List<Recipe>
+    @Query("SELECT * FROM recipes ORDER BY id DESC")
+    suspend fun getAllRecipes(): List<Recipe>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertRecipeDetail(recipeDetail: RecipeDetail)
+    suspend fun insertRecipe(vararg recipe: Recipe)
 
     @Delete
     suspend fun deleteRecipe(recipe: Recipe)
 
-    @Query("SELECT EXISTS (SELECT 1 FROM recipe_details WHERE `key` = :key)")
+    @Query("SELECT EXISTS (SELECT 1 FROM recipes WHERE `key` = :key)")
     suspend fun isRecipesExist(key: String): Boolean
+
 }

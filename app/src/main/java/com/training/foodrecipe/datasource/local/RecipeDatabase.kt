@@ -4,9 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.training.foodrecipe.model.Recipe
-import com.training.foodrecipe.model.RecipeCategory
-import com.training.foodrecipe.model.RecipeDetail
+import androidx.room.TypeConverters
+import com.training.foodrecipe.datasource.local.dao.RecipeDao
+import com.training.foodrecipe.datasource.local.dao.RecipeDetailDao
+import com.training.foodrecipe.model.*
 
 /****************************************************
  * Created by Indra Muliana (indra.ndra26@gmail.com)
@@ -14,21 +15,43 @@ import com.training.foodrecipe.model.RecipeDetail
  * https://gitlab.com/indra-yana
  ****************************************************/
 
-@Database(entities = [Recipe::class, RecipeDetail::class, RecipeCategory::class], version = 1, exportSchema = false)
+@Database(
+    entities = [
+        Recipe::class,
+        RecipeDetail::class,
+        RecipeCategory::class,
+        NeedItem::class,
+        Author::class
+    ],
+    version = 2,
+    exportSchema = false
+)
+@TypeConverters(TypeConverter::class)
 abstract class RecipeDatabase : RoomDatabase() {
 
     companion object {
-        private var db : RecipeDatabase? = null
+        // Singleton prevents multiple instances of database opening at the
+        // same time.
+        @Volatile
+        private var INSTANCE: RecipeDatabase? = null
 
-        fun dbInstance(context: Context) : RecipeDatabase {
-            if (db == null) {
-                db = Room.databaseBuilder(context, RecipeDatabase::class.java, "food_recipe_db").build()
+        @JvmStatic
+        val dbInstance get() = INSTANCE
+
+        fun initDatabase(context: Context): RecipeDatabase {
+            // if the INSTANCE is not null, then return it,
+            // if it is, then create the database
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(context.applicationContext, RecipeDatabase::class.java, "food_recipe_db").fallbackToDestructiveMigration().build()
+                INSTANCE = instance
+
+                // return instance
+                instance
             }
-
-            return db!!
         }
     }
 
-    abstract fun getRecipeDao() : RecipeDao
+    abstract fun getRecipeDao(): RecipeDao
+    abstract fun getRecipeDetailDao(): RecipeDetailDao
 
 }

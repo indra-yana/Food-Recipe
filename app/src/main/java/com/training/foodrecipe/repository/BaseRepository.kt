@@ -1,5 +1,6 @@
 package com.training.foodrecipe.repository
 
+import com.training.foodrecipe.datasource.local.RecipeDatabase
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -10,7 +11,7 @@ import kotlinx.coroutines.withContext
  * https://gitlab.com/indra-yana
  ****************************************************/
 
-interface BaseRepository {
+abstract class BaseRepository() {
 
     suspend fun <T> safeApiCall(apiCall: suspend () -> T): ResponseStatus<T> {
         return withContext(Dispatchers.IO) {

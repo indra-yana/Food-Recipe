@@ -12,7 +12,7 @@ import com.training.foodrecipe.datasource.remote.response.ResponseStatus
  * https://gitlab.com/indra-yana
  ****************************************************/
 
-class RecipeRepository(private val api: IRecipeApi) : BaseRepository {
+class RecipeRepository(private val api: IRecipeApi) : BaseRepository() {
 
     suspend fun getLatestRecipe(): ResponseStatus<RecipeResponse> = safeApiCall { api.getLatestRecipe() }
     suspend fun getRecipeByPage(page: Int): ResponseStatus<RecipeResponse> = safeApiCall { api.getRecipeByPage(page) }

@@ -9,7 +9,7 @@ import com.training.foodrecipe.datasource.remote.response.*
  * https://gitlab.com/indra-yana
  ****************************************************/
 
-class ArticleRepository(private val api: IRecipeApi) : BaseRepository {
+class ArticleRepository(private val api: IRecipeApi) : BaseRepository() {
 
     suspend fun getLatestArticle(): ResponseStatus<ArticleResponse> = safeApiCall { api.getLatestArticle() }
     suspend fun getArticleCategory(): ResponseStatus<ArticleCategoryResponse> = safeApiCall { api.getArticleCategory() }
