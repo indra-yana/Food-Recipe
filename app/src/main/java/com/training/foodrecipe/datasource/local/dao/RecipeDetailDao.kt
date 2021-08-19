@@ -13,7 +13,7 @@ import com.training.foodrecipe.model.RecipeDetail
 interface RecipeDetailDao {
 
     @Query("SELECT * FROM recipe_details WHERE `key` = :key")
-    suspend fun find(key: String): RecipeDetail
+    suspend fun find(key: String): RecipeDetail?
 
     @Query("SELECT * FROM recipe_details")
     suspend fun all(): List<RecipeDetail>

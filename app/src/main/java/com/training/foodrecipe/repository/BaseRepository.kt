@@ -1,6 +1,5 @@
 package com.training.foodrecipe.repository
 
-import com.training.foodrecipe.datasource.local.RecipeDatabase
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

@@ -126,7 +126,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
     }
 
     override fun getRepository(): RecipeRepository {
-        return RecipeRepository(apiClient.crete(IRecipeApi::class.java))
+        return RecipeRepository(recipeDB, apiClient.crete(IRecipeApi::class.java))
     }
 
     private fun buildRecipeAdapter() {

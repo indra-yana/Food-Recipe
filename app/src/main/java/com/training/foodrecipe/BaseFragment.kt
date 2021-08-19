@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
+import com.training.foodrecipe.datasource.local.RecipeDatabase
 import com.training.foodrecipe.datasource.remote.RecipeApiClient
 import com.training.foodrecipe.repository.BaseRepository
 import com.training.foodrecipe.viewmodel.ViewModelFactory
@@ -22,6 +23,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel, BR : BaseRepos
 
     protected lateinit var viewBinding: VB
     protected lateinit var viewModel: VM
+    protected val recipeDB: RecipeDatabase by lazy { BaseApplication.recipeDB }
     protected val apiClient = RecipeApiClient
 
     override fun onCreate(savedInstanceState: Bundle?) {

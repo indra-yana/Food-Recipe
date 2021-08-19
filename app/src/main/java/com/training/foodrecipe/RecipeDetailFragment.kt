@@ -14,7 +14,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -34,9 +33,6 @@ import com.training.foodrecipe.model.Recipe
 import com.training.foodrecipe.model.RecipeDetail
 import com.training.foodrecipe.repository.RecipeRepository
 import com.training.foodrecipe.viewmodel.RecipeViewModel
-import kotlinx.coroutines.launch
-import java.util.*
-import kotlin.random.Random
 
 /****************************************************
  * Created by Indra Muliana (indra.ndra26@gmail.com)
@@ -103,7 +99,7 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
     }
 
     override fun getRepository(): RecipeRepository {
-        return RecipeRepository(apiClient.crete(IRecipeApi::class.java))
+        return RecipeRepository(recipeDB, apiClient.crete(IRecipeApi::class.java))
     }
 
     private fun observeRecipeDetail() {

@@ -93,7 +93,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
     }
 
     override fun getRepository(): RecipeRepository {
-        return RecipeRepository(apiClient.crete(IRecipeApi::class.java))
+        return RecipeRepository(recipeDB, apiClient.crete(IRecipeApi::class.java))
     }
 
     private fun showInputKey(view: View, show: Boolean) {
