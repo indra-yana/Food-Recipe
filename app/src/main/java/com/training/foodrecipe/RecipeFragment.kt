@@ -79,7 +79,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
         super.onCreate(savedInstanceState)
 
         buildBannerAdapter()
-
+        buildRecipeAdapter()
         fetchData(initialPage)
     }
 
@@ -102,7 +102,6 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
         observeLatestRecipe()
 
         // Recipe
-        buildRecipeAdapter()
         buildRecipeRV()
         observeRecipeByPage()
     }
