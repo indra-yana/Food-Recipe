@@ -1,6 +1,8 @@
 package com.training.foodrecipe.repository
 
+import com.training.foodrecipe.datasource.remote.response.RecipeCategoryResponse
 import com.training.foodrecipe.datasource.remote.response.RecipeDetailResponse
+import com.training.foodrecipe.model.RecipeCategory
 import com.training.foodrecipe.model.RecipeDetail
 
 /****************************************************
@@ -15,6 +17,11 @@ class MapperEntity {
         @JvmStatic
         fun recipeDetailCategoryMapper(data: RecipeDetail): RecipeDetailResponse {
             return RecipeDetailResponse(method = "DB", status = true, recipeDetail = data)
+        }
+
+        @JvmStatic
+        fun recipeCategoryMapper(data: List<RecipeCategory>): RecipeCategoryResponse {
+            return RecipeCategoryResponse(method = "DB", status = true, recipeCategories = data)
         }
     }
 }

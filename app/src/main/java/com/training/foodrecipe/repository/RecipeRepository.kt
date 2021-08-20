@@ -26,6 +26,7 @@ class RecipeRepository(private val db: RecipeDatabase, private val api: IRecipeA
     suspend fun getRecipeDetail(key: String): ResponseStatus<RecipeDetailResponse> {
         return safeApiCall {
             val cache = db.getRecipeDetailDao().find(key)
+
             if (cache != null) {
                 MapperEntity.recipeDetailCategoryMapper(cache)
             } else {
@@ -37,7 +38,21 @@ class RecipeRepository(private val db: RecipeDatabase, private val api: IRecipeA
         }
     }
 
-    suspend fun getCategory(): ResponseStatus<RecipeCategoryResponse> = safeApiCall { api.getCategory() }
+    suspend fun getCategory(): ResponseStatus<RecipeCategoryResponse> {
+        return safeApiCall {
+            val cache = db.getRecipeCategoryDao().all()
+
+            if (!cache.isNullOrEmpty()) {
+                MapperEntity.recipeCategoryMapper(cache)
+            } else {
+                val apiResult = api.getCategory()
+                db.getRecipeCategoryDao().insertAll(apiResult.recipeCategories)
+
+                apiResult
+            }
+        }
+    }
+
     suspend fun getRecipeByCategory(key: String): ResponseStatus<RecipeResponse> = safeApiCall { api.getRecipeByCategory(key) }
 
 }

@@ -19,10 +19,10 @@ interface RecipeDetailDao {
     suspend fun all(): List<RecipeDetail>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(recipeDetail: RecipeDetail)
+    suspend fun insert(value: RecipeDetail)
 
     @Delete
-    suspend fun delete(recipeDetail: RecipeDetail)
+    suspend fun delete(value: RecipeDetail)
 
     @Query("SELECT EXISTS (SELECT 1 FROM recipe_details WHERE `key` = :key)")
     suspend fun checkIfExist(key: String): Boolean

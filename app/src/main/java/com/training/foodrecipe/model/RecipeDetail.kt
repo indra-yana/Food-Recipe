@@ -26,7 +26,7 @@ data class RecipeDetail(
 
     @ColumnInfo(name = "dificulty")
     @SerializedName("dificulty")
-    val dificulty: String,
+    val dificulty: String?,
 
     @ColumnInfo(name = "ingredient")
     @SerializedName("ingredient")
@@ -38,7 +38,7 @@ data class RecipeDetail(
 
     @ColumnInfo(name = "servings")
     @SerializedName("servings")
-    val servings: String,
+    val servings: String?,
 
     @ColumnInfo(name = "step")
     @SerializedName("step")
@@ -50,7 +50,7 @@ data class RecipeDetail(
 
     @ColumnInfo(name = "times")
     @SerializedName("times")
-    val times: String,
+    val times: String?,
 
     @ColumnInfo(name = "title")
     @SerializedName("title")

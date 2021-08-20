@@ -14,10 +14,10 @@ import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "recipe_categories", indices = [Index(value = ["id", "key"], unique = true)])
 data class RecipeCategory(
-    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    val id: Int,
+    val id: Int?,
 
+    @PrimaryKey
     @ColumnInfo(name = "key")
     @SerializedName("key")
     val key: String,

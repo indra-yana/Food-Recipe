@@ -12,14 +12,26 @@ import com.training.foodrecipe.model.Recipe
 @Dao
 interface RecipeDao {
 
+    @Query("SELECT * FROM recipes WHERE `key` = :key")
+    suspend fun find(key: String): Recipe?
+
     @Query("SELECT * FROM recipes ORDER BY id DESC")
-    suspend fun getAllRecipes(): List<Recipe>
+    suspend fun all(): List<Recipe>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertRecipe(vararg recipe: Recipe)
+    suspend fun insert(value: Recipe)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(value: List<Recipe>)
+
+    @Update
+    suspend fun update(value: Recipe)
 
     @Delete
-    suspend fun deleteRecipe(recipe: Recipe)
+    suspend fun delete(recipe: Recipe)
+
+    @Query("DELETE FROM recipes")
+    suspend fun deleteAll()
 
     @Query("SELECT EXISTS (SELECT 1 FROM recipes WHERE `key` = :key)")
     suspend fun isRecipesExist(key: String): Boolean
