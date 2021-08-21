@@ -20,7 +20,7 @@ interface IRecipeApi {
     suspend fun getRecipeByPage(@Path("page") page: Int): RecipeResponse
 
     @GET("/api/search")
-    suspend fun searchRecipe(@Query("q") query: String): RecipeResponse
+    suspend fun searchRecipe(@Query("q") query: String?): RecipeResponse
 
     @GET("/api/recipe/{key}")
     suspend fun getRecipeDetail(@Path("key") key: String): RecipeDetailResponse

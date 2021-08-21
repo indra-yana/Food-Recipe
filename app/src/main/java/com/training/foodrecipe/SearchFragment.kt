@@ -1,6 +1,5 @@
 package com.training.foodrecipe
 
-import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -10,8 +9,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,11 +20,13 @@ import com.training.foodrecipe.databinding.FragmentSearchBinding
 import com.training.foodrecipe.datasource.remote.IRecipeApi
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.helper.handleRequestError
+import com.training.foodrecipe.helper.showInputKey
 import com.training.foodrecipe.helper.visible
 import com.training.foodrecipe.model.Recipe
 import com.training.foodrecipe.model.RecipeCategory
 import com.training.foodrecipe.repository.RecipeRepository
 import com.training.foodrecipe.viewmodel.RecipeViewModel
+import kotlinx.android.synthetic.main.fragment_recipe.*
 import java.util.*
 
 /****************************************************
@@ -49,7 +48,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
     // Indicator state
     private var isLoading = false
     private var isNetworkError = false
-    private var currentSearchQuery: String = ""
+    private var currentSearchQuery: String? = null
 
     private var timerTask: Timer? = null
 
@@ -96,23 +95,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
         return RecipeRepository(recipeDB, apiClient.crete(IRecipeApi::class.java))
     }
 
-    private fun showInputKey(view: View, show: Boolean) {
-        when (show) {
-            true -> {
-                view.requestFocus().run {
-                    val input = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                    input.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
-                }
-            }
-            false -> {
-                view.requestFocus().run {
-                    val input = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                    input.hideSoftInputFromWindow(view.windowToken, 0)
-                }
-            }
-        }
-    }
-
     private fun buildCategoryAdapter() {
         categoryAdapter = CategoryAdapter().apply {
             iOnItemClickListener = object : IOnItemClickListener {
@@ -142,7 +124,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
             isNetworkError = it is ResponseStatus.Failure
 
             toggleLoading(isLoading)
-            showInputKey(viewBinding.etInputSearch, it is ResponseStatus.Success)
+            showInputKey(viewBinding.etInputSearch, it is ResponseStatus.Success && etInputSearch.text.trim().isEmpty())
 
             when (it) {
                 is ResponseStatus.Loading -> {
@@ -176,20 +158,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
                     }
 
                     findNavController().navigate(R.id.action_searchFragment_to_recipeDetailFragment, bundle)
-                }
-
-                override fun onButtonFavouriteClicked(data: Any) {
-                    super.onButtonFavouriteClicked(data)
-                    data as Recipe
-
-                    Toast.makeText(requireContext(), "${data.title} Added to favourite!", Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onButtonShareClicked(data: Any) {
-                    super.onButtonShareClicked(data)
-                    data as Recipe
-
-                    Toast.makeText(requireContext(), "${data.title} Shared to social media!", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -246,7 +214,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
                         val q = s.toString().trim()
 
                         if (q.isNotEmpty()) {
-                            ivClearInputSearch.visibility = View.VISIBLE
+                            ivClearInputSearch.visible(true)
 
                             if (currentSearchQuery == q) {
                                 timerTask?.cancel()
@@ -257,17 +225,16 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
                             timerTask?.schedule(object : TimerTask() {
                                 override fun run() {
                                     Handler(Looper.getMainLooper()).post {
+                                        currentSearchQuery = q
                                         clearSearchResult()
                                         showInputKey(this@apply, false)
-                                        viewModel.searchRecipe(q)
-
-                                        currentSearchQuery = q
+                                        viewModel.searchRecipe(currentSearchQuery)
                                     }
                                 }
-                            }, 1000)
+                            }, 2000)
                         } else {
-                            currentSearchQuery = ""
-                            ivClearInputSearch.visibility = View.GONE
+                            currentSearchQuery = null
+                            ivClearInputSearch.visible(false)
                             clearSearchResult()
                         }
                     }
@@ -297,25 +264,30 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
                     showInputKey(it, true)
                 }
 
-                requestFocus()
+                currentSearchQuery?.let {
+                    setText(it)
+                    setSelection(it.length)
+                }
             }
 
             ivClearInputSearch.setOnClickListener {
                 etInputSearch.text = null
-                it.visibility = View.GONE
+                it.visible(false)
             }
 
             layoutHeader.tvHeaderTitle.text = getString(R.string.text_search_title)
             layoutHeader.ivHeaderMenu.visible(false)
             layoutHeader.ivHeaderFavourite.visible(false)
             layoutHeader.btnBack.setOnClickListener {
+                showInputKey(etInputSearch, false)
                 findNavController().navigateUp()
-                showInputKey(it, false)
             }
 
             srlRefresh.setOnRefreshListener {
                 isNetworkError = false
                 isLoading = false
+                currentSearchQuery = null
+                etInputSearch.text = null
 
                 fetchData()
             }
@@ -329,26 +301,26 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
 
         if (isLoading || isNetworkError) {
             // Search result
-            viewBinding.layoutSearchResultPlaceholder.visibility = View.VISIBLE
-            viewBinding.layoutSearchResult.visibility = View.GONE
+            viewBinding.layoutSearchResultPlaceholder.visible(true)
+            viewBinding.layoutSearchResult.visible(false)
 
             // Category
-            viewBinding.layoutCategoryPlaceholder.visibility = View.VISIBLE
-            viewBinding.layoutCategory.visibility = View.GONE
+            viewBinding.layoutCategoryPlaceholder.visible(true)
+            viewBinding.layoutCategory.visible(false)
         } else {
             // Search result
             viewBinding.shimmerFramelayout.stopShimmer()
             viewBinding.shimmerFramelayout.hideShimmer()
 
-            viewBinding.layoutSearchResultPlaceholder.visibility = View.GONE
-            viewBinding.layoutSearchResult.visibility = View.VISIBLE
+            viewBinding.layoutSearchResultPlaceholder.visible(false)
+            viewBinding.layoutSearchResult.visible(true)
 
             // Category
             viewBinding.shimmerCategoryFramelayout.stopShimmer()
             viewBinding.shimmerCategoryFramelayout.hideShimmer()
 
-            viewBinding.layoutCategoryPlaceholder.visibility = View.GONE
-            viewBinding.layoutCategory.visibility = View.VISIBLE
+            viewBinding.layoutCategoryPlaceholder.visible(false)
+            viewBinding.layoutCategory.visible(true)
         }
     }
 

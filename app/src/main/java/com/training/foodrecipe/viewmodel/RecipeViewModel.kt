@@ -48,7 +48,7 @@ class RecipeViewModel(private val repository: RecipeRepository) : BaseRecipeView
         _recipe.value = repository.getRecipeByPage(page)
     }
 
-    override fun searchRecipe(query: String) = viewModelScope.launch {
+    override fun searchRecipe(query: String?) = viewModelScope.launch {
         _searchRecipe.value = ResponseStatus.Loading
         _searchRecipe.value = repository.searchRecipe(query)
     }

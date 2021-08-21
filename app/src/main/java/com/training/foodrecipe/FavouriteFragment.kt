@@ -158,7 +158,7 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding, RecipeViewModel
                                         fetchData(currentSearchQuery)
                                     }
                                 }
-                            }, 1000)
+                            }, 2000)
                         } else {
                             currentSearchQuery = null
                             ivClearInputSearch.visible(false)

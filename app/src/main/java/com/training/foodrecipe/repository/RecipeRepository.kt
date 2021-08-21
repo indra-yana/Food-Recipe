@@ -22,7 +22,7 @@ class RecipeRepository(private val db: RecipeDatabase, private val api: IRecipeA
 
     suspend fun getLatestRecipe(): ResponseStatus<RecipeResponse> = safeApiCall { api.getLatestRecipe() }
     suspend fun getRecipeByPage(page: Int): ResponseStatus<RecipeResponse> = safeApiCall { api.getRecipeByPage(page) }
-    suspend fun searchRecipe(query: String): ResponseStatus<RecipeResponse> = safeApiCall { api.searchRecipe(query) }
+    suspend fun searchRecipe(query: String?): ResponseStatus<RecipeResponse> = safeApiCall { api.searchRecipe(query) }
 
     suspend fun getRecipeDetail(key: String): ResponseStatus<RecipeDetailResponse> {
         return safeApiCall {

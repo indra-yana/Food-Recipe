@@ -12,7 +12,7 @@ abstract class BaseRecipeViewModel : BaseViewModel() {
 
     abstract fun getLatestRecipe(): Job
     abstract fun getRecipeByPage(page: Int): Job
-    abstract fun searchRecipe(query: String): Job
+    abstract fun searchRecipe(query: String?): Job
     abstract fun getRecipeDetail(key: String): Job
     abstract fun getCategory(): Job
     abstract fun getRecipeByCategory(key: String): Job
