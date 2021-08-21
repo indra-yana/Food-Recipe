@@ -16,10 +16,10 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 @Entity(tableName = "recipes", indices = [Index(value = ["id", "key"], unique = true)])
 data class Recipe(
-    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    val id: Int,
+    val id: Int?,
 
+    @PrimaryKey
     @ColumnInfo(name = "key")
     @SerializedName("key")
     val key: String,

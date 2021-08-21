@@ -329,6 +329,10 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
             layoutHeader.ivHeaderMenu.setOnClickListener {
                 showPopupMenu(it)
             }
+
+            layoutHeader.ivHeaderFavourite.setOnClickListener {
+                findNavController().navigate(R.id.action_homeFragment_to_favouriteFragment2)
+            }
         }
     }
 

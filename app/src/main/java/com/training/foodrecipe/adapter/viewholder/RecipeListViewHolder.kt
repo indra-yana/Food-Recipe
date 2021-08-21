@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.training.foodrecipe.R
@@ -21,6 +22,7 @@ import com.training.foodrecipe.model.Recipe
 class RecipeListViewHolder(itemView: View) : BaseViewHolder(itemView) {
     private var tvItemTitle: TextView = itemView.findViewById(R.id.tvItemTitle)
     private var tvMisc: TextView = itemView.findViewById(R.id.tvMisc)
+
     // private var tvServing: TextView = itemView.findViewById(R.id.tvServing)
     private var ivItemThumbnail: ImageView = itemView.findViewById(R.id.ivItemThumbnail)
     private var btnAddFavourite: ImageButton = itemView.findViewById(R.id.btnAddFavourite)
@@ -43,6 +45,7 @@ class RecipeListViewHolder(itemView: View) : BaseViewHolder(itemView) {
 
         Glide.with(itemView.context)
             .load(data.thumb)
+            .placeholder(ContextCompat.getDrawable(itemView.context, R.drawable.image_placeholder))
             .apply(RequestOptions().override(100, 60))
             .into(ivItemThumbnail)
 

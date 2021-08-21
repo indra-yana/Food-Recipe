@@ -1,13 +1,7 @@
 package com.training.foodrecipe.helper
 
-import com.training.foodrecipe.datasource.remote.response.ArticleCategoryResponse
-import com.training.foodrecipe.datasource.remote.response.ArticleDetailResponse
-import com.training.foodrecipe.datasource.remote.response.RecipeCategoryResponse
-import com.training.foodrecipe.datasource.remote.response.RecipeDetailResponse
-import com.training.foodrecipe.model.ArticleCategory
-import com.training.foodrecipe.model.ArticleDetail
-import com.training.foodrecipe.model.RecipeCategory
-import com.training.foodrecipe.model.RecipeDetail
+import com.training.foodrecipe.datasource.remote.response.*
+import com.training.foodrecipe.model.*
 
 /****************************************************
  * Created by Indra Muliana (indra.ndra26@gmail.com)
@@ -36,6 +30,25 @@ class ModelMapper {
         @JvmStatic
         fun articleDetailMapper(data: ArticleDetail): ArticleDetailResponse {
             return ArticleDetailResponse(method = "DB", status = true, articleDetail = data)
+        }
+
+        @JvmStatic
+        fun recipeDetailsToRecipeListMapper(data: List<RecipeDetail>): RecipeResponse {
+            val recipe = data.map {
+                Recipe(
+                    id = it.id,
+                    key = it.key,
+                    title = it.title,
+                    dificulty = it.dificulty,
+                    difficulty = it.dificulty,
+                    portion = it.servings,
+                    serving = it.servings,
+                    times = it.times ?: "",
+                    thumb = it.thumb ?: ""
+                )
+            }
+
+            return RecipeResponse(method = "DB", status = true, recipes = recipe)
         }
 
         @JvmStatic

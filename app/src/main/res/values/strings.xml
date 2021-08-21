@@ -40,4 +40,5 @@
     <string name="text_article_category">Category</string>
     <string name="text_latest_article">Article Terbaru</string>
     <string name="text_goto_website">Website</string>
+    <string name="text_search_favourite">Cari di Favourite</string>
 </resources>

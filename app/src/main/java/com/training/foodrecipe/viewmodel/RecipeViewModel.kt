@@ -68,6 +68,11 @@ class RecipeViewModel(private val repository: RecipeRepository) : BaseRecipeView
         _recipeByCategory.value = repository.getRecipeByCategory(key)
     }
 
+    override fun getRecipeFavourite() = viewModelScope.launch {
+        _recipe.value = ResponseStatus.Loading
+        _recipe.value = repository.getRecipeFavourite()
+    }
+
     override fun setFavourite(key: String, isFavourite: Boolean) = viewModelScope.launch {
         _isFavourite.value = ResponseStatus.Loading
         _isFavourite.value = repository.setFavourite(key, isFavourite)

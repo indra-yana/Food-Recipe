@@ -18,6 +18,9 @@ interface RecipeDetailDao {
     @Query("SELECT * FROM recipe_details")
     suspend fun all(): List<RecipeDetail>
 
+    @Query("SELECT * FROM recipe_details WHERE is_favourite = 1")
+    suspend fun getRecipeFavourite(): List<RecipeDetail>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(value: RecipeDetail)
 

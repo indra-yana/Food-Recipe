@@ -24,7 +24,7 @@ import com.training.foodrecipe.model.*
         ArticleCategory::class,
         ArticleDetail::class
     ],
-    version = 10,
+    version = 11,
     exportSchema = false
 )
 @TypeConverters(TypeConverter::class)
