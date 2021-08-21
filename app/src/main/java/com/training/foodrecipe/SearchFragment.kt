@@ -6,6 +6,7 @@ import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -205,12 +206,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
             etInputSearch.apply {
                 addTextChangedListener(object : TextWatcher {
                     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                        timerTask?.cancel()
-                    }
-
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { timerTask?.cancel() }
                     override fun afterTextChanged(s: Editable?) {
-                        // TODO: Run search query with s param
                         val q = s.toString().trim()
 
                         if (q.isNotEmpty()) {
@@ -225,10 +222,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
                             timerTask?.schedule(object : TimerTask() {
                                 override fun run() {
                                     Handler(Looper.getMainLooper()).post {
-                                        currentSearchQuery = q
-                                        clearSearchResult()
-                                        showInputKey(this@apply, false)
-                                        viewModel.searchRecipe(currentSearchQuery)
+                                        doSearch(q)
                                     }
                                 }
                             }, 2000)
@@ -240,25 +234,17 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
                     }
                 })
 
-                /*
-                setOnKeyListener { v, keyCode, event ->
-                    val query = etInputSearch.editableText.toString()
-
+                setOnKeyListener { _, keyCode, _ ->
                     if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                        Log.d(TAG, query)
+                        val q = editableText.trim().toString()
 
-                        // TODO: Run search query with textResult param
-                        Handler().postDelayed({
-                            viewModel.searchRecipe(query)
-                            showSoftKey(v, false)
-                        }, 1000)
-
+                        timerTask?.cancel()
+                        doSearch(q)
                         return@setOnKeyListener true
                     }
 
-                    false
+                    return@setOnKeyListener false
                 }
-                */
 
                 setOnClickListener {
                     showInputKey(it, true)
@@ -326,6 +312,17 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
 
     private fun fetchData() {
         viewModel.getCategory()
+    }
+
+    private fun doSearch(q: String?) {
+        if (!q.isNullOrEmpty()) {
+            if (currentSearchQuery == q) return
+
+            currentSearchQuery = q
+            clearSearchResult()
+            showInputKey(viewBinding.etInputSearch, false)
+            viewModel.searchRecipe(currentSearchQuery)
+        }
     }
 
     private fun clearSearchResult() {
