@@ -28,6 +28,7 @@ class RecipeViewModel(private val repository: RecipeRepository) : BaseRecipeView
     private val _recipeDetail: MutableLiveData<ResponseStatus<RecipeDetailResponse>> = MutableLiveData()
     private val _recipeCategory: MutableLiveData<ResponseStatus<RecipeCategoryResponse>> = MutableLiveData()
     private val _recipeByCategory: MutableLiveData<ResponseStatus<RecipeResponse>> = MutableLiveData()
+    private val _isFavourite: MutableLiveData<ResponseStatus<Boolean>> = MutableLiveData()
 
     val latestRecipe: LiveData<ResponseStatus<RecipeResponse>> get() = _latestRecipe
     val recipe: LiveData<ResponseStatus<RecipeResponse>> get() = _recipe
@@ -35,6 +36,7 @@ class RecipeViewModel(private val repository: RecipeRepository) : BaseRecipeView
     val recipeDetail: LiveData<ResponseStatus<RecipeDetailResponse>> get() = _recipeDetail
     val recipeCategory: LiveData<ResponseStatus<RecipeCategoryResponse>> get() = _recipeCategory
     val recipeByCategory: LiveData<ResponseStatus<RecipeResponse>> get() = _recipeByCategory
+    val isFavourite: LiveData<ResponseStatus<Boolean>> get() = _isFavourite
 
     override fun getLatestRecipe() = viewModelScope.launch {
         _latestRecipe.value = ResponseStatus.Loading
@@ -64,6 +66,11 @@ class RecipeViewModel(private val repository: RecipeRepository) : BaseRecipeView
     override fun getRecipeByCategory(key: String) = viewModelScope.launch {
         _recipeByCategory.value = ResponseStatus.Loading
         _recipeByCategory.value = repository.getRecipeByCategory(key)
+    }
+
+    override fun setFavourite(key: String, isFavourite: Boolean) = viewModelScope.launch {
+        _isFavourite.value = ResponseStatus.Loading
+        _isFavourite.value = repository.setFavourite(key, isFavourite)
     }
 
     fun insertRecipeDetail(recipeDetail: RecipeDetail) = viewModelScope.launch {

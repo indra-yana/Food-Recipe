@@ -88,6 +88,7 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
         updateUI()
 
         observeRecipeDetail()
+        observeFavourite()
     }
 
     override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRecipeDetailBinding {
@@ -132,9 +133,6 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
     }
 
     private fun prepareUI() {
-        // TODO: set isFavourite from persistent data (database or shared preferences)
-        toggleFavourite(isFavourite)
-
         with(viewBinding) {
             srlRefresh.setOnRefreshListener {
                 fetchData()
@@ -146,7 +144,7 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
 
             btnAddFavourite.setOnClickListener {
                 isFavourite = !isFavourite
-                toggleFavourite(isFavourite)
+                setFavourite(isFavourite)
             }
         }
     }
@@ -191,6 +189,9 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
                 btnSteps.setOnClickListener {
                     openTodoBottomSheet("Steps", this)
                 }
+
+                isFavourite = favourite
+                toggleFavourite(isFavourite)
             }
         }
     }
@@ -199,9 +200,8 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
         neededItemAdapter = NeededItemAdapter().apply {
             iOnItemClickListener = object : IOnItemClickListener {
                 override fun onItemClicked(data: Any) {
-                    val needItem = data as NeedItem
-
-                    Toast.makeText(requireContext(), "${needItem.itemName} Item clicked!", Toast.LENGTH_SHORT).show()
+                    data as NeedItem
+                    Toast.makeText(requireContext(), data.itemName, Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -281,17 +281,30 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
 
     private fun toggleFavourite(isFavourite: Boolean) {
         if (isFavourite) {
-            // Remove from favourite
-            viewBinding.btnAddFavourite.setImageResource(R.drawable.ic_favourite_border)
-
-            Log.d(TAG, "setFavourite: Remove from favourite")
-        } else {
-            // Add to favourite
             viewBinding.btnAddFavourite.setImageResource(R.drawable.ic_favourite_filled)
             viewBinding.btnAddFavourite.drawable.setTint(ContextCompat.getColor(requireContext(), R.color.colorDanger))
-
-            Log.d(TAG, "setFavourite: Added to favourite")
+        } else {
+            viewBinding.btnAddFavourite.setImageResource(R.drawable.ic_favourite_border)
         }
+    }
+
+    private fun setFavourite(isFavourite: Boolean) {
+        viewModel.setFavourite(recipe.key, isFavourite)
+    }
+
+    private fun observeFavourite() {
+        viewModel.isFavourite.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is ResponseStatus.Success -> {
+                    toggleFavourite(it.value)
+                    when (it.value) {
+                        true -> Toast.makeText(requireContext(), "Added to favourite", Toast.LENGTH_SHORT).show()
+                        false -> Toast.makeText(requireContext(), "Removed from favourite", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                else -> { }
+            }
+        })
     }
 
     private fun fetchData() {

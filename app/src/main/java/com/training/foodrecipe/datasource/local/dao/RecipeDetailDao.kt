@@ -26,4 +26,10 @@ interface RecipeDetailDao {
 
     @Query("SELECT EXISTS (SELECT 1 FROM recipe_details WHERE `key` = :key)")
     suspend fun exist(key: String): Boolean
+
+    @Query("UPDATE recipe_details SET `is_favourite` = :isFavourite WHERE `key` = :key")
+    suspend fun setFavourite(key: String, isFavourite: Boolean): Int
+
+    @Query("SELECT is_favourite FROM recipe_details WHERE `key` = :key")
+    suspend fun isFavourite(key: String): Int
 }

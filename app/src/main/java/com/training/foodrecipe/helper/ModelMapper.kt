@@ -37,5 +37,10 @@ class ModelMapper {
         fun articleDetailMapper(data: ArticleDetail): ArticleDetailResponse {
             return ArticleDetailResponse(method = "DB", status = true, articleDetail = data)
         }
+
+        @JvmStatic
+        fun booleanMapper(data: Int): Boolean {
+            return data == 1
+        }
     }
 }

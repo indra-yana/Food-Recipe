@@ -16,5 +16,6 @@ abstract class BaseRecipeViewModel : BaseViewModel() {
     abstract fun getRecipeDetail(key: String): Job
     abstract fun getCategory(): Job
     abstract fun getRecipeByCategory(key: String): Job
+    abstract fun setFavourite(key: String, isFavourite: Boolean): Job
 
 }

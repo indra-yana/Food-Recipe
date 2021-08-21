@@ -70,4 +70,14 @@ class TypeConverter {
     fun toTimestamp(date: Date?): Long? {
         return date?.let { date.time }
     }
+
+    @TypeConverter
+    fun fromBoolean(value: Boolean): Int {
+        return if (value) 1 else 0
+    }
+
+    @TypeConverter
+    fun toBoolean(value: Int): Boolean {
+        return value == 1
+    }
 }

@@ -54,5 +54,8 @@ data class RecipeDetail(
 
     @ColumnInfo(name = "title")
     @SerializedName("title")
-    val title: String
+    val title: String,
+
+    @ColumnInfo(name = "is_favourite")
+    var favourite: Boolean = false
 )

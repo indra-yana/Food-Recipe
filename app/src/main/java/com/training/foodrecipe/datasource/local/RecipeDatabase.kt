@@ -24,7 +24,7 @@ import com.training.foodrecipe.model.*
         ArticleCategory::class,
         ArticleDetail::class
     ],
-    version = 9,
+    version = 10,
     exportSchema = false
 )
 @TypeConverters(TypeConverter::class)
@@ -57,6 +57,5 @@ abstract class RecipeDatabase : RoomDatabase() {
     abstract fun getRecipeCategoryDao(): RecipeCategoryDao
     abstract fun getArticleCategoryDao(): ArticleCategoryDao
     abstract fun getArticleDetailDao(): ArticleDetailDao
-
 
 }
