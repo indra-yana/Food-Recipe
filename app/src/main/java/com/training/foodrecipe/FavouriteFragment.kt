@@ -1,6 +1,10 @@
 package com.training.foodrecipe
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,10 +18,12 @@ import com.training.foodrecipe.databinding.FragmentFavouriteBinding
 import com.training.foodrecipe.datasource.remote.IRecipeApi
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.helper.handleRequestError
+import com.training.foodrecipe.helper.showInputKey
 import com.training.foodrecipe.helper.visible
 import com.training.foodrecipe.model.Recipe
 import com.training.foodrecipe.repository.RecipeRepository
 import com.training.foodrecipe.viewmodel.RecipeViewModel
+import java.util.*
 
 class FavouriteFragment : BaseFragment<FragmentFavouriteBinding, RecipeViewModel, RecipeRepository>() {
 
@@ -30,6 +36,9 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding, RecipeViewModel
 
     // Indicator state
     private var isLoading = false
+    private var currentSearchQuery: String? = null
+
+    private var timerTask: Timer? = null
 
     /**
      * Init all variable here that need once time initialization
@@ -59,7 +68,7 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding, RecipeViewModel
         buildRecipeRV()
         observeRecipeFavourite()
 
-        fetchData()
+        fetchData(currentSearchQuery)
     }
 
     override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentFavouriteBinding {
@@ -109,7 +118,7 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding, RecipeViewModel
                     Log.d(TAG, "observeRecipeFavourite: State is success! ${it.value.recipes}")
                 }
                 is ResponseStatus.Failure -> {
-                    handleRequestError(it) { fetchData() }
+                    handleRequestError(it) { fetchData(currentSearchQuery) }
 
                     Log.d(TAG, "observeRecipeFavourite:State is failure! ${it.exception}")
                 }
@@ -122,14 +131,64 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding, RecipeViewModel
 
     private fun prepareUI() {
         with(viewBinding) {
-            layoutSearch.setOnClickListener {
-                findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+            etInputSearch.apply {
+                addTextChangedListener(object : TextWatcher {
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                        timerTask?.cancel()
+                    }
+
+                    override fun afterTextChanged(s: Editable?) {
+                        val q = s.toString().trim()
+
+                        if (q.isNotEmpty()) {
+                            ivClearInputSearch.visible(true)
+
+                            if (currentSearchQuery == q) {
+                                timerTask?.cancel()
+                                return
+                            }
+
+                            timerTask = Timer()
+                            timerTask?.schedule(object : TimerTask() {
+                                override fun run() {
+                                    Handler(Looper.getMainLooper()).post {
+                                        currentSearchQuery = q
+                                        showInputKey(this@apply, false)
+                                        fetchData(currentSearchQuery)
+                                    }
+                                }
+                            }, 1000)
+                        } else {
+                            currentSearchQuery = null
+                            ivClearInputSearch.visible(false)
+
+                            fetchData(currentSearchQuery)
+                        }
+                    }
+                })
+
+                setOnClickListener {
+                    showInputKey(etInputSearch, true)
+                }
+
+                currentSearchQuery?.let {
+                    setText(it)
+                    setSelection(it.length)
+                }
+            }
+
+            ivClearInputSearch.setOnClickListener {
+                etInputSearch.text = null
+                it.visible(false)
             }
 
             srlRefresh.setOnRefreshListener {
                 isLoading = false
+                currentSearchQuery = null
+                etInputSearch.text = null
 
-                fetchData()
+                fetchData(currentSearchQuery)
             }
 
             layoutHeader.tvHeaderTitle.text = getString(R.string.text_favorite)
@@ -137,6 +196,7 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding, RecipeViewModel
             layoutHeader.ivHeaderMenu.visible(false)
             layoutHeader.btnBack.visible(true)
             layoutHeader.btnBack.setOnClickListener {
+                showInputKey(etInputSearch, false)
                 findNavController().navigateUp()
             }
         }
@@ -148,15 +208,15 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding, RecipeViewModel
 
         if (isLoading) {
             // Recipe
-            viewBinding.shimmerRecipePlaceholder.visibility = View.VISIBLE
-            viewBinding.layoutRecipeContainer.visibility = View.GONE
+            viewBinding.shimmerRecipePlaceholder.visible(true)
+            viewBinding.layoutRecipeContainer.visible(false)
         } else {
             // Recipe
             viewBinding.shimmerRecipeContainer.stopShimmer()
             viewBinding.shimmerRecipeContainer.hideShimmer()
 
-            viewBinding.shimmerRecipePlaceholder.visibility = View.GONE
-            viewBinding.layoutRecipeContainer.visibility = View.VISIBLE
+            viewBinding.shimmerRecipePlaceholder.visible(false)
+            viewBinding.layoutRecipeContainer.visible(true)
         }
     }
 
@@ -169,7 +229,7 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding, RecipeViewModel
         findNavController().navigate(R.id.action_favouriteFragment2_to_recipeDetailFragment, bundle)
     }
 
-    private fun fetchData() {
-        viewModel.getRecipeFavourite()
+    private fun fetchData(key: String?) {
+        viewModel.getRecipeFavourite(key)
     }
 }

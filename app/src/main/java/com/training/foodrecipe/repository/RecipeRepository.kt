@@ -64,9 +64,9 @@ class RecipeRepository(private val db: RecipeDatabase, private val api: IRecipeA
         }
     }
 
-    suspend fun getRecipeFavourite(): ResponseStatus<RecipeResponse> {
+    suspend fun getRecipeFavourite(key: String?): ResponseStatus<RecipeResponse> {
         return safeApiCall {
-            val result = db.getRecipeDetailDao().getRecipeFavourite()
+            val result = if (key == null) db.getRecipeDetailDao().getRecipeFavourite() else db.getRecipeDetailDao().getRecipeFavourite(key)
 
             ModelMapper.recipeDetailsToRecipeListMapper(result)
         }

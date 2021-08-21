@@ -1,11 +1,13 @@
 package com.training.foodrecipe.helper
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.text.Layout
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
@@ -76,6 +78,23 @@ fun Fragment.handleRequestError(failure: ResponseStatus.Failure, action: (() -> 
             requireView().snackBar("Something when wrong please try again later!", action)
 
             Log.e(TAG, "handleRequestError: ${exception.message}")
+        }
+    }
+}
+
+fun showInputKey(view: View, show: Boolean) {
+    when (show) {
+        true -> {
+            view.requestFocus().run {
+                val input = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                input.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+            }
+        }
+        false -> {
+            view.requestFocus().run {
+                val input = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                input.hideSoftInputFromWindow(view.windowToken, 0)
+            }
         }
     }
 }
