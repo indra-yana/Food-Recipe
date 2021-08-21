@@ -19,11 +19,11 @@ interface RecipeCategoryDao {
     suspend fun insert(value: RecipeCategory)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(value: List<RecipeCategory>)
+    suspend fun insert(value: List<RecipeCategory>)
 
     @Delete
     suspend fun delete(value: RecipeCategory)
 
     @Query("DELETE FROM recipe_categories")
-    suspend fun deleteAll()
+    suspend fun delete()
 }

@@ -25,5 +25,5 @@ interface RecipeDetailDao {
     suspend fun delete(value: RecipeDetail)
 
     @Query("SELECT EXISTS (SELECT 1 FROM recipe_details WHERE `key` = :key)")
-    suspend fun checkIfExist(key: String): Boolean
+    suspend fun exist(key: String): Boolean
 }

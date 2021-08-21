@@ -46,7 +46,7 @@ class RecipeRepository(private val db: RecipeDatabase, private val api: IRecipeA
                 MapperEntity.recipeCategoryMapper(cache)
             } else {
                 val apiResult = api.getCategory()
-                db.getRecipeCategoryDao().insertAll(apiResult.recipeCategories)
+                db.getRecipeCategoryDao().insert(apiResult.recipeCategories)
 
                 apiResult
             }

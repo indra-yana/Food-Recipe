@@ -22,7 +22,7 @@ interface RecipeDao {
     suspend fun insert(value: Recipe)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(value: List<Recipe>)
+    suspend fun insert(value: List<Recipe>)
 
     @Update
     suspend fun update(value: Recipe)
@@ -31,9 +31,9 @@ interface RecipeDao {
     suspend fun delete(recipe: Recipe)
 
     @Query("DELETE FROM recipes")
-    suspend fun deleteAll()
+    suspend fun delete()
 
     @Query("SELECT EXISTS (SELECT 1 FROM recipes WHERE `key` = :key)")
-    suspend fun isRecipesExist(key: String): Boolean
+    suspend fun exist(key: String): Boolean
 
 }
