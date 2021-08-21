@@ -6,6 +6,7 @@ import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -153,9 +154,7 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding, RecipeViewModel
                             timerTask?.schedule(object : TimerTask() {
                                 override fun run() {
                                     Handler(Looper.getMainLooper()).post {
-                                        currentSearchQuery = q
-                                        showInputKey(this@apply, false)
-                                        fetchData(currentSearchQuery)
+                                        doSearch(q)
                                     }
                                 }
                             }, 2000)
@@ -167,6 +166,18 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding, RecipeViewModel
                         }
                     }
                 })
+
+                setOnKeyListener { _, keyCode, _ ->
+                    if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                        val q = editableText.trim().toString()
+
+                        timerTask?.cancel()
+                        doSearch(q)
+                        return@setOnKeyListener true
+                    }
+
+                    return@setOnKeyListener false
+                }
 
                 setOnClickListener {
                     showInputKey(etInputSearch, true)
@@ -227,6 +238,16 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding, RecipeViewModel
         }
 
         findNavController().navigate(R.id.action_favouriteFragment2_to_recipeDetailFragment, bundle)
+    }
+
+    private fun doSearch(q: String?) {
+        if (!q.isNullOrEmpty()) {
+            if (currentSearchQuery == q) return
+
+            currentSearchQuery = q
+            showInputKey(viewBinding.etInputSearch, false)
+            fetchData(currentSearchQuery)
+        }
     }
 
     private fun fetchData(key: String?) {
