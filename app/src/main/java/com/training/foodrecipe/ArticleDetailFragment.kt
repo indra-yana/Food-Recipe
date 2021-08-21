@@ -76,7 +76,7 @@ class ArticleDetailFragment : BaseFragment<FragmentArticleDetailBinding, Article
     }
 
     override fun getRepository(): ArticleRepository {
-        return ArticleRepository(apiClient.crete(IRecipeApi::class.java))
+        return ArticleRepository(recipeDB, apiClient.crete(IRecipeApi::class.java))
     }
 
     private fun observeArticle() {

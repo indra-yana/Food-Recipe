@@ -5,9 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.training.foodrecipe.datasource.local.dao.RecipeCategoryDao
-import com.training.foodrecipe.datasource.local.dao.RecipeDao
-import com.training.foodrecipe.datasource.local.dao.RecipeDetailDao
+import com.training.foodrecipe.datasource.local.dao.*
 import com.training.foodrecipe.model.*
 
 /****************************************************
@@ -22,9 +20,11 @@ import com.training.foodrecipe.model.*
         RecipeDetail::class,
         RecipeCategory::class,
         NeedItem::class,
-        Author::class
+        Author::class,
+        ArticleCategory::class,
+        ArticleDetail::class
     ],
-    version = 8,
+    version = 9,
     exportSchema = false
 )
 @TypeConverters(TypeConverter::class)
@@ -55,6 +55,8 @@ abstract class RecipeDatabase : RoomDatabase() {
     abstract fun getRecipeDao(): RecipeDao
     abstract fun getRecipeDetailDao(): RecipeDetailDao
     abstract fun getRecipeCategoryDao(): RecipeCategoryDao
+    abstract fun getArticleCategoryDao(): ArticleCategoryDao
+    abstract fun getArticleDetailDao(): ArticleDetailDao
 
 
 }
