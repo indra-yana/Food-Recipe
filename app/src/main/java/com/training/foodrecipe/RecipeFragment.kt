@@ -325,6 +325,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
 
             layoutHeader.tvHeaderTitle.text = getString(R.string.text_welcome_user)
             layoutHeader.btnBack.visible(false)
+            layoutHeader.ivHeaderFavourite.visible(true)
             layoutHeader.ivHeaderMenu.setOnClickListener {
                 showPopupMenu(it)
             }

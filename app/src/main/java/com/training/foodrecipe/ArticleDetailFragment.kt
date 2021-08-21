@@ -60,6 +60,7 @@ class ArticleDetailFragment : BaseFragment<FragmentArticleDetailBinding, Article
 
         // Connect to activity
         (activity as MainActivity).apply {
+            hideFabAction()
             hideBottomNavigation()
         }
 

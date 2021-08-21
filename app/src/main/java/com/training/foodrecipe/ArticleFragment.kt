@@ -62,7 +62,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
 
         // Connect to activity
         (activity as MainActivity).apply {
-            hideFabAction()
+            showFabAction()
             showBottomNavigation()
         }
 
@@ -207,6 +207,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
 
             layoutHeader.tvHeaderTitle.text = getString(R.string.text_article_title)
             layoutHeader.btnBack.visible(false)
+            layoutHeader.ivHeaderFavourite.visible(false)
             layoutHeader.ivHeaderMenu.visible(false)
         }
     }

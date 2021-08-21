@@ -307,6 +307,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
 
             layoutHeader.tvHeaderTitle.text = getString(R.string.text_search_title)
             layoutHeader.ivHeaderMenu.visible(false)
+            layoutHeader.ivHeaderFavourite.visible(false)
             layoutHeader.btnBack.setOnClickListener {
                 findNavController().navigateUp()
                 showInputKey(it, false)
