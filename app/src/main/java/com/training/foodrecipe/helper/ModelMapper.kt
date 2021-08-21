@@ -1,4 +1,4 @@
-package com.training.foodrecipe.repository
+package com.training.foodrecipe.helper
 
 import com.training.foodrecipe.datasource.remote.response.ArticleCategoryResponse
 import com.training.foodrecipe.datasource.remote.response.ArticleDetailResponse
@@ -15,7 +15,7 @@ import com.training.foodrecipe.model.RecipeDetail
  * https://gitlab.com/indra-yana
  ****************************************************/
 
-class MapperEntity {
+class ModelMapper {
 
     companion object {
         @JvmStatic

@@ -6,6 +6,7 @@ import com.training.foodrecipe.datasource.remote.response.RecipeCategoryResponse
 import com.training.foodrecipe.datasource.remote.response.RecipeDetailResponse
 import com.training.foodrecipe.datasource.remote.response.RecipeResponse
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
+import com.training.foodrecipe.helper.ModelMapper
 
 /****************************************************
  * Created by Indra Muliana (indra.ndra26@gmail.com)
@@ -28,7 +29,7 @@ class RecipeRepository(private val db: RecipeDatabase, private val api: IRecipeA
             val cache = db.getRecipeDetailDao().find(key)
 
             if (cache != null) {
-                MapperEntity.recipeDetailCategoryMapper(cache)
+                ModelMapper.recipeDetailCategoryMapper(cache)
             } else {
                 val apiResult = api.getRecipeDetail(key)
                 db.getRecipeDetailDao().insert(apiResult.recipeDetail.copy(key = key))
@@ -43,7 +44,7 @@ class RecipeRepository(private val db: RecipeDatabase, private val api: IRecipeA
             val cache = db.getRecipeCategoryDao().all()
 
             if (!cache.isNullOrEmpty()) {
-                MapperEntity.recipeCategoryMapper(cache)
+                ModelMapper.recipeCategoryMapper(cache)
             } else {
                 val apiResult = api.getCategory()
                 db.getRecipeCategoryDao().insert(apiResult.recipeCategories)

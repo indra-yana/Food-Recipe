@@ -3,6 +3,7 @@ package com.training.foodrecipe.repository
 import com.training.foodrecipe.datasource.local.RecipeDatabase
 import com.training.foodrecipe.datasource.remote.IRecipeApi
 import com.training.foodrecipe.datasource.remote.response.*
+import com.training.foodrecipe.helper.ModelMapper
 
 /****************************************************
  * Created by Indra Muliana (indra.ndra26@gmail.com)
@@ -19,7 +20,7 @@ class ArticleRepository(private val db: RecipeDatabase, private val api: IRecipe
             val cache = db.getArticleCategoryDao().all()
 
             if (!cache.isNullOrEmpty()) {
-                MapperEntity.articleCategoryMapper(cache)
+                ModelMapper.articleCategoryMapper(cache)
             } else {
                 val apiResult = api.getArticleCategory()
                 db.getArticleCategoryDao().insert(apiResult.articleCategories)
@@ -36,7 +37,7 @@ class ArticleRepository(private val db: RecipeDatabase, private val api: IRecipe
             val cache = db.getArticleDetailDao().find(key)
 
             if (cache != null) {
-                MapperEntity.articleDetailMapper(cache)
+                ModelMapper.articleDetailMapper(cache)
             } else {
                 val apiResult = api.getArticleDetail(tag, key)
                 db.getArticleDetailDao().insert(apiResult.articleDetail.copy(key = key))
