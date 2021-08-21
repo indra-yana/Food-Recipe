@@ -132,26 +132,19 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
         recipeAdapter = RecipeAdapter().apply {
             iOnItemClickListener = object : IOnItemClickListener {
                 override fun onItemClicked(data: Any) {
-                    val recipe = data as Recipe
-                    val bundle = Bundle().apply {
-                        putParcelable("recipe", recipe)
-                    }
-
-                    findNavController().navigate(R.id.action_homeFragment_to_recipeDetailFragment, bundle)
+                    gotoDetail(data)
                 }
 
                 override fun onButtonFavouriteClicked(data: Any) {
                     super.onButtonFavouriteClicked(data)
-
-                    val recipe = data as Recipe
-                    Toast.makeText(requireContext(), "${recipe.title} Added to favourite!", Toast.LENGTH_SHORT).show()
+                    data as Recipe
+                    Toast.makeText(requireContext(), "${data.title} Added to favourite!", Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onButtonShareClicked(data: Any) {
                     super.onButtonShareClicked(data)
-
-                    val recipe = data as Recipe
-                    Toast.makeText(requireContext(), "${recipe.title} Shared to social media!", Toast.LENGTH_SHORT).show()
+                    data as Recipe
+                    Toast.makeText(requireContext(), "${data.title} Shared to social media!", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -242,9 +235,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
         bannerAdapter = BannerAdapter().apply {
             iOnItemClickListener = object : IOnItemClickListener {
                 override fun onItemClicked(data: Any) {
-                    val recipe = data as Recipe
-
-                    Toast.makeText(requireContext(), "${recipe.title} Item clicked!", Toast.LENGTH_SHORT).show()
+                    gotoDetail(data)
                 }
             }
         }
@@ -439,6 +430,15 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
         }
 
         bottomSheetAbout?.show()
+    }
+
+    private fun gotoDetail(data: Any) {
+        data as Recipe
+        val bundle = Bundle().apply {
+            putParcelable("recipe", data)
+        }
+
+        findNavController().navigate(R.id.action_homeFragment_to_recipeDetailFragment, bundle)
     }
 
     private fun fetchData(page: Int) {
