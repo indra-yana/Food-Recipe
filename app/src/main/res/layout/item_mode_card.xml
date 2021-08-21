@@ -66,6 +66,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/viewFadingEdgeBottom"
             app:layout_constraintTop_toTopOf="@+id/viewFadingEdgeBottom">
 

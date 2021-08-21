@@ -21,7 +21,7 @@ import com.training.foodrecipe.model.Recipe
 class RecipeListViewHolder(itemView: View) : BaseViewHolder(itemView) {
     private var tvItemTitle: TextView = itemView.findViewById(R.id.tvItemTitle)
     private var tvMisc: TextView = itemView.findViewById(R.id.tvMisc)
-    private var tvServing: TextView = itemView.findViewById(R.id.tvServing)
+    // private var tvServing: TextView = itemView.findViewById(R.id.tvServing)
     private var ivItemThumbnail: ImageView = itemView.findViewById(R.id.ivItemThumbnail)
     private var btnAddFavourite: ImageButton = itemView.findViewById(R.id.btnAddFavourite)
     private var btnShare: ImageButton = itemView.findViewById(R.id.btnShare)
@@ -38,7 +38,7 @@ class RecipeListViewHolder(itemView: View) : BaseViewHolder(itemView) {
         data as Recipe
 
         tvItemTitle.text = data.title
-        tvMisc.text = ("${data.dificulty ?: (data.difficulty ?: "-")} | ${data.portion ?: (data.serving ?: "-")} | ${data.times}")
+        tvMisc.text = ("${data.dificulty ?: (data.difficulty ?: "-")} • ${data.portion ?: (data.serving ?: "-")} • ${data.times}")
         // tvServing.text = recipe.serving
 
         Glide.with(itemView.context)

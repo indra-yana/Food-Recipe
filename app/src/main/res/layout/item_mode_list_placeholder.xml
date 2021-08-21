@@ -35,46 +35,64 @@
     <View
         android:id="@+id/tvItemTitleExt"
         android:layout_width="0dp"
-        android:layout_height="@dimen/_20sdp"
+        android:layout_height="@dimen/_15sdp"
         android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_25sdp"
+        android:background="@color/colorPrimaryGrey40"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivItemThumbnailExt"
+        app:layout_constraintTop_toTopOf="@+id/viewBackgroundExt"
+        tools:text="@string/text_lorem_ipsum_title" />
+
+    <View
+        android:id="@+id/tvItemTitleExt2"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_15sdp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_4sdp"
         android:layout_marginEnd="@dimen/_8sdp"
         android:background="@color/colorPrimaryGrey40"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ivItemThumbnailExt"
-        app:layout_constraintTop_toTopOf="@+id/ivItemThumbnailExt"
+        app:layout_constraintTop_toBottomOf="@+id/tvItemTitleExt"
         tools:text="@string/text_lorem_ipsum_title" />
 
     <!-- Difficulty | Portion | times   -->
     <View
         android:id="@+id/tvMiscExt"
         android:layout_width="0dp"
-        android:layout_height="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_3sdp"
-        android:background="@color/colorPrimaryGrey40"
-        app:layout_constraintEnd_toEndOf="@id/tvItemTitleExt"
-        app:layout_constraintStart_toStartOf="@id/tvItemTitleExt"
-        app:layout_constraintTop_toBottomOf="@id/tvItemTitleExt"
-        tools:text="@string/text_lorem_ipsum_description" />
-
-    <View
-        android:id="@+id/tvServingExt"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_3sdp"
+        android:layout_height="@dimen/_15sdp"
+        android:layout_marginStart="@dimen/_45sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_45sdp"
         android:layout_marginBottom="@dimen/_10sdp"
         android:background="@color/colorPrimaryGrey40"
-        app:layout_constraintBottom_toTopOf="@id/viewSupporterExt"
-        app:layout_constraintEnd_toEndOf="@+id/tvMiscExt"
-        app:layout_constraintStart_toStartOf="@id/tvMiscExt"
-        app:layout_constraintTop_toBottomOf="@id/tvMiscExt"
+        app:layout_constraintBottom_toTopOf="@+id/viewSupporterExt"
+        app:layout_constraintEnd_toEndOf="@id/viewBackgroundExt"
+        app:layout_constraintStart_toStartOf="@id/viewBackgroundExt"
+        app:layout_constraintTop_toBottomOf="@id/ivItemThumbnailExt"
         tools:text="@string/text_lorem_ipsum_description" />
+
+    <!--    <View-->
+    <!--        android:id="@+id/tvServingExt"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="@dimen/_8sdp"-->
+    <!--        android:layout_marginTop="@dimen/_3sdp"-->
+    <!--        android:layout_marginBottom="@dimen/_10sdp"-->
+    <!--        android:background="@color/colorPrimaryGrey40"-->
+    <!--        app:layout_constraintBottom_toTopOf="@id/viewSupporterExt"-->
+    <!--        app:layout_constraintEnd_toEndOf="@+id/tvMiscExt"-->
+    <!--        app:layout_constraintStart_toStartOf="@id/tvMiscExt"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/tvMiscExt"-->
+    <!--        tools:text="@string/text_lorem_ipsum_description" />-->
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
         android:orientation="horizontal"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/viewBackgroundExt"
         app:layout_constraintEnd_toEndOf="@+id/ivItemThumbnailExt"
         app:layout_constraintStart_toStartOf="@+id/ivItemThumbnailExt"

@@ -44,7 +44,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_8sdp"
         android:ellipsize="end"
         android:fontFamily="@font/poppins_semibold"
@@ -54,48 +54,54 @@
         android:textSize="@dimen/_12ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ivItemThumbnail"
-        app:layout_constraintTop_toTopOf="@+id/ivItemThumbnail"
-        tools:text="@string/text_lorem_ipsum_title" />
+        app:layout_constraintTop_toTopOf="@+id/viewBackground"
+        tools:text="@string/text_lorem_ipsum_description" />
 
     <!-- Difficulty | Portion | times   -->
     <TextView
         android:id="@+id/tvMisc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_3sdp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
         android:ellipsize="end"
         android:fontFamily="@font/poppins_regular"
         android:includeFontPadding="false"
         android:maxLines="1"
+        android:textAlignment="center"
         android:textColor="@color/colorTextBlack100"
         android:textSize="@dimen/_11ssp"
-        app:layout_constraintEnd_toEndOf="@id/tvItemTitle"
-        app:layout_constraintStart_toStartOf="@id/tvItemTitle"
-        app:layout_constraintTop_toBottomOf="@id/tvItemTitle"
-        tools:text="@string/text_lorem_ipsum_description" />
-
-    <TextView
-        android:id="@+id/tvServing"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_3sdp"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:fontFamily="@font/poppins_regular"
-        android:includeFontPadding="false"
-        android:maxLines="1"
-        android:textColor="@color/colorTextBlack100"
-        android:textSize="@dimen/_8ssp"
         app:layout_constraintBottom_toTopOf="@id/viewSupporter"
-        app:layout_constraintEnd_toEndOf="@+id/tvMisc"
-        app:layout_constraintStart_toStartOf="@id/tvMisc"
-        app:layout_constraintTop_toBottomOf="@id/tvMisc"
-        tools:text="@string/text_lorem_ipsum_description" />
+        app:layout_constraintEnd_toEndOf="@id/viewBackground"
+        app:layout_constraintStart_toStartOf="@id/viewBackground"
+        app:layout_constraintTop_toBottomOf="@id/ivItemThumbnail"
+        tools:text="@string/text_lorem_ipsum_title" />
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/tvServing"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="@dimen/_3sdp"-->
+    <!--        android:layout_marginBottom="@dimen/_10sdp"-->
+    <!--        android:fontFamily="@font/poppins_regular"-->
+    <!--        android:includeFontPadding="false"-->
+    <!--        android:maxLines="1"-->
+    <!--        android:textColor="@color/colorTextBlack100"-->
+    <!--        android:textSize="@dimen/_8ssp"-->
+    <!--        app:layout_constraintBottom_toTopOf="@id/viewSupporter"-->
+    <!--        app:layout_constraintEnd_toEndOf="@+id/tvMisc"-->
+    <!--        app:layout_constraintStart_toStartOf="@id/tvMisc"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/tvMisc"-->
+    <!--        tools:text="@string/text_lorem_ipsum_description" />-->
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
         android:orientation="horizontal"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/viewBackground"
         app:layout_constraintEnd_toEndOf="@+id/ivItemThumbnail"
         app:layout_constraintStart_toStartOf="@+id/ivItemThumbnail"
