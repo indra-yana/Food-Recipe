@@ -157,13 +157,11 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
 
             Glide.with(requireView().context)
                 .load(recipe.thumb)
+                .placeholder(ContextCompat.getDrawable(requireContext(), R.drawable.image_placeholder))
                 .apply(RequestOptions().override(450, 250))
                 .into(ivItemThumbnail)
 
             recipeDetail?.apply {
-                // TODO: Remove this, Experiment only
-                // viewModel.insertRecipeDetail(this.copy(key = recipe.key, thumb = recipe.thumb))
-
                 tvAuthor.text = ("By ${author.user}, ${author.datePublished}")
                 tvItemTitle.text = title
                 tvItemDescription.text = desc
