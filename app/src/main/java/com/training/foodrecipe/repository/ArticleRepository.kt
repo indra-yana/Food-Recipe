@@ -17,13 +17,14 @@ class ArticleRepository(private val db: RecipeDatabase, private val api: IRecipe
 
     suspend fun getArticleCategory(): ResponseStatus<ArticleCategoryResponse> {
         return safeApiCall {
-            val cache = db.getArticleCategoryDao().all()
+            val dao = db.getArticleCategoryDao()
+            val cache = dao.all()
 
             if (!cache.isNullOrEmpty()) {
                 ModelMapper.articleCategoryMapper(cache)
             } else {
                 val apiResult = api.getArticleCategory()
-                db.getArticleCategoryDao().insert(apiResult.articleCategories)
+                dao.insert(apiResult.articleCategories)
 
                 apiResult
             }
@@ -34,13 +35,14 @@ class ArticleRepository(private val db: RecipeDatabase, private val api: IRecipe
 
     suspend fun getArticleDetail(tag: String, key: String): ResponseStatus<ArticleDetailResponse> {
         return safeApiCall {
-            val cache = db.getArticleDetailDao().find(key)
+            val dao = db.getArticleDetailDao()
+            val cache = dao.find(key)
 
             if (cache != null) {
                 ModelMapper.articleDetailMapper(cache)
             } else {
                 val apiResult = api.getArticleDetail(tag, key)
-                db.getArticleDetailDao().insert(apiResult.articleDetail.copy(key = key))
+                dao.insert(apiResult.articleDetail.copy(key = key))
 
                 apiResult
             }

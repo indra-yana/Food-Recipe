@@ -26,13 +26,14 @@ class RecipeRepository(private val db: RecipeDatabase, private val api: IRecipeA
 
     suspend fun getRecipeDetail(key: String): ResponseStatus<RecipeDetailResponse> {
         return safeApiCall {
-            val cache = db.getRecipeDetailDao().find(key)
+            val dao = db.getRecipeDetailDao()
+            val cache = dao.find(key)
 
             if (cache != null) {
                 ModelMapper.recipeDetailCategoryMapper(cache)
             } else {
                 val apiResult = api.getRecipeDetail(key)
-                db.getRecipeDetailDao().insert(apiResult.recipeDetail.copy(key = key))
+                dao.insert(apiResult.recipeDetail.copy(key = key))
 
                 apiResult
             }
@@ -41,13 +42,14 @@ class RecipeRepository(private val db: RecipeDatabase, private val api: IRecipeA
 
     suspend fun getCategory(): ResponseStatus<RecipeCategoryResponse> {
         return safeApiCall {
-            val cache = db.getRecipeCategoryDao().all()
+            val dao = db.getRecipeCategoryDao()
+            val cache = dao.all()
 
             if (!cache.isNullOrEmpty()) {
                 ModelMapper.recipeCategoryMapper(cache)
             } else {
                 val apiResult = api.getCategory()
-                db.getRecipeCategoryDao().insert(apiResult.recipeCategories)
+                dao.insert(apiResult.recipeCategories)
 
                 apiResult
             }
@@ -58,17 +60,19 @@ class RecipeRepository(private val db: RecipeDatabase, private val api: IRecipeA
 
     suspend fun setFavourite(key: String, isFavourite: Boolean): ResponseStatus<Boolean> {
         return safeApiCall {
-            db.getRecipeDetailDao().setFavourite(key, isFavourite)
+            val dao = db.getRecipeDetailDao()
+            dao.setFavourite(key, isFavourite)
 
-            ModelMapper.booleanMapper(db.getRecipeDetailDao().isFavourite(key))
+            ModelMapper.booleanMapper(dao.isFavourite(key))
         }
     }
 
     suspend fun getRecipeFavourite(key: String?): ResponseStatus<RecipeResponse> {
         return safeApiCall {
-            val result = if (key == null) db.getRecipeDetailDao().getRecipeFavourite() else db.getRecipeDetailDao().getRecipeFavourite(key)
+            val dao = db.getRecipeDetailDao()
+            val dbResult = if (key == null) dao.getRecipeFavourite() else dao.getRecipeFavourite(key)
 
-            ModelMapper.recipeDetailsToRecipeListMapper(result)
+            ModelMapper.recipeDetailsToRecipeListMapper(dbResult)
         }
     }
 

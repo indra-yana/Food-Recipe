@@ -219,26 +219,26 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
 
         if (isLoading || isNetworkError) {
             // Article
-            viewBinding.layoutArticlePlaceholder.visibility = View.VISIBLE
-            viewBinding.layoutArticleResult.visibility = View.GONE
+            viewBinding.layoutArticlePlaceholder.visible(true)
+            viewBinding.layoutArticleResult.visible(false)
 
             // Category
-            viewBinding.layoutCategoryPlaceholder.visibility = View.VISIBLE
-            viewBinding.layoutCategory.visibility = View.GONE
+            viewBinding.layoutCategoryPlaceholder.visible(true)
+            viewBinding.layoutCategory.visible(false)
         } else {
             // Article
             viewBinding.shimmerArticleContainer.stopShimmer()
             viewBinding.shimmerArticleContainer.hideShimmer()
 
-            viewBinding.layoutArticlePlaceholder.visibility = View.GONE
-            viewBinding.layoutArticleResult.visibility = View.VISIBLE
+            viewBinding.layoutArticlePlaceholder.visible(false)
+            viewBinding.layoutArticleResult.visible(true)
 
             // Category
             viewBinding.shimmerCategoryContainer.stopShimmer()
             viewBinding.shimmerCategoryContainer.hideShimmer()
 
-            viewBinding.layoutCategoryPlaceholder.visibility = View.GONE
-            viewBinding.layoutCategory.visibility = View.VISIBLE
+            viewBinding.layoutCategoryPlaceholder.visible(false)
+            viewBinding.layoutCategory.visible(true)
         }
     }
 

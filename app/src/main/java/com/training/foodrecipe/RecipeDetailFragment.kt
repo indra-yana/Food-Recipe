@@ -28,6 +28,7 @@ import com.training.foodrecipe.databinding.FragmentRecipeDetailBinding
 import com.training.foodrecipe.datasource.remote.IRecipeApi
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.helper.handleRequestError
+import com.training.foodrecipe.helper.visible
 import com.training.foodrecipe.model.NeedItem
 import com.training.foodrecipe.model.Recipe
 import com.training.foodrecipe.model.RecipeDetail
@@ -266,14 +267,14 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
         viewBinding.shimmerFramelayout.showShimmer(isLoading || isNetworkError)
 
         if (isLoading || isNetworkError) {
-            viewBinding.shimmerRecipeDetailPlaceholder.visibility = View.VISIBLE
-            viewBinding.mainRecipeDetailContainer.visibility = View.GONE
+            viewBinding.shimmerRecipeDetailPlaceholder.visible(true)
+            viewBinding.mainRecipeDetailContainer.visible(false)
         } else {
             viewBinding.shimmerFramelayout.stopShimmer()
             viewBinding.shimmerFramelayout.hideShimmer()
 
-            viewBinding.shimmerRecipeDetailPlaceholder.visibility = View.GONE
-            viewBinding.mainRecipeDetailContainer.visibility = View.VISIBLE
+            viewBinding.shimmerRecipeDetailPlaceholder.visible(false)
+            viewBinding.mainRecipeDetailContainer.visible(true)
         }
     }
 

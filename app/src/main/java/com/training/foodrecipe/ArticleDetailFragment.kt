@@ -18,6 +18,7 @@ import com.training.foodrecipe.datasource.remote.IRecipeApi
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.helper.enable
 import com.training.foodrecipe.helper.handleRequestError
+import com.training.foodrecipe.helper.visible
 import com.training.foodrecipe.model.Article
 import com.training.foodrecipe.model.ArticleDetail
 import com.training.foodrecipe.repository.ArticleRepository
@@ -115,14 +116,14 @@ class ArticleDetailFragment : BaseFragment<FragmentArticleDetailBinding, Article
             shimmerArticleContainer.showShimmer(isLoading || isNetworkError)
 
             if (isLoading || isNetworkError) {
-                layoutArticleDetailPlaceholder.visibility = View.VISIBLE
-                layoutArticleDetailContainer.visibility = View.GONE
+                layoutArticleDetailPlaceholder.visible(true)
+                layoutArticleDetailContainer.visible(false)
             } else {
                 shimmerArticleContainer.stopShimmer()
                 shimmerArticleContainer.hideShimmer()
 
-                layoutArticleDetailPlaceholder.visibility = View.GONE
-                layoutArticleDetailContainer.visibility = View.VISIBLE
+                layoutArticleDetailPlaceholder.visible(false)
+                layoutArticleDetailContainer.visible(true)
             }
 
             btnGotoWebsite.enable(!isLoading)

@@ -134,18 +134,6 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
                 override fun onItemClicked(data: Any) {
                     gotoDetail(data)
                 }
-
-                override fun onButtonFavouriteClicked(data: Any) {
-                    super.onButtonFavouriteClicked(data)
-                    data as Recipe
-                    Toast.makeText(requireContext(), "${data.title} Added to favourite!", Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onButtonShareClicked(data: Any) {
-                    super.onButtonShareClicked(data)
-                    data as Recipe
-                    Toast.makeText(requireContext(), "${data.title} Shared to social media!", Toast.LENGTH_SHORT).show()
-                }
             }
         }
     }
@@ -343,26 +331,26 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
 
         if ((isLoading || isNetworkError) && !isRequestNextPage) {
             // Banner
-            viewBinding.shimmerBannerPlaceholder.visibility = View.VISIBLE
-            viewBinding.layoutBannerContainer.visibility = View.GONE
+            viewBinding.shimmerBannerPlaceholder.visible(true)
+            viewBinding.layoutBannerContainer.visible(false)
 
             // Recipe
-            viewBinding.shimmerRecipePlaceholder.visibility = View.VISIBLE
-            viewBinding.layoutRecipeContainer.visibility = View.GONE
+            viewBinding.shimmerRecipePlaceholder.visible(true)
+            viewBinding.layoutRecipeContainer.visible(false)
         } else {
             // Banner
             viewBinding.shimmerBannerContainer.stopShimmer()
             viewBinding.shimmerBannerContainer.hideShimmer()
 
-            viewBinding.shimmerBannerPlaceholder.visibility = View.GONE
-            viewBinding.layoutBannerContainer.visibility = View.VISIBLE
+            viewBinding.shimmerBannerPlaceholder.visible(false)
+            viewBinding.layoutBannerContainer.visible(true)
 
             // Recipe
             viewBinding.shimmerRecipeContainer.stopShimmer()
             viewBinding.shimmerRecipeContainer.hideShimmer()
 
-            viewBinding.shimmerRecipePlaceholder.visibility = View.GONE
-            viewBinding.layoutRecipeContainer.visibility = View.VISIBLE
+            viewBinding.shimmerRecipePlaceholder.visible(false)
+            viewBinding.layoutRecipeContainer.visible(true)
         }
     }
 
