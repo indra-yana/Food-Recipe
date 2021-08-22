@@ -18,19 +18,14 @@
 
         <TextView
             android:id="@+id/tvCategoryTitle"
+            style="@style/Text.Subtitle.White"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_40sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:elevation="@dimen/_5sdp"
-            android:ellipsize="end"
-            android:includeFontPadding="false"
-            android:maxLines="1"
             android:text="@string/text_article_category"
-            android:textColor="@color/colorTextWhite100"
-            android:textSize="@dimen/_12ssp"
-            android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.facebook.shimmer.ShimmerFrameLayout
@@ -87,20 +82,14 @@
 
         <TextView
             android:id="@+id/tvLatestArticleTitle"
+            style="@style/Text.Subtitle.Dark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:elevation="@dimen/_5sdp"
-            android:ellipsize="end"
-            android:includeFontPadding="false"
-            android:maxLines="1"
             android:text="@string/text_latest_article"
-            android:textColor="@color/colorTextBlack100"
-            android:textSize="@dimen/_12ssp"
-            android:textStyle="bold"
-            android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/shimmerCategoryContainer" />
 

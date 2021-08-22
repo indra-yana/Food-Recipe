@@ -39,13 +39,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_8sdp"
-            android:ellipsize="end"
-            android:includeFontPadding="false"
-            android:maxLines="1"
             android:text="@string/text_lorem_ipsum_title"
-            android:textColor="@color/colorTextWhite100"
-            android:textSize="@dimen/_14ssp"
-            android:textStyle="bold"
+            style="@style/Header.H4"
             app:layout_constraintBottom_toBottomOf="@+id/ivItemThumbnail" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

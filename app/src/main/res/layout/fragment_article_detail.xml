@@ -92,31 +92,23 @@
 
                         <TextView
                             android:id="@+id/tvAuthor"
+                            style="@style/Text.Subtitle.White"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/_5sdp"
-                            android:fontFamily="@font/poppins_semibold"
                             android:gravity="center"
-                            android:includeFontPadding="false"
-                            android:textColor="@color/colorTextWhite100"
                             tools:text="@string/text_lorem_ipsum_title" />
 
                     </LinearLayout>
 
                     <TextView
                         android:id="@+id/tvItemTitle"
+                        style="@style/Text.ItemDetailTitle"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_12sdp"
                         android:layout_marginEnd="@dimen/_10sdp"
-                        android:ellipsize="end"
-                        android:includeFontPadding="false"
-                        android:maxLines="2"
-                        android:textColor="@color/colorTextBlack100"
-                        android:textSize="@dimen/_14ssp"
-                        android:textStyle="bold"
-                        android:visibility="visible"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/ivItemThumbnail"
@@ -124,18 +116,12 @@
 
                     <TextView
                         android:id="@+id/tvItemDescription"
+                        style="@style/Text.ItemDetailDesc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10sdp"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:layout_marginEnd="@dimen/_10sdp"
-                        android:ellipsize="end"
-                        android:includeFontPadding="false"
-                        android:lineSpacingExtra="@dimen/_2sdp"
-                        android:maxLines="4"
-                        android:textColor="@color/colorTextBlack100"
-                        android:textSize="@dimen/_14ssp"
-                        android:visibility="visible"
                         app:layout_constraintTop_toBottomOf="@id/tvItemTitle"
                         tools:text="@string/text_lorem_ipsum_description" />
 

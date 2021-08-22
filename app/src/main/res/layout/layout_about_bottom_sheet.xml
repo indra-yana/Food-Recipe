@@ -21,18 +21,13 @@
 
         <TextView
             android:id="@+id/tvBottomSheetTitle"
+            style="@style/Header.H3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_8sdp"
             android:layout_weight="1"
-            android:ellipsize="end"
-            android:fontFamily="@font/poppins_light"
-            android:includeFontPadding="false"
-            android:maxLines="1"
-            android:textColor="@color/colorTextWhite100"
-            android:textSize="@dimen/_14ssp"
-            android:text="@string/text_menu_about"/>
+            android:text="@string/text_menu_about" />
 
         <ImageButton
             android:id="@+id/btnBottomSheetClose"

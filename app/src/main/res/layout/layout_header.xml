@@ -32,14 +32,10 @@
 
         <TextView
             android:id="@+id/tvHeaderTitle"
+            style="@style/Header.H3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:fontFamily="@font/poppins_regular"
-            android:includeFontPadding="false"
-            android:textAllCaps="false"
-            android:textColor="@color/colorTextGrey10"
-            android:textSize="@dimen/_16ssp"
             tools:text="@string/text_lorem_ipsum_title" />
 
         <ImageButton
