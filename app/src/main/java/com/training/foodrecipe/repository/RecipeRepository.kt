@@ -1,7 +1,5 @@
 package com.training.foodrecipe.repository
 
-import com.training.foodrecipe.datasource.local.RecipeDatabase
-import com.training.foodrecipe.datasource.remote.IRecipeApi
 import com.training.foodrecipe.datasource.remote.response.RecipeCategoryResponse
 import com.training.foodrecipe.datasource.remote.response.RecipeDetailResponse
 import com.training.foodrecipe.datasource.remote.response.RecipeResponse
@@ -14,7 +12,7 @@ import com.training.foodrecipe.helper.ModelMapper
  * https://gitlab.com/indra-yana
  ****************************************************/
 
-class RecipeRepository(private val db: RecipeDatabase, private val api: IRecipeApi) : BaseRepository() {
+class RecipeRepository : BaseRepository() {
 
     companion object {
         val TAG = RecipeRepository::class.java.simpleName

@@ -25,7 +25,6 @@ import com.training.foodrecipe.adapter.IOnItemClickListener
 import com.training.foodrecipe.adapter.NeededItemAdapter
 import com.training.foodrecipe.adapter.SimpleTextAdapter
 import com.training.foodrecipe.databinding.FragmentRecipeDetailBinding
-import com.training.foodrecipe.datasource.remote.IRecipeApi
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.helper.handleRequestError
 import com.training.foodrecipe.helper.visible
@@ -101,7 +100,7 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
     }
 
     override fun getRepository(): RecipeRepository {
-        return RecipeRepository(recipeDB, recipeApi)
+        return RecipeRepository()
     }
 
     private fun observeRecipeDetail() {

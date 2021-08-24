@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.training.foodrecipe.adapter.IOnItemClickListener
 import com.training.foodrecipe.adapter.RecipeAdapter
 import com.training.foodrecipe.databinding.FragmentFavouriteBinding
-import com.training.foodrecipe.datasource.remote.IRecipeApi
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.helper.handleRequestError
 import com.training.foodrecipe.helper.showInputKey
@@ -81,7 +80,7 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding, RecipeViewModel
     }
 
     override fun getRepository(): RecipeRepository {
-        return RecipeRepository(recipeDB, recipeApi)
+        return RecipeRepository()
     }
 
     private fun buildRecipeAdapter() {

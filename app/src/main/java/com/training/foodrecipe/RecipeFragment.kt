@@ -124,7 +124,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
     }
 
     override fun getRepository(): RecipeRepository {
-        return RecipeRepository(recipeDB, recipeApi)
+        return RecipeRepository()
     }
 
     private fun buildRecipeAdapter() {

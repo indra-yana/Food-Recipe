@@ -14,7 +14,6 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.training.foodrecipe.databinding.FragmentArticleDetailBinding
-import com.training.foodrecipe.datasource.remote.IRecipeApi
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.helper.enable
 import com.training.foodrecipe.helper.handleRequestError
@@ -78,7 +77,7 @@ class ArticleDetailFragment : BaseFragment<FragmentArticleDetailBinding, Article
     }
 
     override fun getRepository(): ArticleRepository {
-        return ArticleRepository(recipeDB, recipeApi)
+        return ArticleRepository()
     }
 
     private fun observeArticle() {

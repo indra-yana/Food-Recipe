@@ -13,7 +13,6 @@ import com.training.foodrecipe.adapter.ArticleAdapter
 import com.training.foodrecipe.adapter.CategoryAdapter
 import com.training.foodrecipe.adapter.IOnItemClickListener
 import com.training.foodrecipe.databinding.FragmentArticleBinding
-import com.training.foodrecipe.datasource.remote.IRecipeApi
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.helper.handleRequestError
 import com.training.foodrecipe.helper.visible
@@ -88,7 +87,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
     }
 
     override fun getRepository(): ArticleRepository {
-        return ArticleRepository(recipeDB, recipeApi)
+        return ArticleRepository()
     }
 
     private fun buildCategoryAdapter() {

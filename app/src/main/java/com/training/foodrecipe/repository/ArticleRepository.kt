@@ -1,8 +1,9 @@
 package com.training.foodrecipe.repository
 
-import com.training.foodrecipe.datasource.local.RecipeDatabase
-import com.training.foodrecipe.datasource.remote.IRecipeApi
-import com.training.foodrecipe.datasource.remote.response.*
+import com.training.foodrecipe.datasource.remote.response.ArticleCategoryResponse
+import com.training.foodrecipe.datasource.remote.response.ArticleDetailResponse
+import com.training.foodrecipe.datasource.remote.response.ArticleResponse
+import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.helper.ModelMapper
 
 /****************************************************
@@ -11,7 +12,7 @@ import com.training.foodrecipe.helper.ModelMapper
  * https://gitlab.com/indra-yana
  ****************************************************/
 
-class ArticleRepository(private val db: RecipeDatabase, private val api: IRecipeApi) : BaseRepository() {
+class ArticleRepository : BaseRepository() {
 
     suspend fun getLatestArticle(): ResponseStatus<ArticleResponse> = safeApiCall { api.getLatestArticle() }
 
