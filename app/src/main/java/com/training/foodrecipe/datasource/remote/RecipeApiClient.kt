@@ -56,6 +56,6 @@ object RecipeApiClient {
             .build()
     }
 
-    fun <Api> crete(api: Class<Api>): Api = retrofit.create(api)
+    fun <Api> initApi(api: Class<Api>): Api = retrofit.create(api)
 
 }

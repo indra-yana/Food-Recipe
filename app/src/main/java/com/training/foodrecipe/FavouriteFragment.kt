@@ -81,7 +81,7 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding, RecipeViewModel
     }
 
     override fun getRepository(): RecipeRepository {
-        return RecipeRepository(recipeDB, apiClient.crete(IRecipeApi::class.java))
+        return RecipeRepository(recipeDB, recipeApi)
     }
 
     private fun buildRecipeAdapter() {

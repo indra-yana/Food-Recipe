@@ -2,6 +2,8 @@ package com.training.foodrecipe
 
 import android.app.Application
 import com.training.foodrecipe.datasource.local.RecipeDatabase
+import com.training.foodrecipe.datasource.remote.IRecipeApi
+import com.training.foodrecipe.datasource.remote.RecipeApiClient
 
 /****************************************************
  * Created by Indra Muliana (indra.ndra26@gmail.com)
@@ -14,11 +16,15 @@ class BaseApplication: Application() {
     companion object {
         @JvmStatic
         lateinit var recipeDB: RecipeDatabase
+
+        @JvmStatic
+        lateinit var recipeApi: IRecipeApi
     }
 
     override fun onCreate() {
         super.onCreate()
         recipeDB = RecipeDatabase.initDatabase(this)
+        recipeApi = RecipeApiClient.initApi(IRecipeApi::class.java)
     }
 
 }

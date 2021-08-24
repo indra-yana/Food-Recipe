@@ -93,7 +93,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
     }
 
     override fun getRepository(): RecipeRepository {
-        return RecipeRepository(recipeDB, apiClient.crete(IRecipeApi::class.java))
+        return RecipeRepository(recipeDB, recipeApi)
     }
 
     private fun buildCategoryAdapter() {

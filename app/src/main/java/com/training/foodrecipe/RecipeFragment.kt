@@ -28,7 +28,6 @@ import com.training.foodrecipe.adapter.IOnItemClickListener
 import com.training.foodrecipe.adapter.RecipeAdapter
 import com.training.foodrecipe.adapter.ViewHolderType
 import com.training.foodrecipe.databinding.FragmentRecipeBinding
-import com.training.foodrecipe.datasource.remote.IRecipeApi
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.helper.OverlapSliderTransformation
 import com.training.foodrecipe.helper.handleRequestError
@@ -125,7 +124,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
     }
 
     override fun getRepository(): RecipeRepository {
-        return RecipeRepository(recipeDB, apiClient.crete(IRecipeApi::class.java))
+        return RecipeRepository(recipeDB, recipeApi)
     }
 
     private fun buildRecipeAdapter() {

@@ -88,7 +88,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
     }
 
     override fun getRepository(): ArticleRepository {
-        return ArticleRepository(recipeDB, apiClient.crete(IRecipeApi::class.java))
+        return ArticleRepository(recipeDB, recipeApi)
     }
 
     private fun buildCategoryAdapter() {
