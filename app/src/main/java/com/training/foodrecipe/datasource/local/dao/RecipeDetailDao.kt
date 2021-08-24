@@ -21,7 +21,7 @@ interface RecipeDetailDao {
     @Query("SELECT * FROM recipe_details WHERE is_favourite = 1")
     suspend fun getRecipeFavourite(): List<RecipeDetail>
 
-    @Query("SELECT * FROM recipe_details WHERE `key` LIKE '%' || :key || '%' OR `title` LIKE '%' || :key || '%' AND is_favourite = 1")
+    @Query("SELECT * FROM recipe_details WHERE `key` LIKE '%' || :key || '%' AND `title` LIKE '%' || :key || '%' AND is_favourite = 1")
     suspend fun getRecipeFavourite(key: String): List<RecipeDetail>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
