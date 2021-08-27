@@ -148,9 +148,9 @@ class MainActivity : AppCompatActivity() {
     fun showFabAction() {
         binding.fabCreate.visibility = View.VISIBLE
         binding.bottomNavBar.menu.findItem(R.id.placeholder).isVisible = true
-        binding.bottomAppBar.fabCradleMargin = resources.getDimension(R.dimen._6sdp)
+        binding.bottomAppBar.fabCradleMargin = resources.getDimension(R.dimen._4sdp)
         binding.bottomAppBar.cradleVerticalOffset = resources.getDimension(R.dimen._4sdp)
-        binding.bottomAppBar.fabCradleRoundedCornerRadius = resources.getDimension(R.dimen._8sdp)
+        binding.bottomAppBar.fabCradleRoundedCornerRadius = resources.getDimension(R.dimen._10sdp)
     }
 
     fun showBottomNavigation() {

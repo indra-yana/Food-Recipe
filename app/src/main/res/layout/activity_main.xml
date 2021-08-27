@@ -94,8 +94,8 @@
         android:layout_gravity="bottom"
         app:backgroundTint="@color/colorPrimaryDark"
         app:fabAlignmentMode="end"
-        app:fabCradleMargin="@dimen/_6sdp"
-        app:fabCradleRoundedCornerRadius="@dimen/_8sdp"
+        app:fabCradleMargin="@dimen/_4sdp"
+        app:fabCradleRoundedCornerRadius="@dimen/_10sdp"
         app:fabCradleVerticalOffset="@dimen/_4sdp"
         app:hideOnScroll="true">
 
