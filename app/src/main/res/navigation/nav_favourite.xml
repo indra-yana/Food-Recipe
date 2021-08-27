@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/favouriteFragment"
-        android:name="com.training.foodrecipe.FavouriteFragment"
+        android:name="com.training.foodrecipe.view.fragment.FavouriteFragment"
         android:label="fragment_favourite"
         tools:layout="@layout/fragment_favourite" />
 </navigation>

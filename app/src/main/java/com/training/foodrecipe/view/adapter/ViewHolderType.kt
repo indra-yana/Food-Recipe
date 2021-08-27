@@ -1,4 +1,4 @@
-package com.training.foodrecipe.adapter
+package com.training.foodrecipe.view.adapter
 
 /****************************************************
  * Created by Indra Muliana (indra.ndra26@gmail.com)

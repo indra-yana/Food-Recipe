@@ -1,4 +1,4 @@
-package com.training.foodrecipe
+package com.training.foodrecipe.view.fragment
 
 import android.os.Bundle
 import android.os.Handler
@@ -14,8 +14,10 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.training.foodrecipe.view.MainActivity
+import com.training.foodrecipe.R
 import com.training.foodrecipe.listener.IOnItemClickListener
-import com.training.foodrecipe.adapter.RecipeAdapter
+import com.training.foodrecipe.view.adapter.RecipeAdapter
 import com.training.foodrecipe.databinding.FragmentFavouriteBinding
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.helper.handleRequestError

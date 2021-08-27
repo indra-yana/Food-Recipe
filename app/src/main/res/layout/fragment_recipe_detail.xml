@@ -5,7 +5,7 @@
     android:id="@+id/srlRefresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RecipeDetailFragment">
+    tools:context=".view.fragment.RecipeDetailFragment">
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmerFramelayout"

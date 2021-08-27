@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/articleFragment"
-        android:name="com.training.foodrecipe.ArticleFragment"
+        android:name="com.training.foodrecipe.view.fragment.ArticleFragment"
         android:label="fragment_article"
         tools:layout="@layout/fragment_article">
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/articleDetailFragment"
-        android:name="com.training.foodrecipe.ArticleDetailFragment"
+        android:name="com.training.foodrecipe.view.fragment.ArticleDetailFragment"
         android:label="fragment_article_detail"
         tools:layout="@layout/fragment_article_detail">
         <action

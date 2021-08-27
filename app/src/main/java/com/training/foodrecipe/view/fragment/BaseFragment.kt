@@ -1,4 +1,4 @@
-package com.training.foodrecipe
+package com.training.foodrecipe.view.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -1,10 +1,10 @@
-package com.training.foodrecipe.adapter
+package com.training.foodrecipe.view.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.training.foodrecipe.adapter.viewholder.BaseViewHolder
-import com.training.foodrecipe.adapter.viewholder.NeededItemViewHolder
+import com.training.foodrecipe.view.adapter.viewholder.BaseViewHolder
+import com.training.foodrecipe.view.adapter.viewholder.NeededItemViewHolder
 import com.training.foodrecipe.helper.DiffUtils
 import com.training.foodrecipe.listener.IOnItemClickListener
 import com.training.foodrecipe.model.NeedItem

@@ -1,4 +1,4 @@
-package com.training.foodrecipe
+package com.training.foodrecipe.view.fragment
 
 import android.annotation.SuppressLint
 import android.content.res.Resources
@@ -23,7 +23,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.training.foodrecipe.adapter.*
+import com.training.foodrecipe.view.MainActivity
+import com.training.foodrecipe.R
+import com.training.foodrecipe.view.adapter.*
 import com.training.foodrecipe.databinding.FragmentRecipeBinding
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.helper.OverlapSliderTransformation

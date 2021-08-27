@@ -1,4 +1,4 @@
-package com.training.foodrecipe
+package com.training.foodrecipe.view.fragment
 
 import android.annotation.SuppressLint
 import android.content.res.Resources
@@ -21,9 +21,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.training.foodrecipe.view.MainActivity
+import com.training.foodrecipe.R
 import com.training.foodrecipe.listener.IOnItemClickListener
-import com.training.foodrecipe.adapter.NeededItemAdapter
-import com.training.foodrecipe.adapter.SimpleTextAdapter
+import com.training.foodrecipe.view.adapter.NeededItemAdapter
+import com.training.foodrecipe.view.adapter.SimpleTextAdapter
 import com.training.foodrecipe.databinding.FragmentRecipeDetailBinding
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.helper.handleRequestError

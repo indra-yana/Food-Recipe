@@ -1,4 +1,4 @@
-package com.training.foodrecipe
+package com.training.foodrecipe.view.fragment
 
 import android.content.Intent
 import android.net.Uri
@@ -13,6 +13,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.training.foodrecipe.R
+import com.training.foodrecipe.view.MainActivity
 import com.training.foodrecipe.databinding.FragmentArticleDetailBinding
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.helper.enable

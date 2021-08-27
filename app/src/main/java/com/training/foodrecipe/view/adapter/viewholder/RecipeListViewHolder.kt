@@ -1,4 +1,4 @@
-package com.training.foodrecipe.adapter.viewholder
+package com.training.foodrecipe.view.adapter.viewholder
 
 import android.view.LayoutInflater
 import android.view.View

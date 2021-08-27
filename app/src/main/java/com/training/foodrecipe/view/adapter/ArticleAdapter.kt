@@ -1,27 +1,29 @@
-package com.training.foodrecipe.adapter
+package com.training.foodrecipe.view.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.training.foodrecipe.adapter.viewholder.BaseViewHolder
-import com.training.foodrecipe.adapter.viewholder.SimpleTextViewHolder
+import com.training.foodrecipe.view.adapter.viewholder.ArticleViewHolder
+import com.training.foodrecipe.view.adapter.viewholder.BaseViewHolder
 import com.training.foodrecipe.helper.DiffUtils
 import com.training.foodrecipe.listener.IOnItemClickListener
+import com.training.foodrecipe.model.Article
 
 /****************************************************
  * Created by Indra Muliana (indra.ndra26@gmail.com)
- * On Wednesday, 12/05/2021 09.11
+ * On Friday, 14/08/2021 13.02
  * https://gitlab.com/indra-yana
  ****************************************************/
-class SimpleTextAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var itemList: MutableList<String> = mutableListOf()
+class ArticleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private var itemList: MutableList<Article> = mutableListOf()
 
     var iOnItemClickListener: IOnItemClickListener? = null
     var vHolder: RecyclerView.ViewHolder? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return SimpleTextViewHolder(parent)
+        return ArticleViewHolder(parent)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -31,7 +33,7 @@ class SimpleTextAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int = itemList.size
 
-    fun bindData(itemList: List<String>) {
+    fun bindData(itemList: List<Article>) {
         val diffCallback = DiffUtils(this.itemList, itemList)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
 

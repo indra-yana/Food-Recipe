@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.training.foodrecipe.RecipeFragment"
+        android:name="com.training.foodrecipe.view.fragment.RecipeFragment"
         android:label="fragment_recipe"
         tools:layout="@layout/fragment_recipe" >
         <action
@@ -24,7 +24,7 @@
     </fragment>
     <fragment
         android:id="@+id/recipeDetailFragment"
-        android:name="com.training.foodrecipe.RecipeDetailFragment"
+        android:name="com.training.foodrecipe.view.fragment.RecipeDetailFragment"
         android:label="fragment_detail"
         tools:layout="@layout/fragment_recipe_detail" >
         <action
@@ -33,7 +33,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.training.foodrecipe.SearchFragment"
+        android:name="com.training.foodrecipe.view.fragment.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
         <action
@@ -45,7 +45,7 @@
     </fragment>
     <fragment
         android:id="@+id/favouriteFragment2"
-        android:name="com.training.foodrecipe.FavouriteFragment"
+        android:name="com.training.foodrecipe.view.fragment.FavouriteFragment"
         android:label="fragment_favourite"
         tools:layout="@layout/fragment_favourite" >
         <action

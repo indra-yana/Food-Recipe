@@ -1,8 +1,9 @@
-package com.training.foodrecipe.adapter.viewholder
+package com.training.foodrecipe.view.adapter.viewholder
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
@@ -13,18 +14,22 @@ import com.training.foodrecipe.model.Recipe
 
 /****************************************************
  * Created by Indra Muliana (indra.ndra26@gmail.com)
- * On 08/04/2020 10.49
+ * On Friday, 14/05/2021 22.31
+ * https://gitlab.com/indra-yana
  ****************************************************/
-class BannerViewHolder(itemView: View) : BaseViewHolder(itemView) {
+
+class RecipeCardViewHolder(itemView: View) : BaseViewHolder(itemView) {
     private var tvItemTitle: TextView = itemView.findViewById(R.id.tvItemTitle)
     private var ivItemThumbnail: ImageView = itemView.findViewById(R.id.ivItemThumbnail)
+    private var btnAddFavourite: ImageButton = itemView.findViewById(R.id.btnAddFavourite)
+    private var btnShare: ImageButton = itemView.findViewById(R.id.btnShare)
 
     constructor(parent: ViewGroup) : this(
-        LayoutInflater.from(parent.context).inflate(R.layout.item_card_banner, parent, false)
+        LayoutInflater.from(parent.context).inflate(R.layout.item_mode_card, parent, false)
     )
 
     override fun bindView(viewGroup: ViewGroup): View {
-        return LayoutInflater.from(viewGroup.context).inflate(R.layout.item_card_banner, viewGroup, false)
+        return LayoutInflater.from(viewGroup.context).inflate(R.layout.item_mode_card, viewGroup, false)
     }
 
     override fun bind(data: Any, listener: IOnItemClickListener?) {
@@ -33,8 +38,16 @@ class BannerViewHolder(itemView: View) : BaseViewHolder(itemView) {
         tvItemTitle.text = data.title
         Glide.with(itemView.context)
             .load(data.thumb)
-            .apply(RequestOptions().override(350, 350))
+            .apply(RequestOptions().override(450, 250))
             .into(ivItemThumbnail)
+
+        btnAddFavourite.setOnClickListener {
+            listener?.onButtonFavouriteClicked(data)
+        }
+
+        btnShare.setOnClickListener {
+            listener?.onButtonShareClicked(data)
+        }
 
         itemView.setOnClickListener {
             listener?.onItemClicked(data)

@@ -1,4 +1,4 @@
-package com.training.foodrecipe
+package com.training.foodrecipe.view.fragment
 
 import android.os.Bundle
 import android.os.Handler
@@ -14,9 +14,11 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.training.foodrecipe.adapter.CategoryAdapter
+import com.training.foodrecipe.view.MainActivity
+import com.training.foodrecipe.R
+import com.training.foodrecipe.view.adapter.CategoryAdapter
 import com.training.foodrecipe.listener.IOnItemClickListener
-import com.training.foodrecipe.adapter.RecipeAdapter
+import com.training.foodrecipe.view.adapter.RecipeAdapter
 import com.training.foodrecipe.databinding.FragmentSearchBinding
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.helper.handleRequestError

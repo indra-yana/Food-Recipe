@@ -1,4 +1,4 @@
-package com.training.foodrecipe.adapter.viewholder
+package com.training.foodrecipe.view.adapter.viewholder
 
 import android.annotation.SuppressLint
 import android.text.TextUtils
