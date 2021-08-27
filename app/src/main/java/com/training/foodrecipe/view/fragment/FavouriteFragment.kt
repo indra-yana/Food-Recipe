@@ -20,9 +20,7 @@ import com.training.foodrecipe.listener.IOnItemClickListener
 import com.training.foodrecipe.view.adapter.RecipeAdapter
 import com.training.foodrecipe.databinding.FragmentFavouriteBinding
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
-import com.training.foodrecipe.helper.handleRequestError
-import com.training.foodrecipe.helper.showInputKey
-import com.training.foodrecipe.helper.visible
+import com.training.foodrecipe.helper.*
 import com.training.foodrecipe.model.Recipe
 import com.training.foodrecipe.repository.RecipeRepository
 import com.training.foodrecipe.viewmodel.RecipeViewModel
@@ -214,7 +212,8 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding, RecipeViewModel
             }
 
             layoutHeader.ivHeaderCreate.setOnClickListener {
-                Toast.makeText(requireContext(), "Buat resep!", Toast.LENGTH_SHORT).show()
+                // TODO: Create own recipe
+                requireView().shortSnackBar("Buat resepmu sendiri!")
             }
         }
     }
