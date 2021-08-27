@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.training.foodrecipe.R
-import com.training.foodrecipe.adapter.IOnItemClickListener
+import com.training.foodrecipe.listener.IOnItemClickListener
 import com.training.foodrecipe.model.ArticleCategory
 import com.training.foodrecipe.model.RecipeCategory
 

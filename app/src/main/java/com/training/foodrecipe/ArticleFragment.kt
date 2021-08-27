@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.training.foodrecipe.adapter.ArticleAdapter
 import com.training.foodrecipe.adapter.CategoryAdapter
-import com.training.foodrecipe.adapter.IOnItemClickListener
+import com.training.foodrecipe.listener.IOnItemClickListener
 import com.training.foodrecipe.databinding.FragmentArticleBinding
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.helper.handleRequestError
@@ -206,7 +206,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
 
             layoutHeader.tvHeaderTitle.text = getString(R.string.text_article_title)
             layoutHeader.btnBack.visible(false)
-            layoutHeader.ivHeaderFavourite.visible(false)
+            layoutHeader.ivHeaderCreate.visible(false)
             layoutHeader.ivHeaderMenu.visible(false)
         }
     }

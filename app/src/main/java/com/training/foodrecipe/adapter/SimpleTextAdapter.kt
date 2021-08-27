@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.training.foodrecipe.adapter.viewholder.BaseViewHolder
 import com.training.foodrecipe.adapter.viewholder.SimpleTextViewHolder
 import com.training.foodrecipe.helper.DiffUtils
+import com.training.foodrecipe.listener.IOnItemClickListener
 
 /****************************************************
  * Created by Indra Muliana (indra.ndra26@gmail.com)

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.training.foodrecipe.adapter.viewholder.ArticleViewHolder
 import com.training.foodrecipe.adapter.viewholder.BaseViewHolder
 import com.training.foodrecipe.helper.DiffUtils
+import com.training.foodrecipe.listener.IOnItemClickListener
 import com.training.foodrecipe.model.Article
 
 /****************************************************

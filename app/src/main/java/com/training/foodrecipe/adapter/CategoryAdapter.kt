@@ -3,12 +3,10 @@ package com.training.foodrecipe.adapter
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.training.foodrecipe.adapter.viewholder.ArticleViewHolder
 import com.training.foodrecipe.adapter.viewholder.BaseViewHolder
 import com.training.foodrecipe.adapter.viewholder.CategoryViewHolder
 import com.training.foodrecipe.helper.DiffUtils
-import com.training.foodrecipe.model.ArticleCategory
-import com.training.foodrecipe.model.RecipeCategory
+import com.training.foodrecipe.listener.IOnItemClickListener
 
 /****************************************************
  * Created by Indra Muliana (indra.ndra26@gmail.com)

@@ -11,6 +11,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import com.training.foodrecipe.listener.IOnFabClickListener
 import com.training.foodrecipe.databinding.ActivityMainBinding
 import com.training.foodrecipe.helper.ConnectivityHelper
 import com.training.foodrecipe.helper.setupWithNavController
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var currentNavController: LiveData<NavController>? = null
     private var backPressedOnce = false
+    var iOnFabClickListener: IOnFabClickListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.fabCreate.setOnClickListener {
-            Toast.makeText(this, "Fab Clicked!", Toast.LENGTH_SHORT).show()
+            iOnFabClickListener?.onFabClicked(it)
         }
 
         if (savedInstanceState == null) {

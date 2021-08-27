@@ -9,7 +9,7 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.training.foodrecipe.R
-import com.training.foodrecipe.adapter.IOnItemClickListener
+import com.training.foodrecipe.listener.IOnItemClickListener
 import com.training.foodrecipe.model.Recipe
 
 /****************************************************

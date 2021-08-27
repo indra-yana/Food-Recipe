@@ -23,15 +23,14 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.training.foodrecipe.adapter.BannerAdapter
-import com.training.foodrecipe.adapter.IOnItemClickListener
-import com.training.foodrecipe.adapter.RecipeAdapter
-import com.training.foodrecipe.adapter.ViewHolderType
+import com.training.foodrecipe.adapter.*
 import com.training.foodrecipe.databinding.FragmentRecipeBinding
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.helper.OverlapSliderTransformation
 import com.training.foodrecipe.helper.handleRequestError
 import com.training.foodrecipe.helper.visible
+import com.training.foodrecipe.listener.IOnFabClickListener
+import com.training.foodrecipe.listener.IOnItemClickListener
 import com.training.foodrecipe.model.Recipe
 import com.training.foodrecipe.repository.RecipeRepository
 import com.training.foodrecipe.viewmodel.RecipeViewModel
@@ -92,6 +91,11 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
         (activity as MainActivity).apply {
             showFabAction()
             showBottomNavigation()
+            iOnFabClickListener = object : IOnFabClickListener {
+                override fun onFabClicked(view: View) {
+                    findNavController().navigate(R.id.action_homeFragment_to_favouriteFragment2)
+                }
+            }
         }
 
         prepareUI()
@@ -302,6 +306,10 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
                 findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
             }
 
+            tvInputSearch.setOnClickListener {
+                findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+            }
+
             srlRefresh.setOnRefreshListener {
                 isLoading = false
                 isNetworkError = false
@@ -312,13 +320,9 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
 
             layoutHeader.tvHeaderTitle.text = getString(R.string.text_welcome_user)
             layoutHeader.btnBack.visible(false)
-            layoutHeader.ivHeaderFavourite.visible(true)
+            layoutHeader.ivHeaderCreate.visible(false)
             layoutHeader.ivHeaderMenu.setOnClickListener {
                 showPopupMenu(it)
-            }
-
-            layoutHeader.ivHeaderFavourite.setOnClickListener {
-                findNavController().navigate(R.id.action_homeFragment_to_favouriteFragment2)
             }
         }
     }

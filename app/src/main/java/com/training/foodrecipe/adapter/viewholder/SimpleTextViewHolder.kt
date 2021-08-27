@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import com.training.foodrecipe.R
-import com.training.foodrecipe.adapter.IOnItemClickListener
+import com.training.foodrecipe.listener.IOnItemClickListener
 import com.training.foodrecipe.helper.hasEllipsis
 
 

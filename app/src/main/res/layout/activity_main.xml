@@ -80,7 +80,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        android:src="@drawable/ic_receipt"
+        android:src="@drawable/ic_favourite_border"
         app:backgroundTint="@color/colorPrimary2"
         app:fabCustomSize="@dimen/_40sdp"
         app:layout_anchor="@id/bottomAppBar"

@@ -15,7 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.training.foodrecipe.adapter.CategoryAdapter
-import com.training.foodrecipe.adapter.IOnItemClickListener
+import com.training.foodrecipe.listener.IOnItemClickListener
 import com.training.foodrecipe.adapter.RecipeAdapter
 import com.training.foodrecipe.databinding.FragmentSearchBinding
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
@@ -26,7 +26,6 @@ import com.training.foodrecipe.model.Recipe
 import com.training.foodrecipe.model.RecipeCategory
 import com.training.foodrecipe.repository.RecipeRepository
 import com.training.foodrecipe.viewmodel.RecipeViewModel
-import kotlinx.android.synthetic.main.fragment_recipe.*
 import java.util.*
 
 /****************************************************
@@ -124,7 +123,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
             isNetworkError = it is ResponseStatus.Failure
 
             toggleLoading(isLoading)
-            showInputKey(viewBinding.etInputSearch, it is ResponseStatus.Success && etInputSearch.text.trim().isEmpty())
+            showInputKey(viewBinding.etInputSearch, it is ResponseStatus.Success && viewBinding.etInputSearch.text.trim().isEmpty())
 
             when (it) {
                 is ResponseStatus.Loading -> {
@@ -262,7 +261,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
 
             layoutHeader.tvHeaderTitle.text = getString(R.string.text_search_title)
             layoutHeader.ivHeaderMenu.visible(false)
-            layoutHeader.ivHeaderFavourite.visible(false)
+            layoutHeader.ivHeaderCreate.visible(false)
             layoutHeader.btnBack.setOnClickListener {
                 showInputKey(etInputSearch, false)
                 findNavController().navigateUp()

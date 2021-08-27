@@ -21,7 +21,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.training.foodrecipe.adapter.IOnItemClickListener
+import com.training.foodrecipe.listener.IOnItemClickListener
 import com.training.foodrecipe.adapter.NeededItemAdapter
 import com.training.foodrecipe.adapter.SimpleTextAdapter
 import com.training.foodrecipe.databinding.FragmentRecipeDetailBinding

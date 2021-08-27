@@ -1,4 +1,4 @@
-package com.training.foodrecipe.adapter
+package com.training.foodrecipe.listener
 
 
 /****************************************************

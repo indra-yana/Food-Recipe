@@ -6,6 +6,7 @@ import com.training.foodrecipe.adapter.viewholder.BaseViewHolder
 import com.training.foodrecipe.adapter.viewholder.RecipeCardViewHolder
 import com.training.foodrecipe.adapter.viewholder.RecipeGridViewHolder
 import com.training.foodrecipe.adapter.viewholder.RecipeListViewHolder
+import com.training.foodrecipe.listener.IOnItemClickListener
 import com.training.foodrecipe.model.Recipe
 
 

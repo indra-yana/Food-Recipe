@@ -39,7 +39,7 @@
             tools:text="@string/text_lorem_ipsum_title" />
 
         <ImageButton
-            android:id="@+id/ivHeaderFavourite"
+            android:id="@+id/ivHeaderCreate"
             android:layout_width="@dimen/_25sdp"
             android:layout_height="@dimen/_25sdp"
             android:layout_marginStart="@dimen/_8sdp"
@@ -47,7 +47,7 @@
             android:clipToPadding="false"
             android:contentDescription="@string/app_name"
             android:foreground="?selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_favourite_border"
+            android:src="@drawable/ic_create"
             app:tint="@color/colorPrimaryWhite100" />
 
         <ImageButton

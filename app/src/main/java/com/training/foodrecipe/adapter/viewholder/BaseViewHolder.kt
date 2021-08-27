@@ -3,7 +3,7 @@ package com.training.foodrecipe.adapter.viewholder
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.training.foodrecipe.adapter.IOnItemClickListener
+import com.training.foodrecipe.listener.IOnItemClickListener
 
 /****************************************************
  * Created by Indra Muliana (indra.ndra26@gmail.com)
