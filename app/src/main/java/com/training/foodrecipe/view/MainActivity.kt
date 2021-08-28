@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         private val TAG = MainActivity::class.java.simpleName
     }
 
-    private lateinit var binding: ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
     private var currentNavController: LiveData<NavController>? = null
     private var backPressedOnce = false
     var iOnFabClickListener: IOnFabClickListener? = null

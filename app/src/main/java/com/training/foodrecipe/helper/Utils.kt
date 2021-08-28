@@ -11,6 +11,9 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
+import com.training.foodrecipe.view.MainActivity
+import com.training.foodrecipe.view.fragment.ArticleFragment
+import com.training.foodrecipe.view.fragment.RecipeFragment
 import retrofit2.HttpException
 import java.net.UnknownHostException
 
@@ -44,25 +47,35 @@ fun String.getRandomString(length: Int) {
 }
 
 fun Fragment.handleRequestError(failure: ResponseStatus.Failure, action: (() -> Unit)? = null) {
+    val anchor = when (this) {
+        is RecipeFragment -> {
+            (activity as MainActivity).binding.fabCreate
+        }
+        is ArticleFragment -> {
+            (activity as MainActivity).binding.fabCreate
+        }
+        else -> null
+    }
+
     when (val exception = failure.exception) {
         is HttpException -> {
             when (val errorCode = exception.code()) {
-                401 -> requireView().snackBar("$errorCode: Bad request!")
-                403 -> requireView().snackBar("$errorCode: Not authorize!")
-                404 -> requireView().snackBar("$errorCode: Resource not found!")
-                500 -> requireView().snackBar("$errorCode: Internal server error!")
-                else -> requireView().snackBar("Http response failure with status code $errorCode")
+                401 -> requireView().snackBar("$errorCode: Bad request!", anchor = anchor)
+                403 -> requireView().snackBar("$errorCode: Not authorize!", anchor = anchor)
+                404 -> requireView().snackBar("$errorCode: Resource not found!", anchor = anchor)
+                500 -> requireView().snackBar("$errorCode: Internal server error!", anchor = anchor)
+                else -> requireView().snackBar("Http response failure with status code $errorCode", anchor = anchor)
             }
 
             Log.e(TAG, "handleRequestError: ${exception.response()?.errorBody()?.string().toString()}")
         }
         is UnknownHostException -> {
-            requireView().snackBar("Please check your internet connection!", long = true, action = action)
+            requireView().snackBar("Please check your internet connection!", long = true, anchor = anchor, action = action)
 
             Log.e(TAG, "handleRequestError: ${exception.message}")
         }
         else -> {
-            requireView().snackBar("Something when wrong please try again later!", long = true, action = action)
+            requireView().snackBar("Something when wrong please try again later!", long = true, anchor = anchor, action = action)
 
             Log.e(TAG, "handleRequestError: ${exception.message}")
         }
