@@ -1,15 +1,12 @@
 package com.training.foodrecipe.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.training.foodrecipe.BaseApplication
 import com.training.foodrecipe.datasource.remote.response.RecipeCategoryResponse
 import com.training.foodrecipe.datasource.remote.response.RecipeDetailResponse
 import com.training.foodrecipe.datasource.remote.response.RecipeResponse
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
-import com.training.foodrecipe.model.RecipeDetail
 import com.training.foodrecipe.repository.RecipeRepository
 import com.training.foodrecipe.viewmodel.base.BaseRecipeViewModel
 import kotlinx.coroutines.launch
@@ -76,17 +73,6 @@ class RecipeViewModel(private val repository: RecipeRepository) : BaseRecipeView
     override fun setFavourite(key: String, isFavourite: Boolean) = viewModelScope.launch {
         _isFavourite.value = ResponseStatus.Loading
         _isFavourite.value = repository.setFavourite(key, isFavourite)
-    }
-
-    fun insertRecipeDetail(recipeDetail: RecipeDetail) = viewModelScope.launch {
-        val db = BaseApplication.recipeDB
-
-        db.apply {
-            getRecipeDetailDao().insert(recipeDetail)
-
-            val result = getRecipeDetailDao().all()
-            Log.d("TAG", "insertDetail: ${result.map { return@map it.key }}")
-        }
     }
 
 }

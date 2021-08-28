@@ -10,8 +10,8 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.*
 import android.os.Build
-import android.util.Log
 import androidx.lifecycle.LiveData
+import timber.log.Timber
 
 class ConnectivityHelper(private val context: Context) : LiveData<Boolean>() {
 
@@ -30,15 +30,15 @@ class ConnectivityHelper(private val context: Context) : LiveData<Boolean>() {
         when {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> {
                 connectivityManager.registerDefaultNetworkCallback(networkCallback)
-                Log.d("onActive", "Build.VERSION.SDK_INT >= Build.VERSION_CODES.N")
+                Timber.tag("onActive").d("Build.VERSION.SDK_INT >= Build.VERSION_CODES.N")
             }
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP -> {
                 lollipopConnectionCallback()
-                Log.d("onActive", " Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP")
+                Timber.tag("onActive").d(" Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP")
             }
             else -> {
                 context.registerReceiver(networkReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
-                Log.d("onActive", "Using Broadcast Receiver Callback")
+                Timber.tag("onActive").d("Using Broadcast Receiver Callback")
             }
         }
     }
@@ -74,14 +74,14 @@ class ConnectivityHelper(private val context: Context) : LiveData<Boolean>() {
                     super.onLost(network)
                     postValue(false)
 
-                    Log.d("networkCallback", "onLost")
+                    Timber.tag("NetworkCallback").d("onLost")
                 }
 
                 override fun onAvailable(network: Network) {
                     super.onAvailable(network)
                     postValue(true)
 
-                    Log.d("networkCallback", "onAvailable")
+                    Timber.tag("NetworkCallback").d("onAvailable")
                 }
             }
             return networkCallback
@@ -94,15 +94,15 @@ class ConnectivityHelper(private val context: Context) : LiveData<Boolean>() {
         override fun onReceive(context: Context?, intent: Intent?) {
             updateConnection()
 
-            Log.d("updateConnection", "onReceive")
+            Timber.tag("updateConnection").d("onReceive")
         }
     }
 
     private fun updateConnection() {
-        val activeNetwork : NetworkInfo? = connectivityManager.activeNetworkInfo
+        val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
         postValue(activeNetwork?.isConnected == true)
 
-        Log.d("updateConnection", "${activeNetwork?.isConnected}")
+        Timber.tag("updateConnection").d("${activeNetwork?.isConnected}")
     }
 
 }

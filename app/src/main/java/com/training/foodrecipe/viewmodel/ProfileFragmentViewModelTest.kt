@@ -1,6 +1,5 @@
 package com.training.foodrecipe.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -29,6 +28,5 @@ class ProfileFragmentViewModelTest : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        Log.d(ProfileFragmentViewModelTest::class.java.simpleName, "onCleared")
     }
 }

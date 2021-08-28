@@ -2,7 +2,6 @@ package com.training.foodrecipe.view
 
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -12,11 +11,11 @@ import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.training.foodrecipe.R
-import com.training.foodrecipe.listener.IOnFabClickListener
 import com.training.foodrecipe.databinding.ActivityMainBinding
 import com.training.foodrecipe.helper.ConnectivityHelper
 import com.training.foodrecipe.helper.setupWithNavController
-
+import com.training.foodrecipe.listener.IOnFabClickListener
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,12 +38,12 @@ class MainActivity : AppCompatActivity() {
 //                networkStatusContainer.visibility = View.GONE
 //                layoutConnected.visibility = View.VISIBLE
 //                layoutDisconnected.visibility = View.GONE
-                Log.d(TAG, "You're connected")
+                Timber.d(TAG, "You're connected")
             } else {
 //                networkStatusContainer.visibility = View.VISIBLE
 //                layoutConnected.visibility = View.GONE
 //                layoutDisconnected.visibility = View.VISIBLE
-                Log.d(TAG, "You're not connected")
+                Timber.d(TAG, "You're not connected")
             }
         })
 
@@ -175,16 +174,16 @@ class MainActivity : AppCompatActivity() {
 //                    val action = ArticleFragmentDirections.actionArticleFragmentToRecipeFragment()
 //                    findNavController(this, R.id.navFragment).navigate(action)
 //
-//                    Log.d(TAG, "setupNavigationBar: Home")
+//                    Timber.d(TAG, "setupNavigationBar: Home")
 //                }
 //                1 -> {
 //                    val action = RecipeFragmentDirections.actionRecipeFragmentToArticleFragment()
 //                    findNavController(this, R.id.navFragment).navigate(action)
 //
-//                    Log.d(TAG, "setupNavigationBar: Article")
+//                    Timber.d(TAG, "setupNavigationBar: Article")
 //                }
 //                2 -> {
-//                    Log.d(TAG, "setupNavigationBar: Favourite")
+//                    Timber.d(TAG, "setupNavigationBar: Favourite")
 //
 //                }
 //            }

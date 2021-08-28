@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.training.foodrecipe.R
-import com.training.foodrecipe.view.MainActivity
 import com.training.foodrecipe.databinding.FragmentArticleDetailBinding
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.helper.enable
@@ -23,7 +21,9 @@ import com.training.foodrecipe.helper.visible
 import com.training.foodrecipe.model.Article
 import com.training.foodrecipe.model.ArticleDetail
 import com.training.foodrecipe.repository.ArticleRepository
+import com.training.foodrecipe.view.MainActivity
 import com.training.foodrecipe.viewmodel.ArticleViewModel
+import timber.log.Timber
 
 /****************************************************
  * Created by Indra Muliana (indra.ndra26@gmail.com)
@@ -91,21 +91,21 @@ class ArticleDetailFragment : BaseFragment<FragmentArticleDetailBinding, Article
 
             when (it) {
                 is ResponseStatus.Loading -> {
-                    Log.d(TAG, "observeArticle: State is loading!")
+                    Timber.d(TAG, "observeArticle: State is loading!")
                 }
                 is ResponseStatus.Success -> {
                     val item = it.value.articleDetail
                     updateUI(item)
 
-                    Log.d(TAG, "observeArticle: State is success! $item")
+                    Timber.d(TAG, "observeArticle: State is success! $item")
                 }
                 is ResponseStatus.Failure -> {
                     handleRequestError(it) { fetchData() }
 
-                    Log.d(TAG, "observeArticle:State is failure! ${it.exception}")
+                    Timber.d(TAG, "observeArticle:State is failure! ${it.exception}")
                 }
                 else -> {
-                    Log.d(TAG, "observeArticle: State is unknown!")
+                    Timber.d(TAG, "observeArticle: State is unknown!")
                 }
             }
         })

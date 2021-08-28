@@ -5,7 +5,6 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -13,17 +12,20 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
-import com.training.foodrecipe.view.MainActivity
 import com.training.foodrecipe.R
-import com.training.foodrecipe.listener.IOnItemClickListener
-import com.training.foodrecipe.view.adapter.RecipeAdapter
 import com.training.foodrecipe.databinding.FragmentFavouriteBinding
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
-import com.training.foodrecipe.helper.*
+import com.training.foodrecipe.helper.handleRequestError
+import com.training.foodrecipe.helper.showInputKey
+import com.training.foodrecipe.helper.snackBar
+import com.training.foodrecipe.helper.visible
+import com.training.foodrecipe.listener.IOnItemClickListener
 import com.training.foodrecipe.model.Recipe
 import com.training.foodrecipe.repository.RecipeRepository
+import com.training.foodrecipe.view.MainActivity
+import com.training.foodrecipe.view.adapter.RecipeAdapter
 import com.training.foodrecipe.viewmodel.RecipeViewModel
+import timber.log.Timber
 import java.util.*
 
 class FavouriteFragment : BaseFragment<FragmentFavouriteBinding, RecipeViewModel, RecipeRepository>() {
@@ -110,21 +112,21 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding, RecipeViewModel
 
             when (it) {
                 is ResponseStatus.Loading -> {
-                    Log.d(TAG, "observeRecipeFavourite: State is loading!")
+                    Timber.d(TAG, "observeRecipeFavourite: State is loading!")
                 }
                 is ResponseStatus.Success -> {
                     recipeAdapter.clearData()
                     recipeAdapter.bindData(it.value.recipes)
 
-                    Log.d(TAG, "observeRecipeFavourite: State is success! ${it.value.recipes}")
+                    Timber.d(TAG, "observeRecipeFavourite: State is success! ${it.value.recipes}")
                 }
                 is ResponseStatus.Failure -> {
                     handleRequestError(it) { fetchData(currentSearchQuery) }
 
-                    Log.d(TAG, "observeRecipeFavourite:State is failure! ${it.exception}")
+                    Timber.d(TAG, "observeRecipeFavourite:State is failure! ${it.exception}")
                 }
                 else -> {
-                    Log.d(TAG, "observeRecipeFavourite: State is unknown!")
+                    Timber.d(TAG, "observeRecipeFavourite: State is unknown!")
                 }
             }
         })

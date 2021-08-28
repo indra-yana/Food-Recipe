@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.res.Resources
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +35,7 @@ import com.training.foodrecipe.listener.IOnItemClickListener
 import com.training.foodrecipe.model.Recipe
 import com.training.foodrecipe.repository.RecipeRepository
 import com.training.foodrecipe.viewmodel.RecipeViewModel
+import timber.log.Timber
 
 /****************************************************
  * Created by Indra Muliana (indra.ndra26@gmail.com)
@@ -155,9 +155,9 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
                     /*
                     * TODO: Not implemented yet
                     when(recyclerView.scrollState) {
-                        RecyclerView.SCROLL_STATE_IDLE -> Log.d(TAG, "onScrollStateChanged: State is SCROLL_STATE_IDLE")
-                        RecyclerView.SCROLL_STATE_DRAGGING -> Log.d(TAG, "onScrollStateChanged: State is SCROLL_STATE_DRAGGING")
-                        RecyclerView.SCROLL_STATE_SETTLING -> Log.d(TAG, "onScrollStateChanged: State is SCROLL_STATE_SETTLING")
+                        RecyclerView.SCROLL_STATE_IDLE -> Timber.d(TAG, "onScrollStateChanged: State is SCROLL_STATE_IDLE")
+                        RecyclerView.SCROLL_STATE_DRAGGING -> Timber.d(TAG, "onScrollStateChanged: State is SCROLL_STATE_DRAGGING")
+                        RecyclerView.SCROLL_STATE_SETTLING -> Timber.d(TAG, "onScrollStateChanged: State is SCROLL_STATE_SETTLING")
                     }
                      */
                 }
@@ -170,7 +170,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
 
                     if (visibleItem > -1) {
                         lastVisibleItem = visibleItem
-//                        Log.d(TAG, "onScrolled: visibleItemAnchorPoint: $visibleItemAnchorPoint")
+//                        Timber.d(TAG, "onScrolled: visibleItemAnchorPoint: $visibleItemAnchorPoint")
                     }
 
                     // Scroll down
@@ -183,7 +183,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
                             }
 
                             viewModel.getRecipeByPage(nextPage)
-                            Log.d(TAG, "onScrolled: nextPage: $nextPage")
+                            Timber.d(TAG, "onScrolled: nextPage: $nextPage")
                         }
                     }
 
@@ -205,20 +205,20 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
 
             when (it) {
                 is ResponseStatus.Loading -> {
-                    Log.d(TAG, "observeRecipeByPage: State is loading!")
+                    Timber.d(TAG, "observeRecipeByPage: State is loading!")
                 }
                 is ResponseStatus.Success -> {
                     recipeAdapter.bindData(it.value.recipes)
 
-                    Log.d(TAG, "observeRecipeByPage: State is success! ${it.value.recipes}")
+                    Timber.d(TAG, "observeRecipeByPage: State is success! ${it.value.recipes}")
                 }
                 is ResponseStatus.Failure -> {
                     handleRequestError(it) { fetchData(nextPage) }
 
-                    Log.d(TAG, "observeRecipeByPage:State is failure! ${it.exception}")
+                    Timber.d(TAG, "observeRecipeByPage:State is failure! ${it.exception}")
                 }
                 else -> {
-                    Log.d(TAG, "observeRecipeByPage: State is unknown!")
+                    Timber.d(TAG, "observeRecipeByPage: State is unknown!")
                 }
             }
         })
@@ -282,21 +282,21 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
 
             when (it) {
                 is ResponseStatus.Loading -> {
-                    Log.d(TAG, "observeLatestRecipe: State is loading!")
+                    Timber.d(TAG, "observeLatestRecipe: State is loading!")
                 }
                 is ResponseStatus.Success -> {
                     bannerAdapter.bindData(it.value.recipes)
                     viewBinding.sliderIndicator.refreshDots()
 
-                    Log.d(TAG, "observeLatestRecipe: State is success! ${it.value.recipes}")
+                    Timber.d(TAG, "observeLatestRecipe: State is success! ${it.value.recipes}")
                 }
                 is ResponseStatus.Failure -> {
                     handleRequestError(it) { fetchData(nextPage) }
 
-                    Log.d(TAG, "observeLatestRecipe: State is failure! ${it.exception}")
+                    Timber.d(TAG, "observeLatestRecipe: State is failure! ${it.exception}")
                 }
                 else -> {
-                    Log.d(TAG, "observeLatestRecipe: State is unknown!")
+                    Timber.d(TAG, "observeLatestRecipe: State is unknown!")
                 }
             }
         })

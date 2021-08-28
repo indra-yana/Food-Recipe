@@ -1,7 +1,6 @@
 package com.training.foodrecipe.view.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +21,7 @@ import com.training.foodrecipe.model.Article
 import com.training.foodrecipe.model.ArticleCategory
 import com.training.foodrecipe.repository.ArticleRepository
 import com.training.foodrecipe.viewmodel.ArticleViewModel
+import timber.log.Timber
 
 /****************************************************
  * Created by Indra Muliana (indra.ndra26@gmail.com)
@@ -124,21 +124,21 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
 
             when (it) {
                 is ResponseStatus.Loading -> {
-                    Log.d(TAG, "observeArticleCategory: State is loading!")
+                    Timber.d(TAG, "observeArticleCategory: State is loading!")
                 }
                 is ResponseStatus.Success -> {
                     val item = it.value.articleCategories
                     categoryAdapter.bindData(item)
 
-                    Log.d(TAG, "observeArticleCategory: State is success! $item")
+                    Timber.d(TAG, "observeArticleCategory: State is success! $item")
                 }
                 is ResponseStatus.Failure -> {
                     handleRequestError(it) { fetchData() }
 
-                    Log.d(TAG, "observeArticleCategory:State is failure! ${it.exception}")
+                    Timber.d(TAG, "observeArticleCategory:State is failure! ${it.exception}")
                 }
                 else -> {
-                    Log.d(TAG, "observeArticleCategory: State is unknown!")
+                    Timber.d(TAG, "observeArticleCategory: State is unknown!")
                 }
             }
         })
@@ -177,21 +177,21 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
 
             when (it) {
                 is ResponseStatus.Loading -> {
-                    Log.d(TAG, "observeArticle: State is loading!")
+                    Timber.d(TAG, "observeArticle: State is loading!")
                 }
                 is ResponseStatus.Success -> {
                     val item = it.value.articles
                     articleAdapter.bindData(item)
 
-                    Log.d(TAG, "observeArticle: State is success! $item")
+                    Timber.d(TAG, "observeArticle: State is success! $item")
                 }
                 is ResponseStatus.Failure -> {
                     handleRequestError(it) { fetchData() }
 
-                    Log.d(TAG, "observeArticle:State is failure! ${it.exception}")
+                    Timber.d(TAG, "observeArticle:State is failure! ${it.exception}")
                 }
                 else -> {
-                    Log.d(TAG, "observeArticle: State is unknown!")
+                    Timber.d(TAG, "observeArticle: State is unknown!")
                 }
             }
         })

@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.text.Layout
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
@@ -15,6 +14,7 @@ import com.training.foodrecipe.view.MainActivity
 import com.training.foodrecipe.view.fragment.ArticleFragment
 import com.training.foodrecipe.view.fragment.RecipeFragment
 import retrofit2.HttpException
+import timber.log.Timber
 import java.net.UnknownHostException
 
 
@@ -24,7 +24,7 @@ import java.net.UnknownHostException
  * https://gitlab.com/indra-yana
  ****************************************************/
 
-const val TAG = "Utils"
+private const val TAG = "Utils"
 
 fun <A : Activity> Activity.startNewActivity(activity: Class<A>) {
     Intent(this, activity).apply {
@@ -67,17 +67,17 @@ fun Fragment.handleRequestError(failure: ResponseStatus.Failure, action: (() -> 
                 else -> requireView().snackBar("Http response failure with status code $errorCode", anchor = anchor)
             }
 
-            Log.e(TAG, "handleRequestError: ${exception.response()?.errorBody()?.string().toString()}")
+            Timber.tag(TAG).e("handleRequestError: ${exception.response()?.errorBody()?.string().toString()}")
         }
         is UnknownHostException -> {
             requireView().snackBar("Please check your internet connection!", long = true, anchor = anchor, action = action)
 
-            Log.e(TAG, "handleRequestError: ${exception.message}")
+            Timber.tag(TAG).e("handleRequestError: ${exception.message}")
         }
         else -> {
             requireView().snackBar("Something when wrong please try again later!", long = true, anchor = anchor, action = action)
 
-            Log.e(TAG, "handleRequestError: ${exception.message}")
+            Timber.tag(TAG).e("handleRequestError: ${exception.message}")
         }
     }
 }

@@ -5,7 +5,6 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +27,7 @@ import com.training.foodrecipe.model.Recipe
 import com.training.foodrecipe.model.RecipeCategory
 import com.training.foodrecipe.repository.RecipeRepository
 import com.training.foodrecipe.viewmodel.RecipeViewModel
+import timber.log.Timber
 import java.util.*
 
 /****************************************************
@@ -129,21 +129,21 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
 
             when (it) {
                 is ResponseStatus.Loading -> {
-                    Log.d(TAG, "observeCategory: State is loading!")
+                    Timber.d(TAG, "observeCategory: State is loading!")
                 }
                 is ResponseStatus.Success -> {
                     val item = it.value.recipeCategories
                     categoryAdapter.bindData(item)
 
-                    Log.d(TAG, "observeCategory: State is success! $item")
+                    Timber.d(TAG, "observeCategory: State is success! $item")
                 }
                 is ResponseStatus.Failure -> {
                     handleRequestError(it) { fetchData() }
 
-                    Log.d(TAG, "observeCategory:State is failure! ${it.exception}")
+                    Timber.d(TAG, "observeCategory:State is failure! ${it.exception}")
                 }
                 else -> {
-                    Log.d(TAG, "observeCategory: State is unknown!")
+                    Timber.d(TAG, "observeCategory: State is unknown!")
                 }
             }
         })
@@ -181,21 +181,21 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
 
             when (it) {
                 is ResponseStatus.Loading -> {
-                    Log.d(TAG, "observeSearchRecipe: State is loading!")
+                    Timber.d(TAG, "observeSearchRecipe: State is loading!")
                 }
                 is ResponseStatus.Success -> {
                     val item = it.value.recipes
                     recipeAdapter.bindData(item)
 
-                    Log.d(TAG, "observeSearchRecipe: State is success! $item")
+                    Timber.d(TAG, "observeSearchRecipe: State is success! $item")
                 }
                 is ResponseStatus.Failure -> {
                     handleRequestError(it) { fetchData() }
 
-                    Log.d(TAG, "observeSearchRecipe:State is failure! ${it.exception}")
+                    Timber.d(TAG, "observeSearchRecipe:State is failure! ${it.exception}")
                 }
                 else -> {
-                    Log.d(TAG, "observeSearchRecipe: State is unknown!")
+                    Timber.d(TAG, "observeSearchRecipe: State is unknown!")
                 }
             }
         })

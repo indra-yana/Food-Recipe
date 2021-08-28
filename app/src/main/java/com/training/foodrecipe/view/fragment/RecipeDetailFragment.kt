@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.res.Resources
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +34,7 @@ import com.training.foodrecipe.model.Recipe
 import com.training.foodrecipe.model.RecipeDetail
 import com.training.foodrecipe.repository.RecipeRepository
 import com.training.foodrecipe.viewmodel.RecipeViewModel
+import timber.log.Timber
 
 /****************************************************
  * Created by Indra Muliana (indra.ndra26@gmail.com)
@@ -114,21 +114,21 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
 
             when (it) {
                 is ResponseStatus.Loading -> {
-                    Log.d(TAG, "observeRecipeDetail: State is loading!")
+                    Timber.d(TAG, "observeRecipeDetail: State is loading!")
                 }
                 is ResponseStatus.Success -> {
                     recipeDetail = it.value.recipeDetail
                     updateUI()
 
-                    Log.d(TAG, "observeRecipeDetail: State is success! ${it.value.recipeDetail}")
+                    Timber.d(TAG, "observeRecipeDetail: State is success! ${it.value.recipeDetail}")
                 }
                 is ResponseStatus.Failure -> {
                     handleRequestError(it) { fetchData() }
 
-                    Log.d(TAG, "observeRecipeDetail:State is failure! ${it.exception}")
+                    Timber.d(TAG, "observeRecipeDetail:State is failure! ${it.exception}")
                 }
                 else -> {
-                    Log.d(TAG, "observeRecipeDetail: State is unknown!")
+                    Timber.d(TAG, "observeRecipeDetail: State is unknown!")
                 }
             }
         })
