@@ -11,7 +11,18 @@ import com.google.android.material.snackbar.Snackbar
  * https://gitlab.com/indra-yana
  ****************************************************/
 
-fun Context.shortToast(msg: String): Unit = Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-fun Context.longToast(msg: String): Unit = Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
-fun View.shortSnackBar(msg: String): Unit = Snackbar.make(this, msg, Snackbar.LENGTH_SHORT).show()
-fun View.longSnackBar(msg: String): Unit = Snackbar.make(this, msg, Snackbar.LENGTH_LONG).show()
+
+fun Context.toast(msg: String, long: Boolean = false) {
+    Toast.makeText(this, msg, if (long) Toast.LENGTH_LONG else Toast.LENGTH_SHORT).show()
+}
+
+fun View.snackBar(msg: String, long: Boolean = false, actionName: String = "Retry", action: (() -> Unit)? = null) {
+    Snackbar.make(this, msg, if (long) Snackbar.LENGTH_LONG else Snackbar.LENGTH_SHORT).apply {
+        action?.let {
+            setAction(actionName) {
+                it()
+            }
+        }
+        show()
+    }
+}

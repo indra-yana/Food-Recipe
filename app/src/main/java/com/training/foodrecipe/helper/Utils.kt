@@ -10,7 +10,6 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.google.android.material.snackbar.Snackbar
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import retrofit2.HttpException
 import java.net.UnknownHostException
@@ -44,22 +43,10 @@ fun String.getRandomString(length: Int) {
     (('a'..'z') + ('A'..'Z') + ('0'..'9')).random().toString().substring(0, length)
 }
 
-fun View.snackBar(message: String, action: (() -> Unit)? = null) {
-    val snackBar = Snackbar.make(this, message, Snackbar.LENGTH_LONG)
-
-    action?.let {
-        snackBar.setAction("Retry") {
-            it()
-        }
-    }
-
-    snackBar.show()
-}
-
 fun Fragment.handleRequestError(failure: ResponseStatus.Failure, action: (() -> Unit)? = null) {
     when (val exception = failure.exception) {
         is HttpException -> {
-            when (val errorCode =  exception.code()) {
+            when (val errorCode = exception.code()) {
                 401 -> requireView().snackBar("$errorCode: Bad request!")
                 403 -> requireView().snackBar("$errorCode: Not authorize!")
                 404 -> requireView().snackBar("$errorCode: Resource not found!")
@@ -70,12 +57,12 @@ fun Fragment.handleRequestError(failure: ResponseStatus.Failure, action: (() -> 
             Log.e(TAG, "handleRequestError: ${exception.response()?.errorBody()?.string().toString()}")
         }
         is UnknownHostException -> {
-            requireView().snackBar("Please check your internet connection!", action)
+            requireView().snackBar("Please check your internet connection!", long = true, action = action)
 
             Log.e(TAG, "handleRequestError: ${exception.message}")
         }
         else -> {
-            requireView().snackBar("Something when wrong please try again later!", action)
+            requireView().snackBar("Something when wrong please try again later!", long = true, action = action)
 
             Log.e(TAG, "handleRequestError: ${exception.message}")
         }

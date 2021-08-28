@@ -10,10 +10,10 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.training.foodrecipe.view.MainActivity
 import com.training.foodrecipe.R
 import com.training.foodrecipe.listener.IOnItemClickListener
@@ -213,7 +213,7 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding, RecipeViewModel
 
             layoutHeader.ivHeaderCreate.setOnClickListener {
                 // TODO: Create own recipe
-                requireView().shortSnackBar("Buat resepmu sendiri!")
+                requireView().snackBar("Buat resepmu sendiri!")
             }
         }
     }
