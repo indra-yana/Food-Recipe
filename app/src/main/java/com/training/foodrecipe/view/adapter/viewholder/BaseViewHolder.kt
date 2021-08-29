@@ -1,7 +1,6 @@
 package com.training.foodrecipe.view.adapter.viewholder
 
 import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.training.foodrecipe.listener.IOnItemClickListener
 
@@ -15,6 +14,5 @@ abstract class BaseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView
 
     var enableBtnItemRemove: Boolean = false
 
-    abstract fun bindView(viewGroup: ViewGroup) : View
-    abstract fun bind(data: Any, listener: IOnItemClickListener?)
+    abstract fun bindItem(data: Any, listener: IOnItemClickListener?)
 }

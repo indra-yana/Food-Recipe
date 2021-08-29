@@ -1,12 +1,8 @@
 package com.training.foodrecipe.view.adapter.viewholder
 
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.training.foodrecipe.R
+import com.training.foodrecipe.databinding.ItemModeGridBinding
 import com.training.foodrecipe.listener.IOnItemClickListener
 import com.training.foodrecipe.model.Recipe
 
@@ -16,27 +12,20 @@ import com.training.foodrecipe.model.Recipe
  * https://gitlab.com/indra-yana
  ****************************************************/
 
-class RecipeGridViewHolder(itemView: View) : BaseViewHolder(itemView) {
-    private var ivItemThumbnail: ImageView = itemView.findViewById(R.id.ivItemThumbnail)
+class RecipeGridViewHolder(private val binding: ItemModeGridBinding) : BaseViewHolder(binding.root) {
 
-    constructor(parent: ViewGroup) : this(
-        LayoutInflater.from(parent.context).inflate(R.layout.item_mode_grid, parent, false)
-    )
-
-    override fun bindView(viewGroup: ViewGroup): View {
-        return LayoutInflater.from(viewGroup.context).inflate(R.layout.item_mode_grid, viewGroup, false)
-    }
-
-    override fun bind(data: Any, listener: IOnItemClickListener?) {
+    override fun bindItem(data: Any, listener: IOnItemClickListener?) {
         data as Recipe
 
-        Glide.with(itemView.context)
-            .load(data.thumb)
-            .apply(RequestOptions().override(350, 350))
-            .into(ivItemThumbnail)
+        with(binding) {
+            Glide.with(root.context)
+                .load(data.thumb)
+                .apply(RequestOptions().override(350, 350))
+                .into(ivItemThumbnail)
 
-        itemView.setOnClickListener {
-            listener?.onItemClicked(data, absoluteAdapterPosition)
+            root.setOnClickListener {
+                listener?.onItemClicked(data, absoluteAdapterPosition)
+            }
         }
     }
 }

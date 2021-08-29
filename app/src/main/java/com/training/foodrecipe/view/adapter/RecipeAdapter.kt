@@ -1,14 +1,17 @@
 package com.training.foodrecipe.view.adapter
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.training.foodrecipe.databinding.ItemModeCardBinding
+import com.training.foodrecipe.databinding.ItemModeGridBinding
+import com.training.foodrecipe.databinding.ItemModeListBinding
 import com.training.foodrecipe.view.adapter.viewholder.BaseViewHolder
 import com.training.foodrecipe.view.adapter.viewholder.RecipeCardViewHolder
 import com.training.foodrecipe.view.adapter.viewholder.RecipeGridViewHolder
 import com.training.foodrecipe.view.adapter.viewholder.RecipeListViewHolder
 import com.training.foodrecipe.listener.IOnItemClickListener
 import com.training.foodrecipe.model.Recipe
-
 
 /****************************************************
  * Created by Indra Muliana (indra.ndra26@gmail.com)
@@ -22,14 +25,13 @@ class RecipeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var iOnItemClickListener: IOnItemClickListener? = null
     var holderType = ViewHolderType.LIST
-    var vHolder: RecyclerView.ViewHolder? = null
     var enableRemove: Boolean = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (holderType) {
-            ViewHolderType.CARD -> RecipeCardViewHolder(parent)
-            ViewHolderType.LIST -> RecipeListViewHolder(parent)
-            ViewHolderType.GRID -> RecipeGridViewHolder(parent)
+            ViewHolderType.CARD -> RecipeCardViewHolder(ItemModeCardBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            ViewHolderType.LIST -> RecipeListViewHolder(ItemModeListBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            ViewHolderType.GRID -> RecipeGridViewHolder(ItemModeGridBinding.inflate(LayoutInflater.from(parent.context), parent, false))
         }
     }
 
@@ -37,9 +39,7 @@ class RecipeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         holder as BaseViewHolder
 
         holder.enableBtnItemRemove = enableRemove
-        holder.bind(itemList[position], iOnItemClickListener)
-
-        vHolder = holder
+        holder.bindItem(itemList[position], iOnItemClickListener)
     }
 
     override fun getItemCount(): Int = itemList.size
