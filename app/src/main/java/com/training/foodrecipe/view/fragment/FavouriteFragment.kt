@@ -244,7 +244,7 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding, RecipeViewModel
             putParcelable("recipe", data)
         }
 
-        findNavController().navigate(R.id.action_favouriteFragment_to_recipeDetailFragment3, bundle)
+        findNavController().navigate(R.id.action_favouriteFragment_to_recipeDetailFragment, bundle)
     }
 
     private fun doSearch(q: String?) {
