@@ -305,11 +305,11 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
     private fun prepareUI() {
         with(viewBinding) {
             layoutSearch.setOnClickListener {
-                findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+                findNavController().navigate(R.id.action_homeFragment_to_nav_search)
             }
 
             tvInputSearch.setOnClickListener {
-                findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+                findNavController().navigate(R.id.action_homeFragment_to_nav_search)
             }
 
             srlRefresh.setOnRefreshListener {

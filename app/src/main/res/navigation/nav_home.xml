@@ -16,11 +16,11 @@
             android:id="@+id/action_homeFragment_to_recipeDetailFragment"
             app:destination="@id/recipeDetailFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_nav_favourite"
             app:destination="@id/nav_favourite" />
+        <action
+            android:id="@+id/action_homeFragment_to_nav_search"
+            app:destination="@id/nav_search" />
     </fragment>
     <fragment
         android:id="@+id/recipeDetailFragment"
@@ -35,13 +35,7 @@
         android:id="@+id/searchFragment"
         android:name="com.training.foodrecipe.view.fragment.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search">
-        <action
-            android:id="@+id/action_searchFragment_to_recipeDetailFragment"
-            app:destination="@id/recipeDetailFragment" />
-        <action
-            android:id="@+id/action_searchFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_search" />
     <include app:graph="@navigation/nav_favourite" />
+    <include app:graph="@navigation/nav_search" />
 </navigation>
