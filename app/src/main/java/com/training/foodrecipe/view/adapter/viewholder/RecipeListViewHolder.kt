@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.training.foodrecipe.R
+import com.training.foodrecipe.helper.visible
 import com.training.foodrecipe.listener.IOnItemClickListener
 import com.training.foodrecipe.model.Recipe
 
@@ -27,6 +28,7 @@ class RecipeListViewHolder(itemView: View) : BaseViewHolder(itemView) {
     private var ivItemThumbnail: ImageView = itemView.findViewById(R.id.ivItemThumbnail)
     private var btnAddFavourite: ImageButton = itemView.findViewById(R.id.btnAddFavourite)
     private var btnShare: ImageButton = itemView.findViewById(R.id.btnShare)
+    private var btnRemove: ImageButton = itemView.findViewById(R.id.btnRemove)
 
     constructor(parent: ViewGroup) : this(
         LayoutInflater.from(parent.context).inflate(R.layout.item_mode_list, parent, false)
@@ -53,13 +55,11 @@ class RecipeListViewHolder(itemView: View) : BaseViewHolder(itemView) {
             listener?.onItemClicked(data, absoluteAdapterPosition)
         }
 
-        btnAddFavourite.setOnClickListener {
-            listener?.onToggleFavouriteItemClicked(data, absoluteAdapterPosition)
+        if (enableBtnItemRemove) {
+            btnRemove.visible(true)
+            btnRemove.setOnClickListener {
+                listener?.onToggleDeleteItemClicked(data, absoluteAdapterPosition)
+            }
         }
-
-        btnShare.setOnClickListener {
-            listener?.onToggleShareItemClicked(data, absoluteAdapterPosition)
-        }
-
     }
 }

@@ -95,9 +95,20 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding, RecipeViewModel
 
     private fun buildRecipeAdapter() {
         recipeAdapter = RecipeAdapter().apply {
+            enableRemove = true
             iOnItemClickListener = object : IOnItemClickListener {
                 override fun onItemClicked(data: Any, position: Int) {
                     gotoDetail(data)
+                }
+
+                override fun onToggleDeleteItemClicked(data: Any, position: Int) {
+                    super.onToggleDeleteItemClicked(data, position)
+                    data as Recipe
+
+                    recipeAdapter.onItemRemoved(position) {
+                        viewModel.setFavourite(it.key, false)
+                        requireView().snackBar("${it.title.substring(0, 16)}... removed from favourite!")
+                    }
                 }
             }
         }

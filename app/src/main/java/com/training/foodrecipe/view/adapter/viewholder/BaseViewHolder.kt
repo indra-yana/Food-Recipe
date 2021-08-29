@@ -12,6 +12,9 @@ import com.training.foodrecipe.listener.IOnItemClickListener
  ****************************************************/
 
 abstract class BaseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+    var enableBtnItemRemove: Boolean = false
+
     abstract fun bindView(viewGroup: ViewGroup) : View
     abstract fun bind(data: Any, listener: IOnItemClickListener?)
 }

@@ -64,10 +64,24 @@
         android:layout_marginBottom="@dimen/_10sdp"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@id/viewSupporter"
-        app:layout_constraintEnd_toEndOf="@id/viewBackground"
+        app:layout_constraintEnd_toStartOf="@id/btnRemove"
         app:layout_constraintStart_toStartOf="@id/viewBackground"
         app:layout_constraintTop_toBottomOf="@id/ivItemThumbnail"
         tools:text="@string/text_lorem_ipsum_title" />
+
+    <ImageButton
+        android:id="@+id/btnRemove"
+        android:layout_width="@dimen/_23sdp"
+        android:layout_height="@dimen/_23sdp"
+        android:layout_marginEnd="@dimen/_4sdp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_delete"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/tvMisc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvMisc"
+        app:tint="@color/colorDanger" />
 
     <!--    <TextView-->
     <!--        android:id="@+id/tvServing"-->

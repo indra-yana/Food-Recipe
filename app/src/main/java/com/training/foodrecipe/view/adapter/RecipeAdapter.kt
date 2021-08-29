@@ -23,6 +23,7 @@ class RecipeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var iOnItemClickListener: IOnItemClickListener? = null
     var holderType = ViewHolderType.LIST
     var vHolder: RecyclerView.ViewHolder? = null
+    var enableRemove: Boolean = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (holderType) {
@@ -33,7 +34,11 @@ class RecipeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as BaseViewHolder).bind(itemList[position], iOnItemClickListener)
+        holder as BaseViewHolder
+
+        holder.enableBtnItemRemove = enableRemove
+        holder.bind(itemList[position], iOnItemClickListener)
+
         vHolder = holder
     }
 
@@ -52,5 +57,17 @@ class RecipeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     fun clearData() {
         this.itemList.clear()
         notifyDataSetChanged()
+    }
+
+    fun onItemRemoved(position: Int, callback: ((recipe: Recipe) -> Unit)? = null) {
+        if (position != RecyclerView.NO_POSITION) {
+            callback?.let {
+                it(itemList[position])
+            }
+
+            this.itemList.removeAt(position)
+            notifyItemRemoved(position)
+            notifyItemRangeChanged(position, itemCount)
+        }
     }
 }
