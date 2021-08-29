@@ -95,7 +95,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
             showBottomNavigation()
             iOnFabClickListener = object : IOnFabClickListener {
                 override fun onFabClicked(view: View) {
-                    findNavController().navigate(R.id.action_homeFragment_to_favouriteFragment2)
+                    findNavController().navigate(R.id.action_homeFragment_to_nav_favourite)
                 }
             }
         }

@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_articleFragment_to_articleDetailFragment"
             app:destination="@id/articleDetailFragment" />
+        <action
+            android:id="@+id/action_articleFragment_to_nav_favourite"
+            app:destination="@id/nav_favourite" />
     </fragment>
     <fragment
         android:id="@+id/articleDetailFragment"
@@ -25,4 +28,5 @@
             android:id="@+id/action_articleDetailFragment_to_articleFragment"
             app:destination="@id/articleFragment" />
     </fragment>
+    <include app:graph="@navigation/nav_favourite" />
 </navigation>

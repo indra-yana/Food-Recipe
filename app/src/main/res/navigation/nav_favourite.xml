@@ -11,5 +11,18 @@
         android:id="@+id/favouriteFragment"
         android:name="com.training.foodrecipe.view.fragment.FavouriteFragment"
         android:label="fragment_favourite"
-        tools:layout="@layout/fragment_favourite" />
+        tools:layout="@layout/fragment_favourite">
+        <action
+            android:id="@+id/action_favouriteFragment_to_recipeDetailFragment3"
+            app:destination="@id/recipeDetailFragment3" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeDetailFragment3"
+        android:name="com.training.foodrecipe.view.fragment.RecipeDetailFragment"
+        android:label="fragment_recipe_detail"
+        tools:layout="@layout/fragment_recipe_detail">
+        <action
+            android:id="@+id/action_recipeDetailFragment3_to_favouriteFragment"
+            app:destination="@id/favouriteFragment" />
+    </fragment>
 </navigation>

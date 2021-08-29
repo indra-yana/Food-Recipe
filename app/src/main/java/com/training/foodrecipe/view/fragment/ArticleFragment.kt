@@ -17,6 +17,7 @@ import com.training.foodrecipe.databinding.FragmentArticleBinding
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.helper.handleRequestError
 import com.training.foodrecipe.helper.visible
+import com.training.foodrecipe.listener.IOnFabClickListener
 import com.training.foodrecipe.model.Article
 import com.training.foodrecipe.model.ArticleCategory
 import com.training.foodrecipe.repository.ArticleRepository
@@ -65,6 +66,11 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
         (activity as MainActivity).apply {
             showFabAction()
             showBottomNavigation()
+            iOnFabClickListener = object : IOnFabClickListener {
+                override fun onFabClicked(view: View) {
+                    findNavController().navigate(R.id.action_articleFragment_to_nav_favourite)
+                }
+            }
         }
 
         prepareUI()
