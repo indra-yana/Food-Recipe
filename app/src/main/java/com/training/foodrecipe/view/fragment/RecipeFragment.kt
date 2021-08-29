@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.os.bundleOf
 import androidx.core.view.children
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -432,9 +433,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
 
     private fun gotoDetail(data: Any) {
         data as Recipe
-        val bundle = Bundle().apply {
-            putParcelable("recipe", data)
-        }
+        val bundle = bundleOf("recipe" to data)
 
         findNavController().navigate(R.id.action_homeFragment_to_recipeDetailFragment, bundle)
     }

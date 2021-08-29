@@ -9,6 +9,7 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -240,9 +241,7 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding, RecipeViewModel
 
     private fun gotoDetail(data: Any) {
         data as Recipe
-        val bundle = Bundle().apply {
-            putParcelable("recipe", data)
-        }
+        val bundle = bundleOf("recipe" to data)
 
         findNavController().navigate(R.id.action_favouriteFragment_to_recipeDetailFragment, bundle)
     }

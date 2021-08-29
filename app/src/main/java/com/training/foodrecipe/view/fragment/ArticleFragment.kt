@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -155,10 +156,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
             iOnItemClickListener = object : IOnItemClickListener {
                 override fun onItemClicked(data: Any) {
                     data as Article
-
-                    val bundle = Bundle().apply {
-                        putParcelable("article", data)
-                    }
+                    val bundle = bundleOf("article" to data)
 
                     findNavController().navigate(R.id.action_articleFragment_to_articleDetailFragment, bundle)
                 }
