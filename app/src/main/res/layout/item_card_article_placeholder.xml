@@ -21,20 +21,24 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <View
+            <com.makeramen.roundedimageview.RoundedImageView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_12sdp"
                 android:layout_marginEnd="@dimen/_60sdp"
                 android:background="@color/colorPrimaryGrey40"
-                android:ellipsize="end" />
+                android:ellipsize="end"
+                app:riv_corner_radius="@dimen/_8sdp"
+                app:riv_mutate_background="true" />
 
-            <View
+            <com.makeramen.roundedimageview.RoundedImageView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_6sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:background="@color/colorPrimaryGrey40"
-                android:ellipsize="end" />
+                android:ellipsize="end"
+                app:riv_corner_radius="@dimen/_8sdp"
+                app:riv_mutate_background="true" />
 
         </LinearLayout>
 

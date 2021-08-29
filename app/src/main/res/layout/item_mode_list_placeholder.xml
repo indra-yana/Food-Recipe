@@ -23,16 +23,18 @@
         app:layout_constraintBottom_toTopOf="@+id/viewSupporterExt"
         app:layout_constraintTop_toTopOf="@+id/ivItemThumbnailExt" />
 
-    <View
+    <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/ivItemThumbnailExt"
         android:layout_width="@dimen/_100sdp"
         android:layout_height="@dimen/_60sdp"
         android:layout_marginStart="@dimen/_10sdp"
         android:background="@color/colorPrimaryGrey40"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:riv_corner_radius="@dimen/_8sdp"
+        app:riv_mutate_background="true" />
 
-    <View
+    <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/tvItemTitleExt"
         android:layout_width="0dp"
         android:layout_height="@dimen/_15sdp"
@@ -43,9 +45,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ivItemThumbnailExt"
         app:layout_constraintTop_toTopOf="@+id/viewBackgroundExt"
+        app:riv_corner_radius="@dimen/_8sdp"
+        app:riv_mutate_background="true"
         tools:text="@string/text_lorem_ipsum_title" />
 
-    <View
+    <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/tvItemTitleExt2"
         android:layout_width="0dp"
         android:layout_height="@dimen/_15sdp"
@@ -56,10 +60,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ivItemThumbnailExt"
         app:layout_constraintTop_toBottomOf="@+id/tvItemTitleExt"
+        app:riv_corner_radius="@dimen/_8sdp"
+        app:riv_mutate_background="true"
         tools:text="@string/text_lorem_ipsum_title" />
 
     <!-- Difficulty | Portion | times   -->
-    <View
+    <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/tvMiscExt"
         android:layout_width="0dp"
         android:layout_height="@dimen/_15sdp"
@@ -68,10 +74,13 @@
         android:layout_marginEnd="@dimen/_45sdp"
         android:layout_marginBottom="@dimen/_10sdp"
         android:background="@color/colorPrimaryGrey40"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/viewSupporterExt"
         app:layout_constraintEnd_toEndOf="@id/viewBackgroundExt"
         app:layout_constraintStart_toStartOf="@id/viewBackgroundExt"
         app:layout_constraintTop_toBottomOf="@id/ivItemThumbnailExt"
+        app:riv_corner_radius="@dimen/_8sdp"
+        app:riv_mutate_background="true"
         tools:text="@string/text_lorem_ipsum_description" />
 
     <!--    <View-->

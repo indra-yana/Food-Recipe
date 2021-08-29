@@ -49,17 +49,19 @@
         app:layout_constraintBottom_toBottomOf="@+id/viewFadingEdgeBottomExt"
         app:layout_constraintTop_toTopOf="@+id/viewFadingEdgeBottomExt">
 
-        <View
+        <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/tvAuthorExt"
             android:layout_width="@dimen/_120sdp"
             android:layout_height="@dimen/_15sdp"
             android:layout_margin="@dimen/_4sdp"
             android:background="@color/colorPrimaryGrey40"
-            android:gravity="center" />
+            android:gravity="center"
+            app:riv_corner_radius="@dimen/_8sdp"
+            app:riv_mutate_background="true" />
 
     </LinearLayout>
 
-    <View
+    <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/tvItemTitleExt"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_20sdp"
@@ -69,17 +71,46 @@
         android:background="@color/colorPrimaryGrey40"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivDetailThumbExt" />
+        app:layout_constraintTop_toBottomOf="@+id/ivDetailThumbExt"
+        app:riv_corner_radius="@dimen/_8sdp"
+        app:riv_mutate_background="true" />
 
-    <View
+    <LinearLayout
         android:id="@+id/tvItemDescriptionExt"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_80sdp"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_10sdp"
-        android:background="@color/colorPrimaryGrey40"
-        app:layout_constraintTop_toBottomOf="@id/tvItemTitleExt" />
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/tvItemTitleExt">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_40sdp"
+            android:background="@color/colorPrimaryGrey40"
+            app:riv_corner_radius="@dimen/_8sdp"
+            app:riv_mutate_background="true" />
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_25sdp"
+            android:background="@color/colorPrimaryGrey40"
+            app:riv_corner_radius="@dimen/_8sdp"
+            app:riv_mutate_background="true" />
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:background="@color/colorPrimaryGrey40"
+            app:riv_corner_radius="@dimen/_8sdp"
+            app:riv_mutate_background="true" />
+
+    </LinearLayout>
 
     <View
         android:id="@+id/viewDivider1Ext"

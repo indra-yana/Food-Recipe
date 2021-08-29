@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <View
+    <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/vp2BannerExt"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_95sdp"
@@ -13,9 +13,11 @@
         android:layout_marginEnd="@dimen/_10sdp"
         android:background="@color/colorPrimaryGrey40"
         android:elevation="@dimen/_5sdp"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:riv_corner_radius="@dimen/_8sdp"
+        app:riv_mutate_background="true" />
 
-    <View
+    <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/sliderIndicatorExt"
         android:layout_width="@dimen/_80sdp"
         android:layout_height="@dimen/_8sdp"
@@ -24,6 +26,8 @@
         android:layout_marginEnd="@dimen/_10sdp"
         android:background="@color/colorPrimaryGrey40"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vp2BannerExt" />
+        app:layout_constraintTop_toBottomOf="@+id/vp2BannerExt"
+        app:riv_corner_radius="@dimen/_8sdp"
+        app:riv_mutate_background="true" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
