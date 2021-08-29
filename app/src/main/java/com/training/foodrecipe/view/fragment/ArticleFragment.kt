@@ -68,7 +68,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
             showFabAction()
             showBottomNavigation()
             iOnFabClickListener = object : IOnFabClickListener {
-                override fun onFabClicked(view: View) {
+                override fun onFabFavouriteClicked(view: View) {
                     findNavController().navigate(R.id.action_articleFragment_to_nav_favourite)
                 }
             }
@@ -102,7 +102,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
     private fun buildCategoryAdapter() {
         categoryAdapter = CategoryAdapter().apply {
             iOnItemClickListener = object : IOnItemClickListener {
-                override fun onItemClicked(data: Any) {
+                override fun onItemClicked(data: Any, position: Int) {
                     data as ArticleCategory
 
                     if (key != data.key) {
@@ -154,7 +154,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
     private fun buildArticleAdapter() {
         articleAdapter = ArticleAdapter().apply {
             iOnItemClickListener = object : IOnItemClickListener {
-                override fun onItemClicked(data: Any) {
+                override fun onItemClicked(data: Any, position: Int) {
                     data as Article
                     val bundle = bundleOf("article" to data)
 

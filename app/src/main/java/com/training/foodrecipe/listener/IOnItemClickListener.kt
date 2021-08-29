@@ -8,7 +8,8 @@ package com.training.foodrecipe.listener
  ****************************************************/
 
 interface IOnItemClickListener {
-    fun onItemClicked(data: Any)
-    fun onButtonFavouriteClicked(data: Any) { }
-    fun onButtonShareClicked(data: Any) { }
+    fun onItemClicked(data: Any, position: Int)
+    fun onToggleFavouriteItemClicked(data: Any, position: Int) { }
+    fun onToggleShareItemClicked(data: Any, position: Int) { }
+    fun onToggleDeleteItemClicked(data: Any, position: Int) { }
 }

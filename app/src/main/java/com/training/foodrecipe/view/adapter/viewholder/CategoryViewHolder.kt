@@ -35,7 +35,7 @@ class CategoryViewHolder(itemView: View) : BaseViewHolder(itemView) {
         }
 
         itemView.setOnClickListener {
-            listener?.onItemClicked(data)
+            listener?.onItemClicked(data, absoluteAdapterPosition)
         }
     }
 

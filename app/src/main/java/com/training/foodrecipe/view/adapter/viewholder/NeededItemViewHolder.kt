@@ -39,7 +39,7 @@ class NeededItemViewHolder(itemView: View) : BaseViewHolder(itemView) {
             .into(ivNeededItem)
 
         itemView.setOnClickListener {
-            listener?.onItemClicked(data)
+            listener?.onItemClicked(data, absoluteAdapterPosition)
         }
     }
 

@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.fabCreate.setOnClickListener {
-            iOnFabClickListener?.onFabClicked(it)
+            iOnFabClickListener?.onFabFavouriteClicked(it)
         }
 
         if (savedInstanceState == null) {

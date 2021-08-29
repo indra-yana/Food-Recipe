@@ -41,6 +41,7 @@ import timber.log.Timber
  * On Friday, 14/08/2021 22.02
  * https://gitlab.com/indra-yana
  ****************************************************/
+
 class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeViewModel, RecipeRepository>() {
 
     companion object {
@@ -199,7 +200,7 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
     private fun buildNeededItemAdapter() {
         neededItemAdapter = NeededItemAdapter().apply {
             iOnItemClickListener = object : IOnItemClickListener {
-                override fun onItemClicked(data: Any) {
+                override fun onItemClicked(data: Any, position: Int) {
                     data as NeedItem
                     Toast.makeText(requireContext(), data.itemName, Toast.LENGTH_SHORT).show()
                 }
@@ -250,7 +251,7 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
     private fun buildTodoAdapter() {
         detailTodoAdapter = SimpleTextAdapter().apply {
             iOnItemClickListener = object : IOnItemClickListener {
-                override fun onItemClicked(data: Any) {
+                override fun onItemClicked(data: Any, position: Int) {
                     // TODO: Not yet implemented
                 }
             }

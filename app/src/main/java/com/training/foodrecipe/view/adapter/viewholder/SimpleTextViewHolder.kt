@@ -39,7 +39,7 @@ class SimpleTextViewHolder(itemView: View) : BaseViewHolder(itemView) {
         }
 
         itemView.setOnClickListener {
-            listener?.onItemClicked(data)
+            listener?.onItemClicked(data, absoluteAdapterPosition)
             expandText()
         }
     }

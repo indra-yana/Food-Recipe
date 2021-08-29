@@ -100,7 +100,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
     private fun buildCategoryAdapter() {
         categoryAdapter = CategoryAdapter().apply {
             iOnItemClickListener = object : IOnItemClickListener {
-                override fun onItemClicked(data: Any) {
+                override fun onItemClicked(data: Any, position: Int) {
                     data as RecipeCategory
 
                     with(viewBinding.etInputSearch) {
@@ -153,7 +153,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
     private fun buildRecipeAdapter() {
         recipeAdapter = RecipeAdapter().apply {
             iOnItemClickListener = object : IOnItemClickListener {
-                override fun onItemClicked(data: Any) {
+                override fun onItemClicked(data: Any, position: Int) {
                     data as Recipe
                     val bundle = bundleOf("recipe" to data)
 

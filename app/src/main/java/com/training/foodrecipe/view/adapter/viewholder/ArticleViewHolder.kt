@@ -33,11 +33,11 @@ class ArticleViewHolder(itemView: View) : BaseViewHolder(itemView) {
 
         tvItemTitle.text = data.title
         btnToggleReadMore.setOnClickListener {
-            listener?.onItemClicked(data)
+            listener?.onItemClicked(data, absoluteAdapterPosition)
         }
 
         itemView.setOnClickListener {
-            listener?.onItemClicked(data)
+            listener?.onItemClicked(data, absoluteAdapterPosition)
         }
     }
 

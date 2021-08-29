@@ -10,5 +10,5 @@ import android.view.View
  ****************************************************/
 
 interface IOnFabClickListener {
-    fun onFabClicked(view: View)
+    fun onFabFavouriteClicked(view: View)
 }

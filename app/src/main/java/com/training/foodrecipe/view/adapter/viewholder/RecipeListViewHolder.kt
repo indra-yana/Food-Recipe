@@ -50,15 +50,15 @@ class RecipeListViewHolder(itemView: View) : BaseViewHolder(itemView) {
             .into(ivItemThumbnail)
 
         itemView.setOnClickListener {
-            listener?.onItemClicked(data)
+            listener?.onItemClicked(data, absoluteAdapterPosition)
         }
 
         btnAddFavourite.setOnClickListener {
-            listener?.onButtonFavouriteClicked(data)
+            listener?.onToggleFavouriteItemClicked(data, absoluteAdapterPosition)
         }
 
         btnShare.setOnClickListener {
-            listener?.onButtonShareClicked(data)
+            listener?.onToggleShareItemClicked(data, absoluteAdapterPosition)
         }
 
     }

@@ -95,7 +95,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
             showFabAction()
             showBottomNavigation()
             iOnFabClickListener = object : IOnFabClickListener {
-                override fun onFabClicked(view: View) {
+                override fun onFabFavouriteClicked(view: View) {
                     findNavController().navigate(R.id.action_homeFragment_to_nav_favourite)
                 }
             }
@@ -137,7 +137,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
     private fun buildRecipeAdapter() {
         recipeAdapter = RecipeAdapter().apply {
             iOnItemClickListener = object : IOnItemClickListener {
-                override fun onItemClicked(data: Any) {
+                override fun onItemClicked(data: Any, position: Int) {
                     gotoDetail(data)
                 }
             }
@@ -228,7 +228,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
     private fun buildBannerAdapter() {
         bannerAdapter = BannerAdapter().apply {
             iOnItemClickListener = object : IOnItemClickListener {
-                override fun onItemClicked(data: Any) {
+                override fun onItemClicked(data: Any, position: Int) {
                     gotoDetail(data)
                 }
             }

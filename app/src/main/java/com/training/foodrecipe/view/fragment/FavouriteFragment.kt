@@ -29,6 +29,12 @@ import com.training.foodrecipe.viewmodel.RecipeViewModel
 import timber.log.Timber
 import java.util.*
 
+/****************************************************
+ * Created by Indra Muliana (indra.ndra26@gmail.com)
+ * On Friday, 25/08/2021 13.02
+ * https://gitlab.com/indra-yana
+ ****************************************************/
+
 class FavouriteFragment : BaseFragment<FragmentFavouriteBinding, RecipeViewModel, RecipeRepository>() {
 
     companion object {
@@ -90,7 +96,7 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding, RecipeViewModel
     private fun buildRecipeAdapter() {
         recipeAdapter = RecipeAdapter().apply {
             iOnItemClickListener = object : IOnItemClickListener {
-                override fun onItemClicked(data: Any) {
+                override fun onItemClicked(data: Any, position: Int) {
                     gotoDetail(data)
                 }
             }
