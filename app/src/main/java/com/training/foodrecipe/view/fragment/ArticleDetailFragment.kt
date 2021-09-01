@@ -161,7 +161,7 @@ class ArticleDetailFragment : BaseFragment<FragmentArticleDetailBinding, Article
                 tvItemDescription.text = description
 
                 tvReadMore.setOnClickListener {
-                    if (tvReadMore.text.toString() == "Read More") {
+                    if (tvReadMore.text.toString() == getString(R.string.text_read_more)) {
                         tvItemDescription.maxLines = Int.MAX_VALUE
                         tvItemDescription.ellipsize = null
                         tvReadMore.text = getString(R.string.text_read_less)
