@@ -41,4 +41,14 @@
     <string name="text_latest_article">Article Terbaru</string>
     <string name="text_goto_website">Website</string>
     <string name="text_search_favourite">Cari di Favourite</string>
+
+    <!-- String resource error -->
+    <string name="error_bad_request">%d: Bad request!</string>
+    <string name="error_not_authorize">%d: Not authorize!</string>
+    <string name="error_not_found">%d: Resource not found!</string>
+    <string name="error_internal_server_error">%d: Internal server error!</string>
+    <string name="error_unknown_host">No address associated with hostname!</string>
+    <string name="error_connection">Please check your internet connection!</string>
+    <string name="error_http_failure">Http response failure with status code %d</string>
+    <string name="error_unknown">Something when wrong please try again later!</string>
 </resources>

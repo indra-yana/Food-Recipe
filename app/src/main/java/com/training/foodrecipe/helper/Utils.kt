@@ -9,12 +9,14 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.training.foodrecipe.R
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.view.MainActivity
 import com.training.foodrecipe.view.fragment.ArticleFragment
 import com.training.foodrecipe.view.fragment.RecipeFragment
 import retrofit2.HttpException
 import timber.log.Timber
+import java.net.ConnectException
 import java.net.UnknownHostException
 
 
@@ -60,24 +62,29 @@ fun Fragment.handleRequestError(failure: ResponseStatus.Failure, action: (() -> 
     when (val exception = failure.exception) {
         is HttpException -> {
             when (val errorCode = exception.code()) {
-                401 -> requireView().snackBar("$errorCode: Bad request!", anchor = anchor)
-                403 -> requireView().snackBar("$errorCode: Not authorize!", anchor = anchor)
-                404 -> requireView().snackBar("$errorCode: Resource not found!", anchor = anchor)
-                500 -> requireView().snackBar("$errorCode: Internal server error!", anchor = anchor)
-                else -> requireView().snackBar("Http response failure with status code $errorCode", anchor = anchor)
+                401 -> requireView().snackBar(getString(R.string.error_bad_request, errorCode), anchor = anchor)
+                403 -> requireView().snackBar(getString(R.string.error_not_authorize, errorCode), anchor = anchor)
+                404 -> requireView().snackBar(getString(R.string.error_not_found, errorCode), anchor = anchor)
+                500 -> requireView().snackBar(getString(R.string.error_internal_server_error, errorCode), anchor = anchor)
+                else -> requireView().snackBar(getString(R.string.error_http_failure, errorCode), anchor = anchor)
             }
 
             Timber.tag(TAG).e("handleRequestError: ${exception.response()?.errorBody()?.string().toString()}")
         }
         is UnknownHostException -> {
-            requireView().snackBar("Please check your internet connection!", long = true, anchor = anchor, action = action)
+            requireView().snackBar(getString(R.string.error_unknown_host), long = true, anchor = anchor, action = action)
+
+            Timber.tag(TAG).e("handleRequestError: ${exception.message}")
+        }
+        is ConnectException -> {
+            requireView().snackBar(getString(R.string.error_connection), long = true, anchor = anchor, action = action)
 
             Timber.tag(TAG).e("handleRequestError: ${exception.message}")
         }
         else -> {
-            requireView().snackBar("Something when wrong please try again later!", long = true, anchor = anchor, action = action)
+            requireView().snackBar(getString(R.string.error_unknown), long = true, anchor = anchor, action = action)
 
-            Timber.tag(TAG).e("handleRequestError: ${exception.message}")
+            Timber.tag(TAG).e("handleRequestError: ${exception.message} ${exception.stackTrace}")
         }
     }
 }
