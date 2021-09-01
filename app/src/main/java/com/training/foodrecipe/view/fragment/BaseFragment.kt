@@ -22,6 +22,8 @@ abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel, BR : BaseRepos
     protected lateinit var viewBinding: VB
     protected lateinit var viewModel: VM
 
+    val binding: ViewBinding get() = viewBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this, ViewModelFactory(getRepository())).get(getViewModel())

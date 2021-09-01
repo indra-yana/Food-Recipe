@@ -30,6 +30,7 @@ import com.training.foodrecipe.databinding.FragmentRecipeBinding
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.helper.OverlapSliderTransformation
 import com.training.foodrecipe.helper.handleRequestError
+import com.training.foodrecipe.helper.snackBar
 import com.training.foodrecipe.helper.visible
 import com.training.foodrecipe.listener.IOnFabClickListener
 import com.training.foodrecipe.listener.IOnItemClickListener
@@ -374,6 +375,8 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
 
     private fun showPopupMenu(view: View) {
         // inflate menu
+        val anchor = (activity as MainActivity).binding.fabCreate
+
         PopupMenu(view.context, view).apply {
             menuInflater.inflate(R.menu.overflow_menu, menu)
             setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener {
@@ -382,21 +385,21 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
                         viewHolderType = ViewHolderType.CARD
                         setListMode()
 
-                        Toast.makeText(view.context, "Changed to card", Toast.LENGTH_SHORT).show()
+                        requireView().snackBar("Changed to card", anchor = anchor)
                         return@OnMenuItemClickListener true
                     }
                     R.id.menu_act_list -> {
                         viewHolderType = ViewHolderType.LIST
                         setListMode()
 
-                        Toast.makeText(view.context, "Changed to list", Toast.LENGTH_SHORT).show()
+                        requireView().snackBar("Changed to list", anchor = anchor)
                         return@OnMenuItemClickListener true
                     }
                     R.id.menu_act_grid -> {
                         viewHolderType = ViewHolderType.GRID
                         setListMode()
 
-                        Toast.makeText(view.context, "Changed to grid", Toast.LENGTH_SHORT).show()
+                        requireView().snackBar("Changed to grid", anchor = anchor)
                         return@OnMenuItemClickListener true
                     }
                     R.id.menu_act_about -> {

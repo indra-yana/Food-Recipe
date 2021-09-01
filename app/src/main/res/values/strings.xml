@@ -41,6 +41,9 @@
     <string name="text_latest_article">Article Terbaru</string>
     <string name="text_goto_website">Website</string>
     <string name="text_search_favourite">Cari di Favourite</string>
+    <string name="text_added_to_favourite">Ditambahkan ke favourite!</string>
+    <string name="text_removed_from_favourite">Dihapus dari favourite!</string>
+    <string name="text_link_not_available">Link tidak tersedia</string>
 
     <!-- String resource error -->
     <string name="error_bad_request">%d: Bad request!</string>

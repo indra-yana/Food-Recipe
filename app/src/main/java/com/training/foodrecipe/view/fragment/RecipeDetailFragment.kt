@@ -28,6 +28,7 @@ import com.training.foodrecipe.view.adapter.SimpleTextAdapter
 import com.training.foodrecipe.databinding.FragmentRecipeDetailBinding
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.helper.handleRequestError
+import com.training.foodrecipe.helper.snackBar
 import com.training.foodrecipe.helper.visible
 import com.training.foodrecipe.model.NeedItem
 import com.training.foodrecipe.model.Recipe
@@ -299,11 +300,12 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
                 is ResponseStatus.Success -> {
                     toggleFavourite(it.value)
                     when (it.value) {
-                        true -> Toast.makeText(requireContext(), "Added to favourite", Toast.LENGTH_SHORT).show()
-                        false -> Toast.makeText(requireContext(), "Removed from favourite", Toast.LENGTH_SHORT).show()
+                        true -> requireView().snackBar(getString(R.string.text_added_to_favourite), anchor = viewBinding.layoutTodoAction)
+                        false -> requireView().snackBar(getString(R.string.text_removed_from_favourite), anchor = viewBinding.layoutTodoAction)
                     }
                 }
-                else -> { }
+                else -> {
+                }
             }
         })
     }

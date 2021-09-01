@@ -17,6 +17,7 @@ import com.training.foodrecipe.databinding.FragmentArticleDetailBinding
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.helper.enable
 import com.training.foodrecipe.helper.handleRequestError
+import com.training.foodrecipe.helper.snackBar
 import com.training.foodrecipe.helper.visible
 import com.training.foodrecipe.model.Article
 import com.training.foodrecipe.model.ArticleDetail
@@ -176,7 +177,7 @@ class ArticleDetailFragment : BaseFragment<FragmentArticleDetailBinding, Article
 
     private fun gotoWebsite(url: String?) {
         if (url == null) {
-            Toast.makeText(requireContext(), "N/A", Toast.LENGTH_SHORT).show()
+            requireView().snackBar(getString(R.string.text_link_not_available), anchor = viewBinding.layoutGoto)
             return
         }
 
