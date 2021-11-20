@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/srlRefresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.fragment.RecipeDetailFragment">
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmerFramelayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        app:shimmer_base_alpha="0.6"
+        app:shimmer_highlight_alpha="0.3">
+
+        <LinearLayout
+            android:id="@+id/shimmerRecipeDetailPlaceholder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <include layout="@layout/fragment_recipe_detail_placeholder" />
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mainRecipeDetailContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/scrollViewContainer"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="@dimen/_2sdp"
+                app:layout_constraintBottom_toTopOf="@+id/layoutTodoAction"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/ivItemThumbnail"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_160sdp"
+                        android:layout_marginBottom="@dimen/_4sdp"
+                        android:contentDescription="@string/app_name"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/image_placeholder"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/viewFadingEdgeTop"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_30sdp"
+                        android:background="@drawable/bg_fading_edge_top"
+                        android:visibility="visible"
+                        app:layout_constraintTop_toTopOf="@+id/ivItemThumbnail" />
+
+                    <View
+                        android:id="@+id/viewFadingEdgeBottom"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_50sdp"
+                        android:background="@drawable/bg_fading_edge_bottom"
+                        android:visibility="visible"
+                        app:layout_constraintBottom_toBottomOf="@+id/ivItemThumbnail" />
+
+                    <ImageButton
+                        android:id="@+id/btnBack"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:background="@drawable/bg_rounded_button_dark"
+                        android:contentDescription="@string/app_name"
+                        android:foreground="?selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_back"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/colorIconWhite100" />
+
+                    <ImageButton
+                        android:id="@+id/btnAddImage"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:background="@drawable/bg_rounded_button_dark"
+                        android:contentDescription="@string/app_name"
+                        android:foreground="?selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_add_image"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/colorIconWhite100" />
+
+                    <LinearLayout
+                        android:id="@+id/layoutServing"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="@+id/viewFadingEdgeBottom"
+                        app:layout_constraintTop_toTopOf="@+id/viewFadingEdgeBottom">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvLevel"
+                                style="@style/Text.Subtitle.White.Light"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/_4sdp"
+                                android:drawablePadding="@dimen/_3sdp"
+                                android:gravity="center"
+                                android:text="@string/text_recipe_level"
+                                app:drawableStartCompat="@drawable/ic_grade"
+                                app:drawableTint="@color/colorWarning" />
+
+                            <TextView
+                                android:id="@+id/tvPortion"
+                                style="@style/Text.Subtitle.White.Light"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/_4sdp"
+                                android:drawablePadding="@dimen/_3sdp"
+                                android:gravity="center"
+                                android:text="@string/text_recipe_portion"
+                                app:drawableStartCompat="@drawable/ic_portion"
+                                app:drawableTint="@color/colorWarning" />
+
+                            <TextView
+                                android:id="@+id/tvTime"
+                                style="@style/Text.Subtitle.White.Light"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/_4sdp"
+                                android:drawablePadding="@dimen/_3sdp"
+                                android:gravity="center"
+                                android:text="@string/text_recipe_time"
+                                app:drawableStartCompat="@drawable/ic_timer"
+                                app:drawableTint="@color/colorWarning" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tvAuthor"
+                            style="@style/Text.Subtitle.White"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:gravity="center"
+                            android:text="By You, Juli 21 2021"
+                            android:textColor="@color/colorTextWhite100" />
+
+                    </LinearLayout>
+
+                    <ImageButton
+                        android:id="@+id/btnAddServing"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:background="@drawable/bg_rounded_button_dark"
+                        android:contentDescription="@string/app_name"
+                        android:foreground="?selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_create"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/layoutServing"
+                        app:tint="@color/colorIconWhite100" />
+
+                    <TextView
+                        android:id="@+id/tvItemTitle"
+                        style="@style/Text.ItemDetailTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:text="@string/text_write_title"
+                        app:layout_constraintEnd_toStartOf="@+id/btnAddTitle"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ivItemThumbnail" />
+
+                    <TextView
+                        android:id="@+id/tvItemDescription"
+                        style="@style/Text.ItemDetailDesc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:text="@string/text_write_description"
+                        app:layout_constraintTop_toBottomOf="@id/tvItemTitle" />
+
+                    <TextView
+                        android:id="@+id/tvReadMore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_3sdp"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:text="@string/text_read_more"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/_12ssp"
+                        android:visibility="invisible"
+                        app:layout_constraintStart_toStartOf="@id/tvItemDescription"
+                        app:layout_constraintTop_toBottomOf="@id/tvItemDescription" />
+
+                    <ImageButton
+                        android:id="@+id/btnAddTitle"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="@string/app_name"
+                        android:foreground="?selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_create"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvItemTitle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvItemTitle"
+                        app:tint="@color/colorIconGrey80" />
+
+                    <View
+                        android:id="@+id/viewDivider1"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_2sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_8sdp"
+                        android:background="@color/colorPrimaryGrey40"
+                        android:visibility="visible"
+                        app:layout_constraintTop_toBottomOf="@+id/tvReadMore" />
+
+                    <LinearLayout
+                        android:id="@+id/layoutNeededItem"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:gravity="start"
+                        android:orientation="vertical"
+                        android:visibility="visible"
+                        app:layout_constraintTop_toBottomOf="@id/viewDivider1">
+
+                        <TextView
+                            android:id="@+id/tvNeededItem"
+                            style="@style/Text.Subtitle.Dark"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:text="@string/text_needed_items"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/ivItemThumbnail" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvNeededItem"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_4sdp"
+                            android:clipToPadding="false"
+                            android:elevation="@dimen/_5sdp"
+                            android:orientation="horizontal"
+                            android:paddingStart="@dimen/_4sdp"
+                            android:paddingEnd="@dimen/_4sdp"
+                            android:visibility="visible"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            tools:listitem="@layout/item_neededitem" />
+
+                    </LinearLayout>
+
+                    <ImageButton
+                        android:id="@+id/btnAddNeedItem"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="@string/app_name"
+                        android:foreground="?selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_add_image"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/viewDivider1"
+                        app:tint="@color/colorIconGrey80" />
+
+                    <View
+                        android:id="@+id/viewDivider2"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_2sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:background="@color/colorPrimaryGrey40"
+                        android:visibility="visible"
+                        app:layout_constraintTop_toBottomOf="@+id/layoutNeededItem" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+            <LinearLayout
+                android:id="@+id/layoutTodoAction"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_4sdp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnIngredients"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/colorPrimary2"
+                    android:fontFamily="@font/poppins_regular"
+                    android:includeFontPadding="false"
+                    android:text="@string/text_ingredients"
+                    android:textColor="@color/colorTextWhite100"
+                    android:textSize="@dimen/_12ssp"
+                    android:visibility="visible"
+                    app:cornerRadius="@dimen/_6sdp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSteps"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:fontFamily="@font/poppins_regular"
+                    android:includeFontPadding="false"
+                    android:text="@string/text_steps"
+                    android:textColor="@color/colorTextWhite100"
+                    android:textSize="@dimen/_12ssp"
+                    android:visibility="visible"
+                    app:cornerRadius="@dimen/_6sdp" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

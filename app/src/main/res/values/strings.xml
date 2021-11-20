@@ -54,4 +54,10 @@
     <string name="error_connection">Please check your internet connection!</string>
     <string name="error_http_failure">Http response failure with status code %d</string>
     <string name="error_unknown">Something when wrong please try again later!</string>
+    <string name="text_recipe_level">Level</string>
+    <string name="text_recipe_portion">Portion</string>
+    <string name="text_recipe_time">Time</string>
+    <string name="text_write_title">Tulis judul</string>
+    <string name="text_write_description">Tulis deskripsi (Tulis deskripsi resep)</string>
+    <string name="text_add_ingredients">Add Ingredients</string>
 </resources>
