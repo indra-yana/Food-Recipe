@@ -10,7 +10,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.training.foodrecipe.R
-import com.training.foodrecipe.databinding.FragmentArticleDetailBinding
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.view.MainActivity
 import com.training.foodrecipe.view.fragment.ArticleDetailFragment
@@ -59,7 +58,7 @@ fun Fragment.handleRequestError(failure: ResponseStatus.Failure, action: (() -> 
             (activity as MainActivity).binding.fabCreate
         }
         is ArticleDetailFragment -> {
-            (binding as FragmentArticleDetailBinding).layoutGoto
+            viewBinding.layoutGoto
         }
         else -> null
     }

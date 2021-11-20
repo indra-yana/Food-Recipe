@@ -5,23 +5,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.training.foodrecipe.view.MainActivity
 import com.training.foodrecipe.R
-import com.training.foodrecipe.view.adapter.ArticleAdapter
-import com.training.foodrecipe.view.adapter.CategoryAdapter
-import com.training.foodrecipe.listener.IOnItemClickListener
 import com.training.foodrecipe.databinding.FragmentArticleBinding
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.helper.handleRequestError
 import com.training.foodrecipe.helper.visible
 import com.training.foodrecipe.listener.IOnFabClickListener
+import com.training.foodrecipe.listener.IOnItemClickListener
 import com.training.foodrecipe.model.Article
 import com.training.foodrecipe.model.ArticleCategory
 import com.training.foodrecipe.repository.ArticleRepository
+import com.training.foodrecipe.view.MainActivity
+import com.training.foodrecipe.view.adapter.ArticleAdapter
+import com.training.foodrecipe.view.adapter.CategoryAdapter
+import com.training.foodrecipe.view.fragment.base.BaseFragment
 import com.training.foodrecipe.viewmodel.ArticleViewModel
 import timber.log.Timber
 
@@ -34,7 +34,7 @@ import timber.log.Timber
 class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, ArticleRepository>() {
 
     companion object {
-        private val TAG = ArticleFragment::class.java.simpleName
+        private val TAG = this::class.java.simpleName
     }
 
     // Adapter
@@ -87,17 +87,9 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
         observeArticle()
     }
 
-    override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentArticleBinding {
-        return FragmentArticleBinding.inflate(inflater, container, false)
-    }
-
-    override fun getViewModel(): Class<ArticleViewModel> {
-        return ArticleViewModel::class.java
-    }
-
-    override fun getRepository(): ArticleRepository {
-        return ArticleRepository()
-    }
+    override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentArticleBinding.inflate(inflater, container, false)
+    override fun getViewModel() = ArticleViewModel::class.java
+    override fun getRepository() = ArticleRepository()
 
     private fun buildCategoryAdapter() {
         categoryAdapter = CategoryAdapter().apply {
@@ -114,16 +106,14 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
         }
     }
 
-    private fun buildCategoryRV() {
-        with(viewBinding) {
+    private fun buildCategoryRV() = with(viewBinding) {
             rvCategory.setHasFixedSize(true)
             rvCategory.adapter = categoryAdapter
             rvCategory.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL)
-        }
     }
 
     private fun observeArticleCategory() {
-        viewModel.articleCategory.observe(viewLifecycleOwner, Observer {
+        viewModel.articleCategory.observe(viewLifecycleOwner, {
             isLoading = it is ResponseStatus.Loading
             isNetworkError = it is ResponseStatus.Failure
 
@@ -164,16 +154,14 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
         }
     }
 
-    private fun buildArticleRV() {
-        with(viewBinding) {
+    private fun buildArticleRV() = with(viewBinding) {
             rvArticle.setHasFixedSize(true)
             rvArticle.adapter = articleAdapter
             rvArticle.layoutManager = LinearLayoutManager(requireContext())
-        }
     }
 
     private fun observeArticle() {
-        viewModel.latestArticle.observe(viewLifecycleOwner, Observer {
+        viewModel.latestArticle.observe(viewLifecycleOwner, {
             isLoading = it is ResponseStatus.Loading
             isNetworkError = it is ResponseStatus.Failure
 
@@ -201,8 +189,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
         })
     }
 
-    private fun prepareUI() {
-        with(viewBinding) {
+    override fun prepareUI() = with(viewBinding) {
             srlRefresh.setOnRefreshListener {
                 isNetworkError = false
                 isLoading = false
@@ -214,10 +201,9 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
             layoutHeader.btnBack.visible(false)
             layoutHeader.ivHeaderCreate.visible(false)
             layoutHeader.ivHeaderMenu.visible(false)
-        }
     }
 
-    private fun toggleLoading(isLoading: Boolean) {
+    override fun toggleLoading(isLoading: Boolean) {
         viewBinding.srlRefresh.isRefreshing = isLoading
         viewBinding.shimmerArticleContainer.showShimmer(isLoading || isNetworkError)
         viewBinding.shimmerCategoryContainer.showShimmer(isLoading || isNetworkError)
@@ -247,7 +233,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel, A
         }
     }
 
-    private fun fetchData() {
+    override fun fetchData() {
         viewModel.getArticleCategory()
         viewModel.getArticleByCategory(key)
     }

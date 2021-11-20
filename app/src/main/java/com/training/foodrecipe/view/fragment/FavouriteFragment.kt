@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.training.foodrecipe.R
@@ -25,6 +24,7 @@ import com.training.foodrecipe.model.Recipe
 import com.training.foodrecipe.repository.RecipeRepository
 import com.training.foodrecipe.view.MainActivity
 import com.training.foodrecipe.view.adapter.RecipeAdapter
+import com.training.foodrecipe.view.fragment.base.BaseFragment
 import com.training.foodrecipe.viewmodel.RecipeViewModel
 import timber.log.Timber
 import java.util.*
@@ -38,7 +38,7 @@ import java.util.*
 class FavouriteFragment : BaseFragment<FragmentFavouriteBinding, RecipeViewModel, RecipeRepository>() {
 
     companion object {
-        private val TAG = FavouriteFragment::class.java.simpleName
+        private val TAG = this::class.java.simpleName
     }
 
     // Adapter
@@ -81,17 +81,9 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding, RecipeViewModel
         fetchData(currentSearchQuery)
     }
 
-    override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentFavouriteBinding {
-        return FragmentFavouriteBinding.inflate(inflater, container, false)
-    }
-
-    override fun getViewModel(): Class<RecipeViewModel> {
-        return RecipeViewModel::class.java
-    }
-
-    override fun getRepository(): RecipeRepository {
-        return RecipeRepository()
-    }
+    override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentFavouriteBinding.inflate(inflater, container, false)
+    override fun getViewModel() = RecipeViewModel::class.java
+    override fun getRepository() = RecipeRepository()
 
     private fun buildRecipeAdapter() {
         recipeAdapter = RecipeAdapter().apply {
@@ -114,16 +106,14 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding, RecipeViewModel
         }
     }
 
-    private fun buildRecipeRV() {
-        with(viewBinding) {
-            rvRecipe.setHasFixedSize(true)
-            viewBinding.rvRecipe.adapter = recipeAdapter
-            viewBinding.rvRecipe.layoutManager = LinearLayoutManager(requireContext())
-        }
+    private fun buildRecipeRV() = with(viewBinding) {
+        rvRecipe.setHasFixedSize(true)
+        viewBinding.rvRecipe.adapter = recipeAdapter
+        viewBinding.rvRecipe.layoutManager = LinearLayoutManager(requireContext())
     }
 
     private fun observeRecipeFavourite() {
-        viewModel.recipe.observe(viewLifecycleOwner, Observer {
+        viewModel.recipe.observe(viewLifecycleOwner, {
             isLoading = it is ResponseStatus.Loading
 
             toggleLoading(isLoading)
@@ -150,95 +140,93 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding, RecipeViewModel
         })
     }
 
-    private fun prepareUI() {
-        with(viewBinding) {
-            etInputSearch.apply {
-                addTextChangedListener(object : TextWatcher {
-                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                        timerTask?.cancel()
-                    }
+    override fun prepareUI() = with(viewBinding) {
+        etInputSearch.apply {
+            addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    timerTask?.cancel()
+                }
 
-                    override fun afterTextChanged(s: Editable?) {
-                        val q = s.toString().trim()
+                override fun afterTextChanged(s: Editable?) {
+                    val q = s.toString().trim()
 
-                        if (q.isNotEmpty()) {
-                            ivClearInputSearch.visible(true)
+                    if (q.isNotEmpty()) {
+                        ivClearInputSearch.visible(true)
 
-                            if (currentSearchQuery == q) {
-                                timerTask?.cancel()
-                                return
-                            }
-
-                            timerTask = Timer()
-                            timerTask?.schedule(object : TimerTask() {
-                                override fun run() {
-                                    Handler(Looper.getMainLooper()).post {
-                                        doSearch(q)
-                                    }
-                                }
-                            }, 2000)
-                        } else {
-                            currentSearchQuery = null
-                            ivClearInputSearch.visible(false)
-
-                            fetchData(currentSearchQuery)
+                        if (currentSearchQuery == q) {
+                            timerTask?.cancel()
+                            return
                         }
+
+                        timerTask = Timer()
+                        timerTask?.schedule(object : TimerTask() {
+                            override fun run() {
+                                Handler(Looper.getMainLooper()).post {
+                                    doSearch(q)
+                                }
+                            }
+                        }, 2000)
+                    } else {
+                        currentSearchQuery = null
+                        ivClearInputSearch.visible(false)
+
+                        fetchData(currentSearchQuery)
                     }
-                })
+                }
+            })
 
-                setOnKeyListener { _, keyCode, _ ->
-                    if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                        val q = editableText.trim().toString()
+            setOnKeyListener { _, keyCode, _ ->
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    val q = editableText.trim().toString()
 
-                        timerTask?.cancel()
-                        doSearch(q)
-                        return@setOnKeyListener true
-                    }
-
-                    return@setOnKeyListener false
+                    timerTask?.cancel()
+                    doSearch(q)
+                    return@setOnKeyListener true
                 }
 
-                setOnClickListener {
-                    showInputKey(etInputSearch, true)
-                }
-
-                currentSearchQuery?.let {
-                    setText(it)
-                    setSelection(it.length)
-                }
+                return@setOnKeyListener false
             }
 
-            ivClearInputSearch.setOnClickListener {
-                etInputSearch.text = null
-                it.visible(false)
+            setOnClickListener {
+                showInputKey(etInputSearch, true)
             }
 
-            srlRefresh.setOnRefreshListener {
-                isLoading = false
-                currentSearchQuery = null
-                etInputSearch.text = null
-
-                fetchData(currentSearchQuery)
+            currentSearchQuery?.let {
+                setText(it)
+                setSelection(it.length)
             }
+        }
 
-            layoutHeader.tvHeaderTitle.text = getString(R.string.text_favorite)
-            layoutHeader.ivHeaderCreate.visible(true)
-            layoutHeader.ivHeaderMenu.visible(false)
-            layoutHeader.btnBack.visible(true)
-            layoutHeader.btnBack.setOnClickListener {
-                showInputKey(etInputSearch, false)
-                findNavController().navigateUp()
-            }
+        ivClearInputSearch.setOnClickListener {
+            etInputSearch.text = null
+            it.visible(false)
+        }
 
-            layoutHeader.ivHeaderCreate.setOnClickListener {
-                // TODO: Create own recipe
-                requireView().snackBar("Buat resepmu sendiri!")
-            }
+        srlRefresh.setOnRefreshListener {
+            isLoading = false
+            currentSearchQuery = null
+            etInputSearch.text = null
+
+            fetchData(currentSearchQuery)
+        }
+
+        layoutHeader.tvHeaderTitle.text = getString(R.string.text_favorite)
+        layoutHeader.ivHeaderCreate.visible(true)
+        layoutHeader.ivHeaderMenu.visible(false)
+        layoutHeader.btnBack.visible(true)
+        layoutHeader.btnBack.setOnClickListener {
+            showInputKey(etInputSearch, false)
+            findNavController().navigateUp()
+        }
+
+        layoutHeader.ivHeaderCreate.setOnClickListener {
+            // TODO: Create own recipe
+            requireView().snackBar("Buat resepmu sendiri!")
         }
     }
 
-    private fun toggleLoading(isLoading: Boolean) {
+    override fun toggleLoading(isLoading: Boolean) {
         viewBinding.srlRefresh.isRefreshing = isLoading
         viewBinding.shimmerRecipeContainer.showShimmer(isLoading)
 

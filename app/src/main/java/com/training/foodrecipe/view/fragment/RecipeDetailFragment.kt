@@ -12,7 +12,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,20 +19,21 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.training.foodrecipe.view.MainActivity
 import com.training.foodrecipe.R
-import com.training.foodrecipe.listener.IOnItemClickListener
-import com.training.foodrecipe.view.adapter.NeededItemAdapter
-import com.training.foodrecipe.view.adapter.SimpleTextAdapter
 import com.training.foodrecipe.databinding.FragmentRecipeDetailBinding
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.helper.handleRequestError
 import com.training.foodrecipe.helper.snackBar
 import com.training.foodrecipe.helper.visible
+import com.training.foodrecipe.listener.IOnItemClickListener
 import com.training.foodrecipe.model.NeedItem
 import com.training.foodrecipe.model.Recipe
 import com.training.foodrecipe.model.RecipeDetail
 import com.training.foodrecipe.repository.RecipeRepository
+import com.training.foodrecipe.view.MainActivity
+import com.training.foodrecipe.view.adapter.NeededItemAdapter
+import com.training.foodrecipe.view.adapter.SimpleTextAdapter
+import com.training.foodrecipe.view.fragment.base.BaseFragment
 import com.training.foodrecipe.viewmodel.RecipeViewModel
 import timber.log.Timber
 
@@ -46,7 +46,7 @@ import timber.log.Timber
 class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeViewModel, RecipeRepository>() {
 
     companion object {
-        private val TAG = RecipeDetailFragment::class.java.simpleName
+        private val TAG = this::class.java.simpleName
     }
 
     // Adapter
@@ -95,20 +95,12 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
         observeFavourite()
     }
 
-    override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRecipeDetailBinding {
-        return FragmentRecipeDetailBinding.inflate(inflater, container, false)
-    }
-
-    override fun getViewModel(): Class<RecipeViewModel> {
-        return RecipeViewModel::class.java
-    }
-
-    override fun getRepository(): RecipeRepository {
-        return RecipeRepository()
-    }
+    override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentRecipeDetailBinding.inflate(inflater, container, false)
+    override fun getViewModel() = RecipeViewModel::class.java
+    override fun getRepository() = RecipeRepository()
 
     private fun observeRecipeDetail() {
-        viewModel.recipeDetail.observe(viewLifecycleOwner, Observer {
+        viewModel.recipeDetail.observe(viewLifecycleOwner, {
             isLoading = it is ResponseStatus.Loading
             isNetworkError = it is ResponseStatus.Failure
 
@@ -136,67 +128,64 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
         })
     }
 
-    private fun prepareUI() {
-        with(viewBinding) {
-            srlRefresh.setOnRefreshListener {
-                fetchData()
-            }
+    override fun prepareUI() = with(viewBinding) {
+        srlRefresh.setOnRefreshListener {
+            fetchData()
+        }
 
-            btnBack.setOnClickListener {
-                findNavController().navigateUp()
-            }
+        btnBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
-            btnAddFavourite.setOnClickListener {
-                isFavourite = !isFavourite
-                setFavourite(isFavourite)
-            }
+        btnAddFavourite.setOnClickListener {
+            isFavourite = !isFavourite
+            setFavourite(isFavourite)
         }
     }
 
-    private fun updateUI() {
-        with(viewBinding) {
-            tvLevel.text = recipe.dificulty ?: (recipe.difficulty ?: "-")
-            tvPortion.text = recipe.portion ?: (recipe.serving ?: "-")
-            tvTime.text = recipe.times
+    override fun updateUI(): Unit = with(viewBinding) {
+        tvLevel.text = recipe.dificulty ?: (recipe.difficulty ?: "-")
+        tvPortion.text = recipe.portion ?: (recipe.serving ?: "-")
+        tvTime.text = recipe.times
 
-            Glide.with(requireView().context)
-                .load(recipe.thumb)
-                .placeholder(ContextCompat.getDrawable(requireContext(), R.drawable.image_placeholder))
-                .apply(RequestOptions().override(450, 250))
-                .into(ivItemThumbnail)
+        Glide.with(requireView().context)
+            .load(recipe.thumb)
+            .placeholder(ContextCompat.getDrawable(requireContext(), R.drawable.image_placeholder))
+            .apply(RequestOptions().override(450, 250))
+            .into(ivItemThumbnail)
 
-            recipeDetail?.apply {
-                tvAuthor.text = ("By ${author.user}, ${author.datePublished}")
-                tvItemTitle.text = title
-                tvItemDescription.text = desc
+        recipeDetail?.apply {
+            tvAuthor.text = ("By ${author.user}, ${author.datePublished}")
+            tvItemTitle.text = title
+            tvItemDescription.text = desc
 
-                neededItemAdapter.bindData(needItem)
+            neededItemAdapter.bindData(needItem)
 
-                tvReadMore.setOnClickListener {
-                    if (tvReadMore.text.toString() == getString(R.string.text_read_more)) {
-                        tvItemDescription.maxLines = Int.MAX_VALUE
-                        tvItemDescription.ellipsize = null
-                        tvReadMore.text = getString(R.string.text_read_less)
-                    } else {
-                        tvItemDescription.maxLines = 4
-                        tvItemDescription.ellipsize = TextUtils.TruncateAt.END
-                        tvReadMore.text = getString(R.string.text_read_more)
-                    }
+            tvReadMore.setOnClickListener {
+                if (tvReadMore.text.toString() == getString(R.string.text_read_more)) {
+                    tvItemDescription.maxLines = Int.MAX_VALUE
+                    tvItemDescription.ellipsize = null
+                    tvReadMore.text = getString(R.string.text_read_less)
+                } else {
+                    tvItemDescription.maxLines = 4
+                    tvItemDescription.ellipsize = TextUtils.TruncateAt.END
+                    tvReadMore.text = getString(R.string.text_read_more)
                 }
-
-                btnIngredients.setOnClickListener {
-                    openTodoBottomSheet("Ingredients", this)
-                }
-
-                btnSteps.setOnClickListener {
-                    openTodoBottomSheet("Steps", this)
-                }
-
-                isFavourite = favourite
-                toggleFavourite(isFavourite)
             }
+
+            btnIngredients.setOnClickListener {
+                openTodoBottomSheet("Ingredients", this)
+            }
+
+            btnSteps.setOnClickListener {
+                openTodoBottomSheet("Steps", this)
+            }
+
+            isFavourite = favourite
+            toggleFavourite(isFavourite)
         }
     }
+
 
     private fun buildNeededItemAdapter() {
         neededItemAdapter = NeededItemAdapter().apply {
@@ -209,12 +198,10 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
         }
     }
 
-    private fun buildNeededItemRV() {
-        with(viewBinding) {
-            rvNeededItem.setHasFixedSize(true)
-            rvNeededItem.adapter = neededItemAdapter
-            rvNeededItem.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        }
+    private fun buildNeededItemRV() = with(viewBinding) {
+        rvNeededItem.setHasFixedSize(true)
+        rvNeededItem.adapter = neededItemAdapter
+        rvNeededItem.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -265,7 +252,7 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
 
-    private fun toggleLoading(isLoading: Boolean) {
+    override fun toggleLoading(isLoading: Boolean) {
         viewBinding.srlRefresh.isRefreshing = isLoading
         viewBinding.shimmerFramelayout.showShimmer(isLoading || isNetworkError)
 
@@ -295,7 +282,7 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
     }
 
     private fun observeFavourite() {
-        viewModel.isFavourite.observe(viewLifecycleOwner, Observer {
+        viewModel.isFavourite.observe(viewLifecycleOwner, {
             when (it) {
                 is ResponseStatus.Success -> {
                     toggleFavourite(it.value)
@@ -310,7 +297,7 @@ class RecipeDetailFragment : BaseFragment<FragmentRecipeDetailBinding, RecipeVie
         })
     }
 
-    private fun fetchData() {
+    override fun fetchData() {
         viewModel.getRecipeDetail(recipe.key)
     }
 }

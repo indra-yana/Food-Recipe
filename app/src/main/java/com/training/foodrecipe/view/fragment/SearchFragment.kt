@@ -10,23 +10,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.training.foodrecipe.view.MainActivity
 import com.training.foodrecipe.R
-import com.training.foodrecipe.view.adapter.CategoryAdapter
-import com.training.foodrecipe.listener.IOnItemClickListener
-import com.training.foodrecipe.view.adapter.RecipeAdapter
 import com.training.foodrecipe.databinding.FragmentSearchBinding
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.helper.handleRequestError
 import com.training.foodrecipe.helper.showInputKey
 import com.training.foodrecipe.helper.visible
+import com.training.foodrecipe.listener.IOnItemClickListener
 import com.training.foodrecipe.model.Recipe
 import com.training.foodrecipe.model.RecipeCategory
 import com.training.foodrecipe.repository.RecipeRepository
+import com.training.foodrecipe.view.MainActivity
+import com.training.foodrecipe.view.adapter.CategoryAdapter
+import com.training.foodrecipe.view.adapter.RecipeAdapter
+import com.training.foodrecipe.view.fragment.base.BaseFragment
 import com.training.foodrecipe.viewmodel.RecipeViewModel
 import timber.log.Timber
 import java.util.*
@@ -40,7 +40,7 @@ import java.util.*
 class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, RecipeRepository>() {
 
     companion object {
-        private val TAG = SearchFragment::class.java.simpleName
+        private val TAG = this::class.java.simpleName
     }
 
     // Adapter
@@ -85,17 +85,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
         observeSearchRecipe()
     }
 
-    override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentSearchBinding {
-        return FragmentSearchBinding.inflate(inflater, container, false)
-    }
-
-    override fun getViewModel(): Class<RecipeViewModel> {
-        return RecipeViewModel::class.java
-    }
-
-    override fun getRepository(): RecipeRepository {
-        return RecipeRepository()
-    }
+    override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentSearchBinding.inflate(inflater, container, false)
+    override fun getViewModel() = RecipeViewModel::class.java
+    override fun getRepository() = RecipeRepository()
 
     private fun buildCategoryAdapter() {
         categoryAdapter = CategoryAdapter().apply {
@@ -112,16 +104,14 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
         }
     }
 
-    private fun buildCategoryRV() {
-        with(viewBinding) {
-            rvCategory.setHasFixedSize(true)
-            rvCategory.adapter = categoryAdapter
-            rvCategory.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL)
-        }
+    private fun buildCategoryRV() = with(viewBinding) {
+        rvCategory.setHasFixedSize(true)
+        rvCategory.adapter = categoryAdapter
+        rvCategory.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL)
     }
 
     private fun observeCategory() {
-        viewModel.recipeCategory.observe(viewLifecycleOwner, Observer {
+        viewModel.recipeCategory.observe(viewLifecycleOwner, {
             isLoading = it is ResponseStatus.Loading
             isNetworkError = it is ResponseStatus.Failure
 
@@ -163,16 +153,14 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
         }
     }
 
-    private fun buildRecipeRV() {
-        with(viewBinding) {
-            rvRecipe.setHasFixedSize(true)
-            rvRecipe.adapter = recipeAdapter
-            rvRecipe.layoutManager = LinearLayoutManager(requireContext())
-        }
+    private fun buildRecipeRV() = with(viewBinding) {
+        rvRecipe.setHasFixedSize(true)
+        rvRecipe.adapter = recipeAdapter
+        rvRecipe.layoutManager = LinearLayoutManager(requireContext())
     }
 
     private fun observeSearchRecipe() {
-        viewModel.searchRecipe.observe(viewLifecycleOwner, Observer {
+        viewModel.searchRecipe.observe(viewLifecycleOwner, {
             isLoading = it is ResponseStatus.Loading
             isNetworkError = it is ResponseStatus.Failure
 
@@ -200,86 +188,87 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
         })
     }
 
-    private fun prepareUI() {
-        with(viewBinding) {
-            etInputSearch.apply {
-                addTextChangedListener(object : TextWatcher {
-                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { timerTask?.cancel() }
-                    override fun afterTextChanged(s: Editable?) {
-                        val q = s.toString().trim()
+    override fun prepareUI() = with(viewBinding) {
+        etInputSearch.apply {
+            addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    timerTask?.cancel()
+                }
 
-                        if (q.isNotEmpty()) {
-                            ivClearInputSearch.visible(true)
+                override fun afterTextChanged(s: Editable?) {
+                    val q = s.toString().trim()
 
-                            if (currentSearchQuery == q) {
-                                timerTask?.cancel()
-                                return
-                            }
+                    if (q.isNotEmpty()) {
+                        ivClearInputSearch.visible(true)
 
-                            timerTask = Timer()
-                            timerTask?.schedule(object : TimerTask() {
-                                override fun run() {
-                                    Handler(Looper.getMainLooper()).post {
-                                        doSearch(q)
-                                    }
-                                }
-                            }, 2000)
-                        } else {
-                            currentSearchQuery = null
-                            ivClearInputSearch.visible(false)
-                            clearSearchResult()
+                        if (currentSearchQuery == q) {
+                            timerTask?.cancel()
+                            return
                         }
+
+                        timerTask = Timer()
+                        timerTask?.schedule(object : TimerTask() {
+                            override fun run() {
+                                Handler(Looper.getMainLooper()).post {
+                                    doSearch(q)
+                                }
+                            }
+                        }, 2000)
+                    } else {
+                        currentSearchQuery = null
+                        ivClearInputSearch.visible(false)
+                        clearSearchResult()
                     }
-                })
+                }
+            })
 
-                setOnKeyListener { _, keyCode, _ ->
-                    if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                        val q = editableText.trim().toString()
+            setOnKeyListener { _, keyCode, _ ->
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    val q = editableText.trim().toString()
 
-                        timerTask?.cancel()
-                        doSearch(q)
-                        return@setOnKeyListener true
-                    }
-
-                    return@setOnKeyListener false
+                    timerTask?.cancel()
+                    doSearch(q)
+                    return@setOnKeyListener true
                 }
 
-                setOnClickListener {
-                    showInputKey(it, true)
-                }
-
-                currentSearchQuery?.let {
-                    setText(it)
-                    setSelection(it.length)
-                }
+                return@setOnKeyListener false
             }
 
-            ivClearInputSearch.setOnClickListener {
-                etInputSearch.text = null
-                it.visible(false)
+            setOnClickListener {
+                showInputKey(it, true)
             }
 
-            layoutHeader.tvHeaderTitle.text = getString(R.string.text_search_title)
-            layoutHeader.ivHeaderMenu.visible(false)
-            layoutHeader.ivHeaderCreate.visible(false)
-            layoutHeader.btnBack.setOnClickListener {
-                showInputKey(etInputSearch, false)
-                findNavController().navigateUp()
+            currentSearchQuery?.let {
+                setText(it)
+                setSelection(it.length)
             }
+        }
 
-            srlRefresh.setOnRefreshListener {
-                isNetworkError = false
-                isLoading = false
-                currentSearchQuery = null
-                etInputSearch.text = null
+        ivClearInputSearch.setOnClickListener {
+            etInputSearch.text = null
+            it.visible(false)
+        }
 
-                fetchData()
-            }
+        layoutHeader.tvHeaderTitle.text = getString(R.string.text_search_title)
+        layoutHeader.ivHeaderMenu.visible(false)
+        layoutHeader.ivHeaderCreate.visible(false)
+        layoutHeader.btnBack.setOnClickListener {
+            showInputKey(etInputSearch, false)
+            findNavController().navigateUp()
+        }
+
+        srlRefresh.setOnRefreshListener {
+            isNetworkError = false
+            isLoading = false
+            currentSearchQuery = null
+            etInputSearch.text = null
+
+            fetchData()
         }
     }
 
-    private fun toggleLoading(isLoading: Boolean) {
+    override fun toggleLoading(isLoading: Boolean) {
         viewBinding.srlRefresh.isRefreshing = isLoading
         viewBinding.shimmerFramelayout.showShimmer(isLoading || isNetworkError)
         viewBinding.shimmerCategoryFramelayout.showShimmer(isLoading || isNetworkError)
@@ -309,7 +298,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, RecipeViewModel, Reci
         }
     }
 
-    private fun fetchData() {
+    override fun fetchData() {
         viewModel.getCategory()
     }
 

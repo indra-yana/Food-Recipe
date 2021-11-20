@@ -7,8 +7,6 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -23,6 +21,7 @@ import com.training.foodrecipe.model.Article
 import com.training.foodrecipe.model.ArticleDetail
 import com.training.foodrecipe.repository.ArticleRepository
 import com.training.foodrecipe.view.MainActivity
+import com.training.foodrecipe.view.fragment.base.BaseFragment
 import com.training.foodrecipe.viewmodel.ArticleViewModel
 import timber.log.Timber
 
@@ -35,7 +34,7 @@ import timber.log.Timber
 class ArticleDetailFragment : BaseFragment<FragmentArticleDetailBinding, ArticleViewModel, ArticleRepository>() {
 
     companion object {
-        private val TAG = ArticleDetailFragment::class.java.simpleName
+        private val TAG = this::class.java.simpleName
     }
 
     // Indicator state
@@ -71,20 +70,12 @@ class ArticleDetailFragment : BaseFragment<FragmentArticleDetailBinding, Article
         observeArticle()
     }
 
-    override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentArticleDetailBinding {
-        return FragmentArticleDetailBinding.inflate(inflater, container, false)
-    }
-
-    override fun getViewModel(): Class<ArticleViewModel> {
-        return ArticleViewModel::class.java
-    }
-
-    override fun getRepository(): ArticleRepository {
-        return ArticleRepository()
-    }
+    override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentArticleDetailBinding.inflate(inflater, container, false)
+    override fun getViewModel(): Class<ArticleViewModel> = ArticleViewModel::class.java
+    override fun getRepository(): ArticleRepository = ArticleRepository()
 
     private fun observeArticle() {
-        viewModel.articleDetail.observe(viewLifecycleOwner, Observer {
+        viewModel.articleDetail.observe(viewLifecycleOwner, {
             isLoading = it is ResponseStatus.Loading
             isNetworkError = it is ResponseStatus.Failure
 
@@ -112,64 +103,58 @@ class ArticleDetailFragment : BaseFragment<FragmentArticleDetailBinding, Article
         })
     }
 
-    private fun toggleLoading(isLoading: Boolean) {
-        with(viewBinding) {
-            srlRefresh.isRefreshing = isLoading
-            shimmerArticleContainer.showShimmer(isLoading || isNetworkError)
+    override fun toggleLoading(isLoading: Boolean) = with(viewBinding) {
+        srlRefresh.isRefreshing = isLoading
+        shimmerArticleContainer.showShimmer(isLoading || isNetworkError)
 
-            if (isLoading || isNetworkError) {
-                layoutArticleDetailPlaceholder.visible(true)
-                layoutArticleDetailContainer.visible(false)
-            } else {
-                shimmerArticleContainer.stopShimmer()
-                shimmerArticleContainer.hideShimmer()
+        if (isLoading || isNetworkError) {
+            layoutArticleDetailPlaceholder.visible(true)
+            layoutArticleDetailContainer.visible(false)
+        } else {
+            shimmerArticleContainer.stopShimmer()
+            shimmerArticleContainer.hideShimmer()
 
-                layoutArticleDetailPlaceholder.visible(false)
-                layoutArticleDetailContainer.visible(true)
-            }
+            layoutArticleDetailPlaceholder.visible(false)
+            layoutArticleDetailContainer.visible(true)
+        }
 
-            btnGotoWebsite.enable(!isLoading)
+        btnGotoWebsite.enable(!isLoading)
+    }
+
+    override fun prepareUI() = with(viewBinding) {
+        srlRefresh.setOnRefreshListener {
+            fetchData()
+        }
+
+        btnBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        btnGotoWebsite.setOnClickListener {
+            gotoWebsite(article.url)
         }
     }
 
-    private fun prepareUI() {
-        with(viewBinding) {
-            srlRefresh.setOnRefreshListener {
-                fetchData()
-            }
+    private fun updateUI(item: ArticleDetail) = with(viewBinding) {
+        with(item) {
+            Glide.with(requireView().context)
+                .load(thumb)
+                .apply(RequestOptions().override(450, 250))
+                .into(ivItemThumbnail)
 
-            btnBack.setOnClickListener {
-                findNavController().navigateUp()
-            }
+            tvAuthor.text = ("By $author | $datePublished")
+            tvItemTitle.text = title
+            tvItemDescription.text = description
 
-            btnGotoWebsite.setOnClickListener {
-                gotoWebsite(article.url)
-            }
-        }
-    }
-
-    private fun updateUI(item: ArticleDetail) {
-        with(viewBinding) {
-            with(item) {
-                Glide.with(requireView().context)
-                    .load(thumb)
-                    .apply(RequestOptions().override(450, 250))
-                    .into(ivItemThumbnail)
-
-                tvAuthor.text = ("By $author | $datePublished")
-                tvItemTitle.text = title
-                tvItemDescription.text = description
-
-                tvReadMore.setOnClickListener {
-                    if (tvReadMore.text.toString() == getString(R.string.text_read_more)) {
-                        tvItemDescription.maxLines = Int.MAX_VALUE
-                        tvItemDescription.ellipsize = null
-                        tvReadMore.text = getString(R.string.text_read_less)
-                    } else {
-                        tvItemDescription.maxLines = 4
-                        tvItemDescription.ellipsize = TextUtils.TruncateAt.END
-                        tvReadMore.text = getString(R.string.text_read_more)
-                    }
+            tvReadMore.setOnClickListener {
+                if (tvReadMore.text.toString() == getString(R.string.text_read_more)) {
+                    tvItemDescription.maxLines = Int.MAX_VALUE
+                    tvItemDescription.ellipsize = null
+                    tvReadMore.text = getString(R.string.text_read_less)
+                } else {
+                    tvItemDescription.maxLines = 4
+                    tvItemDescription.ellipsize = TextUtils.TruncateAt.END
+                    tvReadMore.text = getString(R.string.text_read_more)
                 }
             }
         }
@@ -187,7 +172,7 @@ class ArticleDetailFragment : BaseFragment<FragmentArticleDetailBinding, Article
         }
     }
 
-    private fun fetchData() {
+    override fun fetchData() {
         viewModel.getArticleDetail(article.tags ?: "", article.key)
     }
 }

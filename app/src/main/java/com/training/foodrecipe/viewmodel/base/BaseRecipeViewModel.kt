@@ -1,5 +1,6 @@
 package com.training.foodrecipe.viewmodel.base
 
+import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.Job
 
 /****************************************************
@@ -8,7 +9,7 @@ import kotlinx.coroutines.Job
  * https://gitlab.com/indra-yana
  ****************************************************/
 
-abstract class BaseRecipeViewModel : BaseViewModel() {
+abstract class BaseRecipeViewModel : ViewModel() {
 
     abstract fun getLatestRecipe(): Job
     abstract fun getRecipeByPage(page: Int): Job

@@ -10,12 +10,10 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.os.bundleOf
 import androidx.core.view.children
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,9 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.training.foodrecipe.view.MainActivity
 import com.training.foodrecipe.R
-import com.training.foodrecipe.view.adapter.*
 import com.training.foodrecipe.databinding.FragmentRecipeBinding
 import com.training.foodrecipe.datasource.remote.response.ResponseStatus
 import com.training.foodrecipe.helper.OverlapSliderTransformation
@@ -36,6 +32,9 @@ import com.training.foodrecipe.listener.IOnFabClickListener
 import com.training.foodrecipe.listener.IOnItemClickListener
 import com.training.foodrecipe.model.Recipe
 import com.training.foodrecipe.repository.RecipeRepository
+import com.training.foodrecipe.view.MainActivity
+import com.training.foodrecipe.view.adapter.*
+import com.training.foodrecipe.view.fragment.base.BaseFragment
 import com.training.foodrecipe.viewmodel.RecipeViewModel
 import timber.log.Timber
 
@@ -48,7 +47,7 @@ import timber.log.Timber
 class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, RecipeRepository>() {
 
     companion object {
-        private val TAG = RecipeFragment::class.java.simpleName
+        private val TAG = this::class.java.simpleName
     }
 
     private var bottomSheetAbout: BottomSheetDialog? = null
@@ -123,17 +122,9 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
         bannerHandler.removeCallbacks(bannerRunnable)
     }
 
-    override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentRecipeBinding {
-        return FragmentRecipeBinding.inflate(inflater, container, false)
-    }
-
-    override fun getViewModel(): Class<RecipeViewModel> {
-        return RecipeViewModel::class.java
-    }
-
-    override fun getRepository(): RecipeRepository {
-        return RecipeRepository()
-    }
+    override fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?) = FragmentRecipeBinding.inflate(inflater, container, false)
+    override fun getViewModel() = RecipeViewModel::class.java
+    override fun getRepository() = RecipeRepository()
 
     private fun buildRecipeAdapter() {
         recipeAdapter = RecipeAdapter().apply {
@@ -145,8 +136,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
         }
     }
 
-    private fun buildRecipeRV() {
-        with(viewBinding) {
+    private fun buildRecipeRV() = with(viewBinding) {
 
             setListMode()
 
@@ -195,11 +185,10 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
                     }
                 }
             })
-        }
     }
 
     private fun observeRecipeByPage() {
-        viewModel.recipe.observe(viewLifecycleOwner, Observer {
+        viewModel.recipe.observe(viewLifecycleOwner, {
             isLoading = it is ResponseStatus.Loading
             isNetworkError = it is ResponseStatus.Failure
 
@@ -276,7 +265,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
     }
 
     private fun observeLatestRecipe() {
-        viewModel.latestRecipe.observe(viewLifecycleOwner, Observer {
+        viewModel.latestRecipe.observe(viewLifecycleOwner, {
             isLoading = it is ResponseStatus.Loading
             isNetworkError = it is ResponseStatus.Failure
 
@@ -304,8 +293,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
         })
     }
 
-    private fun prepareUI() {
-        with(viewBinding) {
+    override fun prepareUI() = with(viewBinding) {
             layoutSearch.setOnClickListener {
                 findNavController().navigate(R.id.action_homeFragment_to_nav_search)
             }
@@ -328,10 +316,9 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
             layoutHeader.ivHeaderMenu.setOnClickListener {
                 showPopupMenu(it)
             }
-        }
     }
 
-    private fun toggleLoading(isLoading: Boolean) {
+    override fun toggleLoading(isLoading: Boolean) {
         viewBinding.srlRefresh.isRefreshing = isLoading
         viewBinding.shimmerRecipeContainer.showShimmer((isLoading || isNetworkError) && !isRequestNextPage)
         viewBinding.shimmerBannerContainer.showShimmer((isLoading || isNetworkError) && !isRequestNextPage)
@@ -441,7 +428,7 @@ class RecipeFragment : BaseFragment<FragmentRecipeBinding, RecipeViewModel, Reci
         findNavController().navigate(R.id.action_homeFragment_to_recipeDetailFragment, bundle)
     }
 
-    private fun fetchData(page: Int) {
+    override fun fetchData(page: Int) {
         viewModel.getLatestRecipe()
         viewModel.getRecipeByPage(page)
     }

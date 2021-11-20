@@ -1,15 +1,15 @@
-package com.training.foodrecipe.view.fragment
+package com.training.foodrecipe.view.fragment.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.training.foodrecipe.repository.BaseRepository
 import com.training.foodrecipe.viewmodel.ViewModelFactory
-import com.training.foodrecipe.viewmodel.base.BaseViewModel
 
 /****************************************************
  * Created by Indra Muliana (indra.ndra26@gmail.com)
@@ -17,26 +17,31 @@ import com.training.foodrecipe.viewmodel.base.BaseViewModel
  * https://gitlab.com/indra-yana
  ****************************************************/
 
-abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel, BR : BaseRepository> : Fragment() {
+abstract class BaseFragment<VB : ViewBinding, VM : ViewModel, BR : BaseRepository> :
+    Fragment(),
+    FragmentContract<VB, VM, BR>
+{
 
-    protected lateinit var viewBinding: VB
-    protected lateinit var viewModel: VM
+    private var _viewBinding: VB? = null
+    private var _viewModel: VM? = null
 
-    val binding: ViewBinding get() = viewBinding
+    override val viewBinding get() = _viewBinding!!
+    override val viewModel get() = _viewModel!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this, ViewModelFactory(getRepository())).get(getViewModel())
+        _viewModel = ViewModelProvider(this, ViewModelFactory(getRepository())).get(getViewModel())
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        viewBinding = getViewBinding(inflater, container)
+        _viewBinding = getViewBinding(inflater, container)
 
         return viewBinding.root
     }
 
-    abstract fun getViewBinding(inflater: LayoutInflater, container: ViewGroup?): VB
-    abstract fun getViewModel(): Class<VM>
-    abstract fun getRepository(): BR
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _viewBinding = null
+    }
 
 }
